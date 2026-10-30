@@ -1,0 +1,218 @@
+// The contact section (partials/footer.html) on navy, and the footer bar.
+.site-footer {
+    background: $bg-page-footer;
+    color: $white;
+
+    .container {
+        padding-top: var(--spacing-10);
+        padding-bottom: var(--spacing-10);
+
+        @include for-phone-only {
+            padding-top: var(--spacing-7);
+            padding-bottom: var(--spacing-7);
+        }
+    }
+
+    .section-head h2 {
+        color: $white;
+    }
+
+    a {
+        color: $white;
+        text-decoration: underline;
+        text-decoration-color: rgba($gold, .6);
+        text-underline-offset: 3px;
+
+        &:hover {
+            color: $gold;
+        }
+    }
+
+    .placeholder {
+        color: rgba($white, .62);
+    }
+}
+
+.contact {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--spacing-6);
+
+    @include for-tablet-landscape-up {
+        grid-template-columns: 2fr 3fr;
+        gap: var(--spacing-8);
+    }
+
+    &__details {
+        dl > div {
+            padding: 18px 0;
+            border-bottom: 1px solid rgba($white, .12);
+
+            &:first-child {
+                padding-top: 0;
+            }
+        }
+
+        dt {
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: .2em;
+            text-transform: uppercase;
+            color: $gold;
+            margin-bottom: 4px;
+        }
+
+        dd {
+            margin: 0;
+            font-size: 17px;
+        }
+    }
+
+    // the Directions button beside the address. Nested so it outranks the footer's
+    // underlined-link rule above.
+    .btn-map {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        flex-shrink: 0;
+        padding: 9px 16px;
+        border: 1px solid $gold;
+        border-radius: $border-radius;
+        color: $gold;
+        font-size: 13px;
+        font-weight: 600;
+        letter-spacing: .08em;
+        text-transform: uppercase;
+        text-decoration: none;
+        white-space: nowrap;
+        transition: background .15s, color .15s;
+
+        i {
+            font-size: 15px;
+        }
+
+        &:hover,
+        &:focus-visible {
+            background: $gold;
+            color: $navy;
+            text-decoration: none;
+        }
+    }
+
+    // the address with the Directions button beside it; on phones the button
+    // drops under the address
+    &__address {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: var(--spacing-2);
+        flex-wrap: wrap;
+
+        address {
+            width: auto; // base.scss makes <address> full width, which pushed the button under it
+            flex: 1 1 auto;
+            font-style: normal;
+            margin: 0;
+
+            &.placeholder {
+                font-style: italic;
+            }
+        }
+    }
+
+    &__form {
+        background: $navy-2;
+        padding: var(--spacing-4);
+        border-top: 3px solid $maroon;
+
+        @include for-phone-only {
+            padding: var(--spacing-3) var(--spacing-2);
+        }
+
+        h3 {
+            color: $white;
+            margin-bottom: var(--spacing-3);
+        }
+
+        label {
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            color: rgba($white, .8);
+            margin-bottom: 6px;
+        }
+
+        input,
+        textarea {
+            width: 100%;
+            font: inherit;
+            font-size: 16px;
+            color: $white;
+            background: rgba($navy, .55);
+            border: 1px solid rgba($white, .18);
+            border-radius: 2px;
+            padding: 11px 14px;
+
+            &:focus {
+                outline: 2px solid $gold;
+                outline-offset: 0;
+                border-color: transparent;
+            }
+        }
+
+        textarea {
+            margin-bottom: var(--spacing-3);
+            resize: vertical;
+        }
+
+        .btn--maroon {
+            display: inline-block;
+        }
+    }
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--spacing-2);
+    margin-bottom: var(--spacing-2);
+
+    @include for-tablet-portrait-up {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+.recaptcha-note {
+    margin: var(--spacing-2) 0 0;
+    font-size: 12px;
+    color: rgba($white, .6);
+}
+
+.footer-bar {
+    background: $navy-3;
+    color: rgba($white, .7);
+    font-size: 13px;
+
+    &__inner {
+        max-width: $max-width;
+        margin: 0 auto;
+        padding: 18px var(--spacing-2);
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 8px var(--spacing-3);
+    }
+
+    a {
+        color: rgba($white, .85);
+
+        &:hover {
+            color: $gold;
+        }
+    }
+}
+
+.grecaptcha-badge {
+    display: none;
+}

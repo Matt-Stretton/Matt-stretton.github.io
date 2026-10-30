@@ -1,0 +1,26 @@
+# Known site defects that `make test` excuses, one per line, as
+#
+#     <check>: <text that appears in the failure>
+#
+# Every entry must still occur: when a defect is fixed, `make test` fails with
+# "baseline N STALE" until you delete its line here. Never add a line to make
+# a new failure go away; fix the site, or say why not.
+#
+# All of these came with the copy of necksurgery.co.nz this site started from
+# (2026-10-29). `scripts/test.sh --strict` shows them.
+
+# The theme's SCSS goes through toCSS with no transpiler named, which is
+# LibSass (themes/necksurgery/layouts/_default/baseof.html). Moving to Dart
+# Sass means adding transpiler "dartsass" there and a Dart Sass binary to
+# setup; the output should be compared before and after.
+build: css.Sass: libsass was deprecated
+
+# config.toml: languageCode = 'en-nz'. The replacement is locale = 'en-nz'.
+# The theme writes <html lang="en-NZ"> by hand, so this does not change pages.
+build: project config key languageCode was deprecated
+
+# themes/necksurgery/layouts/404.html puts its <h2> outside any `define`
+# block, so /404.html is a bare fragment: no <html>, head, title or styles.
+pages: /404.html: no <html lang>
+pages: /404.html: no <title>
+pages: /404.html: no meta description

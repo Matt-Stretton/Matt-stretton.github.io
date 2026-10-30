@@ -1,0 +1,8 @@
+{{/* The hero's words and button; components/hero.html calls it from both layouts. */}}
+<div class="hero__text">
+    <h1 class="hero__title">{{ .title }}</h1>
+    {{ with .credentials }}<p class="hero__credentials">{{ . }}</p>{{ end }}
+    {{ with .role }}<p class="hero__role">{{ . }}</p>{{ end }}
+    <span class="rule" aria-hidden="true"></span>
+    <p class="hero__cta"><a class="btn btn--maroon" href="#contact">Make an enquiry <i class="lni lni-arrow-right" aria-hidden="true"></i></a></p>
+</div>

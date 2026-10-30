@@ -1,0 +1,37 @@
+# The four service groups on the home page (themes/necksurgery/layouts/partials/home.html),
+# in Matt's own words. "icon" names a partial in themes/necksurgery/layouts/partials/icons/.
+- title: Head and Neck
+  icon: neck
+  items:
+    - Head and Neck cancer - including throat, larynx, oropharynx and robotic surgery
+    - Neck lumps
+    - Skin cancer
+    - Mouth, tongue and lip lesions
+    - Salivary gland stones, infections and tumours
+    - Swallowing and voice problems
+- title: Thyroid and parathyroid
+  icon: thyroid
+  items:
+    - Thyroid lumps/nodules
+    - Thyroid Cancer
+    - Goitre
+    - Parathyroid lesions
+    - Thyroglossal duct cysts
+- title: Nose and Throat
+  icon: nose
+  items:
+    - Nasal blockage and allergy
+    - Deviated septum and swollen turbinates
+    - Rhinitis/nasal drip
+    - Sinusitis and sinus disorders
+    - Snoring and Sleep apnoea
+    - Tonsillitis
+    - Bleeding nose
+- title: Paediatrics
+  icon: child
+  items:
+    - Snoring and sleep disordered breathing
+    - Tonsillitis
+    - Enlarged tonsils
+    - Neck Lumps
+    - Ear infections/Glue ear

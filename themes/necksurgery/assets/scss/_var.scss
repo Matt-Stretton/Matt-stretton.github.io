@@ -1,0 +1,82 @@
+/**
+ * CSS CONFIG FILE
+ * Don't change this file, copy it to a new theme and over write the settings there
+ */
+
+// fonts
+// Fraunces for headings: a variable serif with an optical-size axis, so large
+// headings get the crisp high-contrast cut and small ones stay sturdy. Inter for
+// body text. Only the weights the stylesheet uses are requested.
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600&display=swap');
+$font-title: 'Fraunces', Georgia, 'Times New Roman', serif;
+$font-body: 'Inter', -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+
+// colours
+$black: #000;
+$white: #fff;
+
+// neutrals, used by the base and form styles
+$grey-1: #f4f4f4;
+$grey-2: #B5B5B5;
+$grey-4: #343b43;
+
+// brand
+$navy: #0B1B33;        // main dark: header, hero, marquee, footer
+$navy-2: #132A4A;      // panels on navy: hero photo panel, form fields
+$navy-3: #07142A;      // the footer bar, a step darker than $navy
+$maroon: #7A1F2E;      // buttons and accents
+$maroon-dark: #5E1622; // button hover
+$gold: #C9A24B;        // rules, icon circle ring, small caps labels
+$cream: #F6F2EA;       // warm off-white: light sections
+$studio: #22262b;      // the headshot's backdrop, extended across the hero
+$cream-line: #E6DDCB;  // hairlines and tile borders on light sections
+$ink: #1F2633;         // body text on light backgrounds
+
+// Link states
+$link: $maroon;
+$hover: $navy;
+
+$button-primary: $maroon;
+$button-primary-hover: $maroon-dark;
+
+// page colours
+$bg-page: $white;
+$bg-page-header: $navy;
+$bg-page-footer: $navy;
+
+// content limit
+$max-width: 1200px;
+$max-width-narrow: 800px;
+
+// header
+// The header is position:fixed with a fixed height, so it takes no layout space:
+// .page offsets content by exactly this much and html's scroll-padding-top keeps
+// anchor targets clear of it. Both are set from these two values only.
+$header-height: 80px;
+$header-height-phone: 64px;
+
+// borders 
+$border-radius: 1px;
+
+// sizes
+:root {
+    // fonts
+
+    // spacing
+    --spacing-0: 0;
+    --spacing-1: 10px;
+    --spacing-2: 20px;
+    --spacing-3: 30px;
+    --spacing-4: 40px;
+    --spacing-5: 50px;
+    --spacing-6: 60px;
+    --spacing-7: 70px;
+    --spacing-8: 80px;
+    --spacing-9: 90px;
+    --spacing-10: 100px;
+    --spacing-11: 110px;
+    --spacing-12: 120px;
+    --spacing-13: 130px;
+    --spacing-14: 140px;
+    --spacing-15: 150px;
+}

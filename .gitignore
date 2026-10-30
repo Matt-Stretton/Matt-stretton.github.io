@@ -1,0 +1,18 @@
+/public/
+/resources/_gen/
+
+# Executable may be added to repository
+hugo.exe
+hugo.darwin
+hugo.linux
+
+# Temporary lock file while building
+/.hugo_build.lock
+
+# make test / make preview output, and the pinned Hugo make setup downloads
+/.test/
+/.tools/
+
+# Client-supplied originals and notes, never published
+/.doncheckin/
+/.dontcheckin/

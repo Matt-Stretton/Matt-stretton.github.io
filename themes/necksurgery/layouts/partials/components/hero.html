@@ -1,0 +1,24 @@
+{{/* The home page hero.
+
+     (dict "title" … "credentials" … "role" … "image" … "fullImage" …)
+
+     With "fullImage" (a landscape photo), it is a full-width cover background
+     under a navy gradient with the text over it. Without one, the square headshot
+     "image" fills the left half of a full-width studio-grey band, its edge faded
+     into the grey, with the text on the right. */}}
+{{- $text := . -}}
+
+{{ with .fullImage }}
+<section class="hero hero--full" style="background-image: linear-gradient(90deg, rgba(11, 27, 51, .92) 0%, rgba(11, 27, 51, .7) 45%, rgba(11, 27, 51, .25) 100%), url({{ . }});">
+    <div class="hero__inner">
+        {{ partial "components/hero-text.html" $text }}
+    </div>
+</section>
+{{ else }}
+<section class="hero hero--photo">
+    <div class="hero__inner">
+        <img class="hero__photo" src="{{ .image }}" alt="{{ .title }}" width="512" height="512" />
+        {{ partial "components/hero-text.html" $text }}
+    </div>
+</section>
+{{ end }}

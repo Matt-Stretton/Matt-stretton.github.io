@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en-NZ">
+
+<head>
+    {{/* Analytics: none yet. Nick's Google Ads tag was removed with the copy;
+         add Matt's own id here when he has one, and nowhere else. */}}
+    <title>{{ block "title" . }}{{ .Site.Title }}{{ end }}</title>
+
+    <!-- meta -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="{{ .Site.Params.description }}">
+    <meta name="keywords" content="{{ .Site.Params.keywords }}">
+
+    <meta name="theme-color" content="#0B1B33">
+
+    <!-- canonical -->
+    <link rel="canonical" href="{{ .Permalink }}" />
+
+    <!-- structured data -->
+    {{ partial "schema.html" . }}
+
+    <!-- Social cards -->
+    <meta property="og:url" content="{{ .Permalink }}" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="{{ .Site.Title }}" />
+    <meta property="og:description" content="{{ .Site.Params.description }}" />
+    <meta property="og:image" content="{{ "/imgs/social.png" | absURL }}" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="{{ .Site.Title }}" />
+    <meta name="twitter:description" content="{{ .Site.Params.description }}" />
+    <meta name="twitter:image" content="{{ "/imgs/social.png" | absURL }}" />
+
+    <!-- fonts: the stylesheet @imports them; these let the browser start the connection early -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <!-- css -->
+    {{ if hugo.IsServer }}
+    {{ $cssOpts := (dict "targetPath" "css/styles.css" "enableSourceMap" true ) }}
+    {{ $styles := resources.Get "scss/styles.scss" | resources.ExecuteAsTemplate "style.styles.css" . | toCSS $cssOpts
+    }}
+    <link rel="stylesheet" href="{{ $styles.RelPermalink }}" media="screen">
+    {{ else }}
+    {{ $cssOpts := (dict "targetPath" "css/styles.css" ) }}
+    {{ $styles := resources.Get "scss/styles.scss" | resources.ExecuteAsTemplate "style.coder.css" . | toCSS $cssOpts |
+    minify | fingerprint }}
+    <link rel="stylesheet" href="{{ $styles.RelPermalink }}" integrity="{{ $styles.Data.Integrity }}"
+        crossorigin="anonymous" media="screen" />
+    {{ end }}
+
+    <link rel="icon" type="image/png" href="{{ "/imgs/favicon-32.png" | absURL }}" sizes="32x32">
+    <link rel="icon" type="image/png" href="{{ "/imgs/favicon-16.png" | absURL }}" sizes="16x16">
+    <link rel="apple-touch-icon" href="{{ "/imgs/apple-touch-icon.png" | absURL }}" sizes="180x180">
+
+    <!-- js framework     -->
+    <script src="//unpkg.com/alpinejs" defer></script>
+
+    <!-- icons -->
+    <link href="https://cdn.lineicons.com/3.0/lineicons.css" rel="stylesheet">
+
+    <!-- animations -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
+
+    <script src="/js/scripts.js"></script>
+</head>
+
+<body>
+    {{- partial "header.html" . -}}
+    <div id="content">
+        {{- block "content" . }}{{- end }}
+    </div>
+    {{- partial "footer.html" . -}}
+</body>
+
+</html>

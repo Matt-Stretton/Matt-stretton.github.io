@@ -1,0 +1,22 @@
+{{- if .IsHome -}}
+{{- /* Physician JSON-LD. Only what is on the page and known: name, URL and the
+       services Matt listed. Telephone, email, address and opening hours are left
+       out until they are known; add them from config.toml then, not by hand. */ -}}
+{{- $services := slice -}}
+{{- range hugo.Data.services -}}
+  {{- range .items -}}
+    {{- $services = $services | append (dict "@type" "MedicalProcedure" "name" .) -}}
+  {{- end -}}
+{{- end -}}
+{{- $ld := dict
+    "@context" "https://schema.org"
+    "@type" "Physician"
+    "name" "Dr Matt Stretton"
+    "url" site.BaseURL
+    "availableService" $services
+-}}
+{{- with site.Params.phone }}{{ $ld = merge $ld (dict "telephone" .) }}{{ end -}}
+{{- with site.Params.email }}{{ $ld = merge $ld (dict "email" .) }}{{ end -}}
+{{- with site.Params.maps_url }}{{ $ld = merge $ld (dict "hasMap" .) }}{{ end -}}
+<script type="application/ld+json">{{ $ld | jsonify | safeJS }}</script>
+{{- end -}}

@@ -1,0 +1,13 @@
+{{/* Head and Neck: a head and neck in profile, one white line on a gold disc, running off
+     the bottom edge. The disc colour is a class set in components/_sections.scss. */}}
+<svg class="disc-icon" viewBox="0 0 120 120" width="120" height="120" aria-hidden="true" focusable="false">
+    <clipPath id="disc-neck"><circle cx="60" cy="60" r="60"/></clipPath>
+    <circle class="disc" cx="60" cy="60" r="60"/>
+    {{/* The clip sits on an unscaled group: on the scaled one it would be scaled too. */}}
+    <g clip-path="url(#disc-neck)">
+        <g class="line line--scaled" transform="translate(6 10) scale(1.85)">
+            <path d="M24 5 C36 3 45 11 45 21 C45 23.5 44.5 25 44 26.5 L48 32 L44 33.5 C45.5 35.5 45.5 37 43.5 38.5 C45 41 42.5 43.5 39 43.5 C37.5 46 37 50 37.5 55 C40.5 58 46 59 52 61"/>
+            <path d="M24 5 C14 7 9 17 12 27 C13 31 16 34 20 36 C22 38 23 42 22.5 47 C22 52 18 56 8 61"/>
+        </g>
+    </g>
+</svg>

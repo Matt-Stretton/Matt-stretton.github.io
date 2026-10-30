@@ -1,0 +1,57 @@
+{{/* The home page. Everything in [square brackets] is a placeholder waiting on
+     Matt; see CLAUDE.md, "Not done yet". */}}
+{{ partial "components/hero" (dict
+    "title" "Dr Matt Stretton"
+    "credentials" "[MBChB FRACS]"
+    "role" "[Otolaryngologist, Head and Neck Surgeon]"
+    "image" "/imgs/matt-stretton.webp"
+    "fullImage" "") }}
+
+<section class="marquee" aria-label="Affiliations">
+    <div class="marquee__track">
+        {{ partial "marquee-logos.html" (dict "copy" false) }}
+        {{ partial "marquee-logos.html" (dict "copy" true) }}
+    </div>
+</section>
+
+<section class="about bg-cream" id="about">
+    <div class="container">
+        <header class="section-head">
+            <h2>About</h2>
+            <span class="rule" aria-hidden="true"></span>
+        </header>
+        <div class="about__cols">
+            <div>
+                <p class="placeholder">[Bio to come from Matt: training, fellowships, hospital appointments, affiliations]</p>
+                <p class="placeholder">[Bio to come from Matt: where he trained, and the qualifications behind the letters after his name]</p>
+            </div>
+            <div>
+                <p class="placeholder">[Bio to come from Matt: current hospital and private appointments, and areas of particular interest]</p>
+                <p class="placeholder">[Bio to come from Matt: which insurers he is an affiliated provider for, and ACC]</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="services" id="services">
+    <div class="container">
+        <header class="section-head section-head--center">
+            <p class="eyebrow">What I treat</p>
+            <h2>Services</h2>
+            <span class="rule" aria-hidden="true"></span>
+            <p class="section-head__intro placeholder">[Intro to come from Matt: one sentence on how he assesses and treats]</p>
+        </header>
+
+        <div class="service-grid">
+            {{ range hugo.Data.services }}
+            <article class="service">
+                <div class="service__icon">{{ partial (printf "icons/%s.html" .icon) . }}</div>
+                <h3>{{ .title }}</h3>
+                <ul>
+                    {{ range .items }}<li>{{ . }}</li>{{ end }}
+                </ul>
+            </article>
+            {{ end }}
+        </div>
+    </div>
+</section>

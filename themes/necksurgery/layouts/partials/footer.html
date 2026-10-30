@@ -1,0 +1,98 @@
+{{- $p := .Site.Params -}}
+<footer class="site-footer" id="contact">
+    <div class="container">
+        <header class="section-head">
+            <h2>Contact</h2>
+            <span class="rule" aria-hidden="true"></span>
+        </header>
+
+        <div class="contact">
+            <div class="contact__details">
+                {{/* Placeholders until Matt's details are known. Phone and email come
+                     from config.toml (params.phone, phone_display, email) once set. */}}
+                <dl>
+                    <div>
+                        <dt>Hours</dt>
+                        <dd class="placeholder">[Clinic hours]</dd>
+                    </div>
+                    <div>
+                        <dt>Phone</dt>
+                        <dd>{{ with $p.phone }}<a href="tel:{{ . }}">{{ $p.phone_display | default . }}</a>{{ else }}<span class="placeholder">[Phone number]</span>{{ end }}</dd>
+                    </div>
+                    <div>
+                        <dt>Email</dt>
+                        <dd>{{ with $p.email }}<a href="mailto:{{ . }}">{{ . }}</a>{{ else }}<span class="placeholder">[Email address]</span>{{ end }}</dd>
+                    </div>
+                    <div>
+                        <dt>Address</dt>
+                        <dd class="contact__address">
+                            <address class="placeholder">[Clinic name]<br />[Street address]<br />[Suburb, city]</address>
+                            {{/* params.maps_url is the Google Maps link; until it is set the
+                                 button is there to see but goes nowhere. */}}
+                            <a class="btn-map" href="{{ $p.maps_url | default "#" }}"{{ if $p.maps_url }} target="_blank" rel="noopener"{{ else }} data-todo="Google Maps link goes in config.toml params.maps_url"{{ end }}>
+                                <i class="lni lni-map-marker" aria-hidden="true"></i>Directions
+                            </a>
+                        </dd>
+                    </div>
+                </dl>
+            </div>
+
+            <div class="contact__form">
+                <h3>Appointment enquiry</h3>
+
+                <form id="contact_form" method="post" action="#" data-todo="Matt's own Static Contact endpoint goes here">
+                    <input type="hidden" name="b0tbu5t3r" value="true" />
+                    <div class="form-grid">
+                        <div>
+                            <label for="cf_first_name">First name *</label>
+                            <input id="cf_first_name" class="text_input" name="first_name" type="text" value="" autocomplete="given-name" required />
+                        </div>
+                        <div>
+                            <label for="cf_last_name">Last name *</label>
+                            <input id="cf_last_name" class="text_input" type="text" name="last_name" value="" autocomplete="family-name" required />
+                        </div>
+                        <div>
+                            <label for="cf_email">Email *</label>
+                            <input id="cf_email" class="text_input" type="text" name="email" value="" autocomplete="email"
+                                pattern="[^@\s]+@[^@\s]+\.[^@\s]+" required />
+                        </div>
+                        <div>
+                            <label for="cf_phone">Phone number</label>
+                            <input id="cf_phone" class="text_input" name="phone_number" type="text" value="" autocomplete="tel" />
+                        </div>
+                    </div>
+
+                    <label for="cf_message">Message</label>
+                    <textarea id="cf_message" name="message" rows="5"></textarea>
+
+                    <button class="btn btn--maroon g-recaptcha" data-sitekey="" data-callback='onSubmit'
+                        data-action='submit'>Send enquiry <i class="lni lni-arrow-right" aria-hidden="true"></i></button>
+                    <script src="https://www.google.com/recaptcha/api.js"></script>
+                    <script>
+                        function onSubmit(token) {
+                            var form = document.getElementById("contact_form");
+                            if (form.checkValidity()) {
+                                form.submit();
+                            } else {
+                                grecaptcha.reset();
+                                form.reportValidity();
+                            }
+                        }
+                    </script>
+
+                    <p class="recaptcha-note">
+                        This site is protected by reCAPTCHA and the Google
+                        <a href="https://policies.google.com/privacy">Privacy Policy</a> and
+                        <a href="https://policies.google.com/terms">Terms of Service</a> apply.
+                    </p>
+                </form>
+            </div>
+        </div>
+    </div>
+</footer>
+<div class="footer-bar">
+    <div class="footer-bar__inner">
+        <a href="/privacy-policy/">Privacy policy</a>
+        <span>&copy; {{ now.Format "2006" }} {{ $p.legal_title }}. All rights reserved.</span>
+    </div>
+</div>

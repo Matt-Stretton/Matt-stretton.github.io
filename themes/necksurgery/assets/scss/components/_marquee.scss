@@ -1,0 +1,146 @@
+// The affiliation logo band under the hero (home.html + partials/marquee-logos.html).
+// The set is rendered twice in one track; moving the track by -50% brings the
+// second set exactly where the first began, so the loop has no seam.
+$marquee-gap: 88px;
+
+.marquee {
+    background: $navy;
+    border-top: 1px solid rgba($gold, .35);
+    border-bottom: 1px solid rgba($gold, .35);
+    overflow: hidden;
+    padding: 30px 0;
+    position: relative;
+
+    // soft fade into the navy at both edges
+    &::before,
+    &::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 8%;
+        z-index: 2;
+        pointer-events: none;
+    }
+
+    &::before {
+        left: 0;
+        background: linear-gradient(90deg, $navy, rgba($navy, 0));
+    }
+
+    &::after {
+        right: 0;
+        background: linear-gradient(270deg, $navy, rgba($navy, 0));
+    }
+
+    &__track {
+        display: flex;
+        width: max-content;
+        animation: marquee 60s linear infinite;
+
+        &:hover,
+        &:focus-within {
+            animation-play-state: paused;
+        }
+    }
+
+    &__set {
+        display: flex;
+        align-items: center;
+        gap: $marquee-gap;
+        padding-right: $marquee-gap;
+        list-style: none;
+        margin: 0;
+
+        li {
+            margin: 0;
+            flex: none;
+        }
+
+        a {
+            display: flex;
+            align-items: center;
+            height: 52px;
+            opacity: .85;
+            transition: opacity .2s ease;
+
+            &:hover,
+            &:focus-visible {
+                opacity: 1;
+            }
+        }
+    }
+
+    // Every logo is shown as a white silhouette at a height chosen so their
+    // capitals read at about the same size. The filter turns any opaque pixel
+    // white, whatever colour (or no colour) the file gives it.
+    .logo {
+        display: block;
+        width: auto;
+        filter: brightness(0) invert(1);
+
+        &--racs { height: 42px; }
+        &--anzhncs { height: 50px; }
+        &--southern-cross { height: 30px; }
+
+        &--nib {
+            height: 30px;
+            width: 57px;
+            filter: none;
+            color: $white;
+        }
+
+        // ACC is a square JPEG, white letters on blue. Crop to the letters
+        // (they span 135-749 x 290-596 of 900px), then turn the blue black and
+        // let screen blending drop the black into the navy.
+        &--acc {
+            position: relative;
+            overflow: hidden;
+            height: 30px;
+            width: 60px; // 30 * 614 / 306
+            filter: none;
+            background: $navy; // the backdrop the screen blend below works against
+
+            img {
+                position: absolute;
+                width: 88.2px; // 30 * 900 / 306
+                height: 88.2px;
+                max-width: none;
+                left: -13.2px; // 135 / 900 * 88.2
+                top: -28.4px; // 290 / 900 * 88.2
+                filter: grayscale(1) contrast(6);
+                mix-blend-mode: screen;
+            }
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        &::before,
+        &::after {
+            display: none;
+        }
+
+        &__track {
+            animation: none;
+            width: auto;
+            justify-content: center;
+        }
+
+        &__set {
+            flex-wrap: wrap;
+            justify-content: center;
+            row-gap: var(--spacing-3);
+            padding: 0 var(--spacing-2);
+            gap: var(--spacing-3) var(--spacing-6);
+
+            &[aria-hidden="true"] {
+                display: none;
+            }
+        }
+    }
+}
+
+@keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+}

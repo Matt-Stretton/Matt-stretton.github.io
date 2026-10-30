@@ -1,0 +1,217 @@
+// Home page sections (partials/home.html) and the shared section heading.
+
+.section-head {
+    margin-bottom: var(--spacing-5);
+
+    h2 {
+        text-transform: uppercase;
+        letter-spacing: .06em;
+        color: $navy;
+        margin-bottom: var(--spacing-2);
+    }
+
+    .rule {
+        margin-bottom: 0;
+    }
+
+    &--center {
+        text-align: center;
+
+        .rule {
+            margin-left: auto;
+            margin-right: auto;
+        }
+    }
+
+    &__intro {
+        max-width: 640px;
+        margin: var(--spacing-3) auto 0;
+    }
+}
+
+// small-caps label above a heading
+.eyebrow {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: $gold;
+    margin-bottom: var(--spacing-1);
+}
+
+// Text waiting on Matt. Visible on purpose, so nobody mistakes it for copy.
+.placeholder {
+    color: #6B6457;
+    font-style: italic;
+}
+
+.btn--maroon {
+    background: $maroon;
+    color: $white;
+    font-weight: 600;
+    font-size: 15px;
+    letter-spacing: .06em;
+    padding: 14px 28px;
+
+    i {
+        margin-left: 6px;
+        vertical-align: -1px;
+    }
+
+    &:hover {
+        background: $maroon-dark;
+    }
+
+    @include for-phone-only {
+        display: inline-block;
+    }
+}
+
+// about ----------------------------------------------------------------------
+.about {
+    .container {
+        padding-top: var(--spacing-10);
+        padding-bottom: var(--spacing-10);
+
+        @include for-phone-only {
+            padding-top: var(--spacing-7);
+            padding-bottom: var(--spacing-7);
+        }
+    }
+
+    &__cols {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 0 var(--spacing-6);
+
+        @include for-tablet-portrait-up {
+            grid-template-columns: 1fr 1fr;
+        }
+    }
+}
+
+// services -------------------------------------------------------------------
+.services {
+    background: $white;
+
+    .container {
+        padding-top: var(--spacing-10);
+        padding-bottom: var(--spacing-10);
+
+        @include for-phone-only {
+            padding-top: var(--spacing-7);
+            padding-bottom: var(--spacing-7);
+        }
+    }
+}
+
+.service-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--spacing-3);
+
+    @include for-tablet-portrait-up {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    @include for-tablet-landscape-up {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 24px;
+    }
+}
+
+.service {
+    margin: 0; // base.scss gives every <article> a bottom margin
+    background: $cream;
+    border: 1px solid $cream-line;
+    border-top: 3px solid $navy;
+    padding: var(--spacing-4) 26px var(--spacing-3);
+    text-align: center;
+
+    &__icon {
+        width: 120px;
+        height: 120px;
+        margin: 0 auto var(--spacing-3);
+    }
+
+    h3 {
+        color: $navy;
+        font-size: 23px;
+        line-height: 1.2;
+        min-height: 2.4em; // one- and two-line titles keep the lists level
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: var(--spacing-2);
+        padding-bottom: var(--spacing-2);
+        border-bottom: 1px solid $cream-line;
+    }
+
+    ul {
+        list-style: none;
+        text-align: left;
+        margin: 0;
+        font-size: 15px;
+        line-height: 1.5;
+
+        li {
+            position: relative;
+            margin: 0 0 10px;
+            padding-left: 18px;
+
+            &::before {
+                content: "";
+                position: absolute;
+                left: 0;
+                top: .6em;
+                width: 6px;
+                height: 6px;
+                border-radius: 50%;
+                background: $gold;
+            }
+        }
+    }
+}
+
+// the service icons (partials/icons/*.html): one bold white line on a solid gold
+// disc. The disc is part of the SVG.
+.disc-icon {
+    display: block;
+    width: 100%;
+    height: 100%;
+
+    .disc { fill: $gold; }
+
+    .line {
+        fill: none;
+        stroke: $white;
+        stroke-width: 4.4;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+
+        // groups drawn in a 64-unit box and scaled up ~1.8x: thinner here, same on screen
+        &.line--scaled {
+            stroke-width: 2.4;
+        }
+    }
+
+    .dot { fill: $white; }
+}
+
+// privacy policy and thank-you pages
+.legal {
+    h1 {
+        color: $navy;
+        font-size: 48px;
+        text-transform: uppercase;
+        letter-spacing: .04em;
+
+        @include for-phone-only {
+            font-size: 34px;
+        }
+    }
+
+    ol li {
+        margin-bottom: 14px;
+    }
+}

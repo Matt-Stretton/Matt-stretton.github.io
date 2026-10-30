@@ -1,0 +1,153 @@
+// The home page hero (partials/components/hero.html): ~80vh, under the fixed
+// header. Two layouts: photo (headshot left on studio grey) and full (cover photo).
+.hero {
+    position: relative;
+    background: $navy;
+    color: $white;
+    padding-top: $header-height;
+
+    @include for-phone-only {
+        padding-top: $header-height-phone;
+    }
+
+    &__inner {
+        max-width: $max-width;
+        margin: 0 auto;
+        // ~80% of the viewport, but never taller than the content needs on a
+        // very tall window, nor squashed on a short one
+        min-height: 560px;
+        min-height: unquote("clamp(560px, calc(80vh - #{$header-height}), 760px)");
+        display: grid;
+        align-items: center;
+    }
+
+    &__text {
+        padding: var(--spacing-6) var(--spacing-2);
+    }
+
+    &__title {
+        font-size: 64px;
+        font-weight: 700;
+        line-height: 1.02;
+        letter-spacing: .03em;
+        text-transform: uppercase;
+        margin-bottom: var(--spacing-2);
+        color: $white;
+
+        @include for-tablet-portrait-only {
+            font-size: 48px;
+        }
+
+        @include for-phone-only {
+            font-size: 38px;
+        }
+    }
+
+    &__credentials {
+        font-size: 14px;
+        font-weight: 500;
+        letter-spacing: .16em;
+        text-transform: uppercase;
+        color: rgba($white, .75);
+        margin-bottom: var(--spacing-1);
+    }
+
+    &__role {
+        font-family: $font-title;
+        font-weight: 600;
+        font-size: 22px;
+        line-height: 1.35;
+        color: $white;
+        margin-bottom: 0;
+    }
+
+    .rule {
+        margin: var(--spacing-3) 0;
+    }
+
+    &__cta {
+        margin: 0;
+    }
+
+    // photo: the whole band is the headshot's studio grey; the square photo
+    // fills the left half, cropped to it (the face is centred in the photo, so
+    // the sides can go) and faded into the grey along its right edge. Text on
+    // the right. On phones the photo sits on top, faded at the bottom, text under.
+    &--photo {
+        background: $studio;
+
+        .hero__inner {
+            position: relative;
+            grid-template-columns: 1fr;
+
+            @include for-tablet-portrait-up {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .hero__photo {
+            display: block;
+            width: 100%;
+            height: 360px;
+            object-fit: cover;
+            object-position: center top;
+            mask-image: linear-gradient(to bottom, #000 70%, transparent 100%);
+            -webkit-mask-image: linear-gradient(to bottom, #000 70%, transparent 100%);
+
+            @include for-tablet-portrait-up {
+                position: absolute;
+                top: 0;
+                left: 0;
+                bottom: 0;
+                width: 50%;
+                height: 100%;
+                // the photo's backdrop is not quite flat, so every edge but the
+                // bottom is faded into the band: a long fade on the right, short
+                // ones on the left and top
+                $fade-right: linear-gradient(to right, #000 55%, transparent 100%);
+                $fade-left: linear-gradient(to right, transparent 0, #000 14%);
+                $fade-top: linear-gradient(to bottom, transparent 0, #000 18%);
+                mask-image: $fade-right, $fade-left, $fade-top;
+                mask-composite: intersect;
+                -webkit-mask-image: $fade-right, $fade-left, $fade-top;
+                -webkit-mask-composite: source-in;
+            }
+        }
+
+        .hero__text {
+            @include for-tablet-portrait-up {
+                grid-column: 2;
+                padding-left: var(--spacing-4);
+            }
+
+            @include for-phone-only {
+                text-align: center;
+                padding-top: 0;
+
+                .rule {
+                    margin-left: auto;
+                    margin-right: auto;
+                }
+            }
+        }
+    }
+
+    // full: a landscape photo as the background, navy gradient over it
+    &--full {
+        background-color: $navy;
+        background-size: cover;
+        background-position: center;
+
+        .hero__text {
+            max-width: 640px;
+        }
+    }
+}
+
+// A short gold rule under headings and in the hero.
+.rule {
+    display: block;
+    width: 64px;
+    height: 2px;
+    background: $gold;
+}
