@@ -119,11 +119,12 @@ themes/necksurgery/       the theme, tracked here, not a submodule
                           role, one-line subtitle, gold button; a designed navy background, or the
                           fullImage photo under a navy overlay
     marquee-logos.html    one set of affiliation logos; home.html renders it twice to loop
-    icons/*.html          the four service icons (neck, thyroid, nose, child): one white line
-                          on a solid gold disc; classes in
-                          components/_sections.scss (.disc-icon). Earlier drafts are kept in
-                          .doncheckin/icons-v1/ (line), v2/ (outline + maroon organ) and v3/ (flat
-                          figures).
+    icons/*.html          the four service icons (neck, thyroid, nose, child): a gold line
+                          drawing in two weights (thick outline, thin detail) inside the
+                          monogram's double diamond; classes in components/_sections.scss
+                          (.diamond-icon). Earlier drafts are kept in .doncheckin/icons-v1/
+                          (line), v2/ (outline + maroon organ) and v3/ (flat figures); the white
+                          line on a gold disc is in git at c4fc35e.
     footer.html           the Contact section (details + enquiry form) and the footer bar
     schema.html           JSON-LD (Physician), home page only, built from data/services.yaml
   layouts/robots.txt      robots.txt (enableRobotsTXT = true)

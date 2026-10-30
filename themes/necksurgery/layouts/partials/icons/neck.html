@@ -1,13 +1,19 @@
-{{/* Head and Neck: a head and neck in profile, one white line on a gold disc, running off
-     the bottom edge. The disc colour is a class set in components/_sections.scss. */}}
-<svg class="disc-icon" viewBox="0 0 120 120" width="120" height="120" aria-hidden="true" focusable="false">
-    <clipPath id="disc-neck"><circle cx="60" cy="60" r="60"/></clipPath>
-    <circle class="disc" cx="60" cy="60" r="60"/>
-    {{/* The clip sits on an unscaled group: on the scaled one it would be scaled too. */}}
-    <g clip-path="url(#disc-neck)">
-        <g class="line line--scaled" transform="translate(6 10) scale(1.85)">
-            <path d="M24 5 C36 3 45 11 45 21 C45 23.5 44.5 25 44 26.5 L48 32 L44 33.5 C45.5 35.5 45.5 37 43.5 38.5 C45 41 42.5 43.5 39 43.5 C37.5 46 37 50 37.5 55 C40.5 58 46 59 52 61"/>
-            <path d="M24 5 C14 7 9 17 12 27 C13 31 16 34 20 36 C22 38 23 42 22.5 47 C22 52 18 56 8 61"/>
+{{/* Head and Neck: a head and neck in profile, running out through the bottom of the
+     inner diamond, which clips it.
+     Thick line for the outline, thin for the detail, on the gold double diamond of the
+     monogram (partials/mark.html); classes in components/_sections.scss (.diamond-icon).
+     The drawing sits inside the inner diamond, in the 120 box's own coordinates. */}}
+<svg class="diamond-icon" viewBox="0 0 120 120" width="120" height="120" aria-hidden="true" focusable="false">
+    <clipPath id="diamond-neck"><path d="M60 14 L106 60 L60 106 L14 60 Z"/></clipPath>
+    <path class="diamond" d="M60 3 L117 60 L60 117 L3 60 Z"/>
+    <path class="diamond diamond--inner" d="M60 14 L106 60 L60 106 L14 60 Z"/>
+    <g clip-path="url(#diamond-neck)">
+        <g class="line">
+            <path d="M55.2 30 C69.6 27.6 80.4 37.2 80.4 49.2 C80.4 52.2 79.8 54 79.2 55.8 L84 62.4 L79.2 64.2 C81 66.6 81 68.4 78.6 70.2 C80.4 73.2 77.4 76.2 73.2 76.2 C71.4 79.2 70.8 84 71.4 90 C75 93.6 81.6 94.8 88.8 97.2"/>
+            <path d="M55.2 30 C43.2 32.4 37.2 44.4 40.8 56.4 C42 61.2 45.6 64.8 50.4 67.2 C52.8 69.6 54 74.4 53.4 80.4 C52.8 86.4 48 91.2 36 97.2"/>
+        </g>
+        <g class="line line--thin">
+            <path d="M57 48 C62.4 46.2 65.4 51.6 63 55.8 C61.8 58.2 59.4 58.8 58.8 61.2"/>
         </g>
     </g>
 </svg>

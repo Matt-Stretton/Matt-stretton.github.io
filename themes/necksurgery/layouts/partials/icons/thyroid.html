@@ -1,15 +1,19 @@
-{{/* Thyroid and parathyroid: the butterfly thyroid on the windpipe, parathyroids as dots,
-     one white line on a gold disc. */}}
-<svg class="disc-icon" viewBox="0 0 120 120" width="120" height="120" aria-hidden="true" focusable="false">
-    <circle class="disc" cx="60" cy="60" r="60"/>
-    <g class="line line--scaled" transform="translate(5.6 7) scale(1.7)">
-        <path d="M26 7 L28.5 14 H35.5 L38 7"/>
-        <path d="M28.5 14 V58 M35.5 14 V58"/>
-        <path d="M28.5 21 H35.5 M28.5 50 H35.5"/>
-        <path d="M28.5 28 C24 20 12 19 11 30 C10 41 15 50 22 50 C27 50 28.5 46 28.5 41 H35.5 C35.5 46 37 50 42 50 C49 50 54 41 53 30 C52 19 40 20 35.5 28 V36 H28.5 Z"/>
+{{/* Thyroid and parathyroid: the butterfly thyroid on the windpipe, parathyroids as dots.
+     Thick line for the outline, thin for the detail, on the gold double diamond of the
+     monogram (partials/mark.html); classes in components/_sections.scss (.diamond-icon).
+     The drawing sits inside the inner diamond, in the 120 box's own coordinates. */}}
+<svg class="diamond-icon" viewBox="0 0 120 120" width="120" height="120" aria-hidden="true" focusable="false">
+    <path class="diamond" d="M60 3 L117 60 L60 117 L3 60 Z"/>
+    <path class="diamond diamond--inner" d="M60 14 L106 60 L60 106 L14 60 Z"/>
+    <g class="line">
+        <path d="M56 55.4 C50.8 46.2 37 45 35.8 57.7 C34.7 70.3 40.5 80.7 48.5 80.7 C54.2 80.7 56 76.1 56 70.3 H64 C64 76.1 65.8 80.7 71.5 80.7 C79.5 80.7 85.3 70.3 84.1 57.7 C83 45 69.2 46.2 64 55.4 V64.6 H56 Z"/>
     </g>
-    <g class="dot" transform="translate(5.6 7) scale(1.7)">
-        <circle cx="17.5" cy="31" r="1.9"/><circle cx="19" cy="42.5" r="1.9"/>
-        <circle cx="46.5" cy="31" r="1.9"/><circle cx="45" cy="42.5" r="1.9"/>
+    <g class="line line--thin">
+        <path d="M56 39.3 V89.9 M64 39.3 V89.9"/>
+        <path d="M53.1 31.2 L56 39.3 H64 L66.9 31.2"/>
+        <path d="M56 45 H64 M56 50.2 H64 M56 80.7 H64 M56 85.9 H64"/>
+    </g>
+    <g class="dot">
+        <circle cx="43.3" cy="58.8" r="2.2"/><circle cx="45" cy="72.1" r="2.2"/><circle cx="76.7" cy="58.8" r="2.2"/><circle cx="74.9" cy="72.1" r="2.2"/>
     </g>
 </svg>

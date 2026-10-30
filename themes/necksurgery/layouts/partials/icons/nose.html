@@ -1,11 +1,17 @@
-{{/* Nose and Throat: a nose seen from the front, one white line on a gold disc. */}}
-<svg class="disc-icon" viewBox="0 0 120 120" width="120" height="120" aria-hidden="true" focusable="false">
-    <circle class="disc" cx="60" cy="60" r="60"/>
-    <g class="line line--scaled" transform="translate(2.4 8) scale(1.8)">
-        <path d="M27 6 C27 19 25 28 21 36"/>
-        <path d="M37 6 C37 19 39 28 43 36"/>
-        <path d="M21 36 C15 40 16 50 23 49.5 C25 53 29 54 32 51.5 C35 54 39 53 41 49.5 C48 50 49 40 43 36"/>
-        <path d="M25.5 46.5 C27 44.5 30 45 30 48"/>
-        <path d="M38.5 46.5 C37 44.5 34 45 34 48"/>
+{{/* Nose and Throat: a nose seen from the front.
+     Thick line for the outline, thin for the detail, on the gold double diamond of the
+     monogram (partials/mark.html); classes in components/_sections.scss (.diamond-icon).
+     The drawing sits inside the inner diamond, in the 120 box's own coordinates. */}}
+<svg class="diamond-icon" viewBox="0 0 120 120" width="120" height="120" aria-hidden="true" focusable="false">
+    <path class="diamond" d="M60 3 L117 60 L60 117 L3 60 Z"/>
+    <path class="diamond diamond--inner" d="M60 14 L106 60 L60 106 L14 60 Z"/>
+    <g class="line">
+        <path d="M46.2 67.5 C38.8 72.5 40 85 48.8 84.4 C51.2 88.8 56.2 90 60 86.9 C63.8 90 68.8 88.8 71.2 84.4 C80 85 81.2 72.5 73.8 67.5"/>
+    </g>
+    <g class="line line--thin">
+        <path d="M53.8 30 C53.8 46.2 51.2 57.5 46.2 67.5"/>
+        <path d="M66.2 30 C66.2 46.2 68.8 57.5 73.8 67.5"/>
+        <path d="M51.9 80.6 C53.8 78.1 57.5 78.8 57.5 82.5"/>
+        <path d="M68.1 80.6 C66.2 78.1 62.5 78.8 62.5 82.5"/>
     </g>
 </svg>

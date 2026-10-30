@@ -222,9 +222,11 @@
     padding: var(--spacing-5) 28px var(--spacing-4);
     text-align: center;
 
+    // a square box for the diamond, at the SVG's own 120 units so its line weights land on
+    // whole pixels (see .diamond-icon)
     &__icon {
-        width: 96px;
-        height: 96px;
+        width: 120px;
+        height: 120px;
         margin: 0 auto var(--spacing-3);
     }
 
@@ -273,29 +275,45 @@
     }
 }
 
-// the service icons (partials/icons/*.html): one bold white line on a solid gold
-// disc. The disc is part of the SVG.
-.disc-icon {
+// the service icons (partials/icons/*.html): the monogram's language (partials/mark.html,
+// components/_header.scss .mark) carried onto the tiles: a gold diamond outline with a thinner,
+// fainter diamond inset inside it, and a gold line drawing in two weights, the heavy one for the
+// outline of the subject and the light one for its detail. The diamonds and the drawing share the
+// same two weights so the pairing reads as one system. Every drawing is in the 120 box's own
+// coordinates (no scaled groups), so these widths are the same in every icon; .service__icon
+// shows the box at 120px, so one unit is one CSS pixel.
+$icon-thick: 3;
+$icon-thin: 1.5;
+
+.diamond-icon {
     display: block;
     width: 100%;
     height: 100%;
 
-    .disc { fill: $gold; }
-
+    .diamond,
     .line {
         fill: none;
-        stroke: $white;
-        stroke-width: 4.4;
-        stroke-linecap: round;
-        stroke-linejoin: round;
+        stroke: $gold;
+        stroke-width: $icon-thick;
+    }
 
-        // groups drawn in a 64-unit box and scaled up ~1.8x: thinner here, same on screen
-        &.line--scaled {
-            stroke-width: 2.4;
+    .diamond {
+        stroke-linejoin: miter;
+
+        &--inner {
+            stroke-width: $icon-thin;
+            opacity: .55;
         }
     }
 
-    .dot { fill: $white; }
+    .line {
+        stroke-linecap: round;
+        stroke-linejoin: round;
+
+        &--thin { stroke-width: $icon-thin; }
+    }
+
+    .dot { fill: $gold; }
 }
 
 // privacy policy and thank-you pages

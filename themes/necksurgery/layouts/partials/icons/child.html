@@ -1,14 +1,20 @@
-{{/* Paediatrics: a child's face, one white line on a gold disc. */}}
-<svg class="disc-icon" viewBox="0 0 120 120" width="120" height="120" aria-hidden="true" focusable="false">
-    <circle class="disc" cx="60" cy="60" r="60"/>
+{{/* Paediatrics: a child's face.
+     Thick line for the outline, thin for the detail, on the gold double diamond of the
+     monogram (partials/mark.html); classes in components/_sections.scss (.diamond-icon).
+     The drawing sits inside the inner diamond, in the 120 box's own coordinates. */}}
+<svg class="diamond-icon" viewBox="0 0 120 120" width="120" height="120" aria-hidden="true" focusable="false">
+    <path class="diamond" d="M60 3 L117 60 L60 117 L3 60 Z"/>
+    <path class="diamond diamond--inner" d="M60 14 L106 60 L60 106 L14 60 Z"/>
     <g class="line">
-        <circle cx="60" cy="62" r="29"/>
-        <path d="M31.5 55 C23 54 23 70 32 69"/>
-        <path d="M88.5 55 C97 54 97 70 88 69"/>
-        <path d="M55 34 C56 24 68 25 65 34"/>
-        <path d="M48 72 Q60 83 72 72"/>
+        <circle cx="60" cy="60" r="25.5"/>
+    </g>
+    <g class="line line--thin">
+        <path d="M34.9 53.8 C27.4 52.9 27.4 67 35.4 66.1"/>
+        <path d="M85.1 53.8 C92.6 52.9 92.6 67 84.6 66.1"/>
+        <path d="M55.6 35.3 C56.5 26.5 67 27.4 64.4 35.3"/>
+        <path d="M49.4 68.8 Q60 78.4 70.6 68.8"/>
     </g>
     <g class="dot">
-        <circle cx="49" cy="58" r="3.2"/><circle cx="71" cy="58" r="3.2"/>
+        <circle cx="50.3" cy="56.4" r="2.8"/><circle cx="69.7" cy="56.4" r="2.8"/>
     </g>
 </svg>
