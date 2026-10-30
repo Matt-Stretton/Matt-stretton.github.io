@@ -10,12 +10,15 @@ Dr Matt Stretton's site, to be served at **aklent.co.nz**, as a **first draft**.
 of the necksurgery.co.nz site (Dr Nick Lilic's practice) taken on 2026-10-29 from
 `sfe/necksurgery.co.nz/nicklilic.github.io/`, without that repository's git history or its
 `.github/` deploy workflow. The design, copy structure, images and identity have since been
-replaced with Matt's (2026-10-29): navy, maroon and gold, Fraunces headings and Inter body text, a
-full-width hero with his headshot on studio grey, a moving band of affiliation logos, About, four service tiles with
-line icons, and a navy contact section. **Much of the copy is still bracketed placeholders**, and
+replaced with Matt's (2026-10-29), and on 2026-10-30 redesigned after a reference Paul supplied
+(branch `design-v2`; see "Branches"): a full-height navy hero with the "MS" monogram, his name in
+large tracked capitals (the second line gold) and a gold button; a sticky nav bar under it; About
+on navy with the headshot on studio grey running to the right edge; a moving band of affiliation
+logos; four service tiles on a cream band; and a navy contact section. Jost headings, Inter body
+text, navy, gold and maroon. **Much of the copy is still bracketed placeholders**, and
 the privacy policy is still the old practice's text with the names taken out: see "Not done yet".
 
-It is a local git repository (`main`) with **no remote and no commits**. Within SFE it sits at
+It is a local git repository with **no remote**. See "Branches" for what is on which. Within SFE it sits at
 `sfe/matt-stretton.github.io/`, untracked by SFE like every product. The folder name suggests a
 GitHub Pages user site; nothing has been created on GitHub.
 
@@ -27,6 +30,13 @@ is no analytics tag.
 `.doncheckin/` (gitignored) holds what the client sent: the headshot original, his reference
 screenshot of the icon style, and two files from another surgeon's site (`ZM-logo_65px.png`,
 `apple-touch-icon.png`) that are reference only and must not be used.
+
+## Branches
+
+- **`main`** (commit `df6937c`, also branch and tag `design-v1`): the first draft's design. Kept
+  as the backup of that design; do not commit the redesign onto it.
+- **`design-v2`**: the redesign after Paul's reference (hero, sticky nav, dark/cream rhythm). Not
+  merged into `main`.
 
 ## Where it runs, and the commands
 
@@ -94,14 +104,20 @@ static/imgs/
   social.png              1200x630 OG/Twitter card; favicon-32.png, favicon-16.png,
                           apple-touch-icon.png (gold "MS" on navy). All four generated with PIL.
 themes/necksurgery/       the theme, tracked here, not a submodule
-  layouts/_default/baseof.html   every page's <head>: meta, canonical, OG/Twitter, favicons, CSS
-  layouts/index.html + partials/home.html   the home page: hero, marquee, About, Services
+  layouts/_default/baseof.html   every page's <head>: meta, canonical, OG/Twitter, favicons, CSS;
+                          in <body>, a "hero" block (filled only by the home page), then the nav
+  layouts/index.html      the home page: the hero's words and fullImage (the "hero" block), then
+                          partials/home.html
   layouts/partials/
-    header.html           fixed navy bar, nav, phone link, Alpine burger for phones
-    wordmark.html         the "Dr Matt Stretton" wordmark: swap this one file for the logo
-    components/hero.html  the hero: headshot left on studio grey (#22262b, extended across the
-                          band, photo edges faded into it) or, given fullImage, a cover photo + gradient
-    components/hero-text.html   the hero's name, credentials, role, rule and button
+    home.html             below the hero: About, the marquee, Services
+    header.html           the sticky navy nav bar: monogram + wordmark, links, phone link, maroon
+                          Enquire button, Alpine burger for phones
+    mark.html             the gold "MS" diamond monogram (hero top and nav): swap this one file
+                          for the logo
+    wordmark.html         the "Dr Matt Stretton" text beside the monogram in the nav
+    components/hero.html  the full-height centred hero: monogram, two-line name, credentials and
+                          role, one-line subtitle, gold button; a designed navy background, or the
+                          fullImage photo under a navy overlay
     marquee-logos.html    one set of affiliation logos; home.html renders it twice to loop
     icons/*.html          the four service icons (neck, thyroid, nose, child): one white line
                           on a solid gold disc; classes in
@@ -112,19 +128,34 @@ themes/necksurgery/       the theme, tracked here, not a submodule
     schema.html           JSON-LD (Physician), home page only, built from data/services.yaml
   layouts/robots.txt      robots.txt (enableRobotsTXT = true)
   assets/scss/            the stylesheet, compiled by Hugo's toCSS. _var.scss holds the fonts,
-                          palette and header heights; components/ has header, hero, marquee,
-                          sections (About, Services, icons, legal pages) and footer
+                          palette and header heights; components/ has header (nav, monogram,
+                          wordmark), hero (and the gold button), marquee, sections (headings,
+                          About, Services, icons, legal pages) and footer
 archetypes/default.md     front matter for `scripts/hugo.sh new`
 scripts/                  setup, serve, preview, test, check-site.py, known-defects.txt
 ```
 
 There is no `content/_index.md`, no services or contact page: Services (`/#services`) and About
 (`/#about`) are sections of `partials/home.html`, and Contact (`#contact`) is the footer, so it is on
-every page. The header is a fixed `$header-height` (80px, 64px on phones); `html` has
-`scroll-padding-top` of the same, so anchors land below it, and `.page` pads non-home pages by it.
+every page. The nav bar is `position: sticky` at a fixed `$header-height` (80px, 64px on phones):
+on the home page it follows the hero and sticks once scrolled to; on other pages it is first, so
+it takes its own space and nothing pads for it. `html` has `scroll-padding-top` of the same height,
+so anchors land below it.
 
-To switch the hero to a landscape photo, put it in `static/imgs/` and pass its path as `fullImage`
-in the hero call at the top of `partials/home.html`.
+### The hero photo
+
+The landscape photo is due the week of 2026-11-02. Until then the hero shows a designed background
+(layered navy gradients, a faint blue and gold glow behind the heading, a vignette and a fine SVG
+grain, all in `components/_hero.scss`). To put the photo in:
+
+1. Supply a landscape **JPEG, 2400x1500 (16:10), under 400 KB**, with the subject or the quiet
+   part of the picture in the middle third: the heading sits centred over it, and the sides crop
+   away on phones (`background-size: cover`, centred).
+2. Save it as **`static/imgs/hero.jpg`**.
+3. In **`themes/necksurgery/layouts/index.html`**, set `"fullImage" "/imgs/hero.jpg"`.
+
+The hero then shows the photo under a navy overlay (`.hero--photo`); darken the overlay's three
+stops there if the photo is bright. Nothing else changes.
 
 ## Traps that do not announce themselves
 
@@ -136,15 +167,15 @@ in the hero call at the top of `partials/home.html`.
 - **`markup.goldmark.renderer.unsafe = true`**: raw HTML inside Markdown is passed through as-is,
   scripts included. Nothing here is Markdown today, so it changes no output; it matters the moment
   Markdown content or a CMS is added.
-- **Most of the home page is template, not content.** The hero words and the About placeholders are
-  in `partials/home.html`, the logos in `partials/marquee-logos.html`, the contact placeholders in
+- **Most of the home page is template, not content.** The hero words are in `layouts/index.html`,
+  the About heading and placeholders in `partials/home.html`, the logos in `partials/marquee-logos.html`, the contact placeholders in
   `partials/footer.html`. Only the services list is data (`data/services.yaml`).
 - **The `<head>` ignores the page.** `baseof.html` writes the site `description`, `keywords` and
   title into every page's meta description and OG/Twitter tags; the social image is `/imgs/social.png`.
 - **The marquee's logos are recoloured by CSS, not edited.** `filter: brightness(0) invert(1)` turns
   every opaque pixel white, which is why the ANZHNCS SVG's unfilled (black) paths show too. ACC is a
   blue square JPEG: it is cropped to the letters by a fixed box and blended with `screen` against
-  a navy background on its own wrapper. Change its height and the crop numbers in
+  the marquee band's own colour (`$marquee-bg`) on its wrapper. Change its height and the crop numbers in
   `_marquee.scss` must change with it.
 - **The SCSS goes through LibSass.** `toCSS` with no `transpiler` is LibSass, which needs the extended
   edition and which Hugo deprecated in 0.153.0 (a warning every build). The old workflow installed
@@ -156,6 +187,15 @@ in the hero call at the top of `partials/home.html`.
   hard-coded in `header.html` and the privacy link in `footer.html`. Change those, not the menus.
 - **`/404.html` is bare.** `layouts/404.html` puts its `<h2>` outside any `define` block, so the page
   has no `<html>`, head, title or styles.
+- **`static/js/scripts.js` (theme) defines a global `scrollTo(elementId)`**, which replaces
+  `window.scrollTo`: calling `window.scrollTo(0, y)` throws. It came with the copy; nothing on the
+  site calls it. Use `window.scroll(…)` in scripts and headless-browser checks.
+- **The hero's grain is an inline SVG `data:` URI** in `_hero.scss`. Its filter reference is
+  written `url%28%23n%29`, not `url(#n)`: `make test` scans every `url(` in the CSS and would report
+  `#n` as a missing file.
+- **Wide tracking pushes centred text left.** Letter-spacing adds space after the last letter of
+  each line, so centred tracked headings (hero, Services) are padded on the left by the same amount.
+  Change one and change the other.
 - **The Hugo snap cannot see `/tmp`.** Build into a directory under the checkout (`make test` uses
   `.test/`), never `/tmp`.
 - `themes/necksurgery/theme.toml` and `LICENSE` are template leftovers ("SandersonHowe",
@@ -171,7 +211,7 @@ to anyone as finished**. Matt has seen nothing of it yet.
 
 | Where | Placeholder |
 |---|---|
-| hero (`partials/home.html`) | `[MBChB FRACS]` (credentials), `[Otolaryngologist, Head and Neck Surgeon]` (role) |
+| hero (`layouts/index.html`) | `[MBChB FRACS]` (credentials), `[Otolaryngologist, Head and Neck Surgeon]` (role) |
 | About (`partials/home.html`) | four `[Bio to come from Matt: …]` paragraphs |
 | Services (`partials/home.html`) | `[Intro to come from Matt: …]` |
 | header and Contact | `[Phone number]` (set `params.phone` and `phone_display` in `config.toml`), `[Email address]` (`params.email`) |
@@ -188,16 +228,18 @@ to anyone as finished**. Matt has seen nothing of it yet.
    the files that came with Nick's site, and the ANZHNCS logo is the society's own SVG from
    anzhncs.org. Matt named all five bodies; whether he holds each membership or provider status is
    not confirmed, and each links to the body's home page, not a profile of his.
-3. **No logo.** The header shows a text wordmark (`partials/wordmark.html`); the favicons and social
-   card are a generated "MS" and name.
-4. **No landscape hero photo.** It arrives next week (owner, 2026-10-29). The hero uses the 512px
-   square headshot meanwhile, scaled up to fill the band's left half, so it is soft on large screens.
+3. **No logo.** The hero and nav show a made-up gold "MS" diamond monogram
+   (`partials/mark.html`) and the nav a text wordmark (`partials/wordmark.html`); the favicons and
+   social card are a generated "MS" and name.
+4. **No landscape hero photo.** It arrives next week (owner, 2026-10-29). The hero shows a designed
+   navy background meanwhile; see "The hero photo" for the file, size and the one line to change.
+   The About section uses the 512px headshot, shown no larger than 480px so it stays sharp.
 5. **The contact form goes nowhere.** `action="#"` and an empty reCAPTCHA `data-sitekey`; it needs
    Matt's own Static Contact endpoint and key. The map was removed (it was Nick's clinic and key);
    add one back only for Matt's address.
 6. **The JSON-LD** has his name, the URL and the services only. Telephone and email are added
    automatically once `params.phone` / `params.email` / `params.maps_url` are set; address and hours are not wired up.
-7. **No git remote and no first commit.** The repository was initialised empty on `main`.
+7. **No git remote.** The commits are local only (see "Branches").
 8. **No deploy, and aklent.co.nz is not pointed anywhere.** The source's `.github/workflows/hugo.yml`
    was left out on purpose. Its shape, for reference: on push to `main` (and by hand), install Hugo
    **0.162.1** extended from the release `.deb`, `snap install dart-sass` (unused, see above),
@@ -210,7 +252,7 @@ to anyone as finished**. Matt has seen nothing of it yet.
 
 ## Conventions
 
-- **Commits** (once there are any): one plain imperative sentence, capitalised, no prefix, as the
+- **Commits**: one plain imperative sentence, capitalised, no prefix, as the
   other SFE sites do. A body says *why* when it is not obvious. No AI attribution.
 - Comments in the scripts and Makefile say *why*, not what. Keep that up.
 - Run `make test` before committing.
