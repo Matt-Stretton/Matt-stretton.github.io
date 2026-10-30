@@ -1,35 +1,29 @@
-{{/* The home page. Everything in [square brackets] is a placeholder waiting on
-     Matt; see CLAUDE.md, "Not done yet". */}}
-{{ partial "components/hero" (dict
-    "title" "Dr Matt Stretton"
-    "credentials" "[MBChB FRACS]"
-    "role" "[Otolaryngologist, Head and Neck Surgeon]"
-    "image" "/imgs/matt-stretton.webp"
-    "fullImage" "") }}
+{{/* The home page below the hero (the hero is in index.html). Everything in
+     [square brackets] is a placeholder waiting on Matt; see CLAUDE.md,
+     "Not done yet". */}}
+<section class="about" id="about">
+    <div class="about__text">
+        <header class="section-head section-head--dark">
+            <p class="eyebrow">About</p>
+            <h2>Meet Dr Matt<br />Stretton</h2>
+            <span class="rule" aria-hidden="true"></span>
+        </header>
+        <p class="placeholder">[Bio to come from Matt: training, fellowships, hospital appointments, affiliations]</p>
+        <p class="placeholder">[Bio to come from Matt: where he trained, and the qualifications behind the letters after his name]</p>
+        <p class="placeholder">[Bio to come from Matt: current hospital and private appointments, and areas of particular interest]</p>
+        <p class="placeholder">[Bio to come from Matt: which insurers he is an affiliated provider for, and ACC]</p>
+    </div>
+    {{/* The 512px headshot shown no larger than it is, on its own studio grey
+         carried out to the edge of the window. */}}
+    <div class="about__photo">
+        <img src="/imgs/matt-stretton.webp" alt="Dr Matt Stretton" width="512" height="512" loading="lazy" />
+    </div>
+</section>
 
 <section class="marquee" aria-label="Affiliations">
     <div class="marquee__track">
         {{ partial "marquee-logos.html" (dict "copy" false) }}
         {{ partial "marquee-logos.html" (dict "copy" true) }}
-    </div>
-</section>
-
-<section class="about bg-cream" id="about">
-    <div class="container">
-        <header class="section-head">
-            <h2>About</h2>
-            <span class="rule" aria-hidden="true"></span>
-        </header>
-        <div class="about__cols">
-            <div>
-                <p class="placeholder">[Bio to come from Matt: training, fellowships, hospital appointments, affiliations]</p>
-                <p class="placeholder">[Bio to come from Matt: where he trained, and the qualifications behind the letters after his name]</p>
-            </div>
-            <div>
-                <p class="placeholder">[Bio to come from Matt: current hospital and private appointments, and areas of particular interest]</p>
-                <p class="placeholder">[Bio to come from Matt: which insurers he is an affiliated provider for, and ACC]</p>
-            </div>
-        </div>
     </div>
 </section>
 

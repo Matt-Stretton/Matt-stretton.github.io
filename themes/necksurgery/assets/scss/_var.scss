@@ -4,11 +4,11 @@
  */
 
 // fonts
-// Fraunces for headings: a variable serif with an optical-size axis, so large
-// headings get the crisp high-contrast cut and small ones stay sturdy. Inter for
-// body text. Only the weights the stylesheet uses are requested.
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600&display=swap');
-$font-title: 'Fraunces', Georgia, 'Times New Roman', serif;
+// Jost for headings: a geometric sans that holds up under wide uppercase
+// tracking, which is how every heading on the site is set. Inter for body text.
+// Only the weights the stylesheet uses are requested.
+@import url('https://fonts.googleapis.com/css2?family=Jost:wght@400;500&family=Inter:wght@400;500;600&display=swap');
+$font-title: 'Jost', 'Futura', 'Century Gothic', -apple-system, 'Segoe UI', Arial, sans-serif;
 $font-body: 'Inter', -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
 
 // colours
@@ -21,16 +21,21 @@ $grey-2: #B5B5B5;
 $grey-4: #343b43;
 
 // brand
-$navy: #0B1B33;        // main dark: header, hero, marquee, footer
-$navy-2: #132A4A;      // panels on navy: hero photo panel, form fields
-$navy-3: #07142A;      // the footer bar, a step darker than $navy
-$maroon: #7A1F2E;      // buttons and accents
-$maroon-dark: #5E1622; // button hover
-$gold: #C9A24B;        // rules, icon circle ring, small caps labels
-$cream: #F6F2EA;       // warm off-white: light sections
-$studio: #22262b;      // the headshot's backdrop, extended across the hero
-$cream-line: #E6DDCB;  // hairlines and tile borders on light sections
+// The navy is a touch softer and bluer than design-v1's #0B1B33, which read as
+// near-black over the large dark areas this design has.
+$navy: #0F2340;        // the dark ground: nav, About, Contact
+$navy-2: #17304F;      // panels on navy: the enquiry form, form fields
+$navy-3: #0A1A31;      // the footer bar and the marquee band, a step darker
+$navy-deep: #081629;   // the hero's darkest corner
+$maroon: #862233;      // secondary accent: the enquiry button, hovers, rules
+$maroon-dark: #6A1A28; // maroon hover
+$gold: #C9A24B;        // headings on navy, the primary button, fine rules
+$gold-light: #D8B866;  // gold button hover
+$cream: #F6F2EA;       // the warm light band (Services)
+$studio: #22262b;      // the headshot's backdrop, extended round it in About
+$cream-line: #E6DDCB;  // hairlines on the cream band
 $ink: #1F2633;         // body text on light backgrounds
+$on-navy: #D5DCE6;     // body text on navy: softer than white for long reading
 
 // Link states
 $link: $maroon;
@@ -49,9 +54,9 @@ $max-width: 1200px;
 $max-width-narrow: 800px;
 
 // header
-// The header is position:fixed with a fixed height, so it takes no layout space:
-// .page offsets content by exactly this much and html's scroll-padding-top keeps
-// anchor targets clear of it. Both are set from these two values only.
+// The nav bar is position:sticky with a fixed height: it sits under the hero on
+// the home page (at the top of every other page) and sticks once scrolled to.
+// html's scroll-padding-top keeps anchor targets clear of it.
 $header-height: 80px;
 $header-height-phone: 64px;
 

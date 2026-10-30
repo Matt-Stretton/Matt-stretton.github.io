@@ -2,8 +2,17 @@
     {{ .Site.Title }}
 {{end}}
 
-{{ define "header" }}{{ partial "header.html" . }}{{ end }}
+{{ define "hero" }}
+{{/* Everything in [square brackets] is a placeholder waiting on Matt; see
+     CLAUDE.md, "Not done yet". fullImage is the landscape photo: empty until it
+     arrives, and the hero shows its designed navy background meanwhile. */}}
+{{ partial "components/hero" (dict
+    "title1" "Dr Matt"
+    "title2" "Stretton"
+    "credentials" "[MBChB FRACS]"
+    "role" "[Otolaryngologist, Head and Neck Surgeon]"
+    "subtitle" "Specialist ear, nose and throat care for adults and children."
+    "fullImage" "") }}
+{{ end }}
 
 {{ define "content" }}{{ partial "home.html" . }}{{ end }}
-
-{{ define "footer" }}{{ partial "footer.html" . }}{{ end }}

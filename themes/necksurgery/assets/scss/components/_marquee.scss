@@ -1,14 +1,16 @@
-// The affiliation logo band under the hero (home.html + partials/marquee-logos.html).
+// The affiliation logo band between About and Services (home.html +
+// partials/marquee-logos.html), a step darker than the navy above it.
 // The set is rendered twice in one track; moving the track by -50% brings the
 // second set exactly where the first began, so the loop has no seam.
 $marquee-gap: 88px;
+$marquee-bg: $navy-3;
 
 .marquee {
-    background: $navy;
-    border-top: 1px solid rgba($gold, .35);
-    border-bottom: 1px solid rgba($gold, .35);
+    background: $marquee-bg;
+    border-top: 1px solid rgba($gold, .3);
+    border-bottom: 1px solid rgba($gold, .3);
     overflow: hidden;
-    padding: 30px 0;
+    padding: 36px 0;
     position: relative;
 
     // soft fade into the navy at both edges
@@ -25,12 +27,12 @@ $marquee-gap: 88px;
 
     &::before {
         left: 0;
-        background: linear-gradient(90deg, $navy, rgba($navy, 0));
+        background: linear-gradient(90deg, $marquee-bg, rgba($marquee-bg, 0));
     }
 
     &::after {
         right: 0;
-        background: linear-gradient(270deg, $navy, rgba($navy, 0));
+        background: linear-gradient(270deg, $marquee-bg, rgba($marquee-bg, 0));
     }
 
     &__track {
@@ -99,7 +101,7 @@ $marquee-gap: 88px;
             height: 30px;
             width: 60px; // 30 * 614 / 306
             filter: none;
-            background: $navy; // the backdrop the screen blend below works against
+            background: $marquee-bg; // the backdrop the screen blend below works against
 
             img {
                 position: absolute;

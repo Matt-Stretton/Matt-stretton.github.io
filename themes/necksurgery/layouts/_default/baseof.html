@@ -12,7 +12,7 @@
     <meta name="description" content="{{ .Site.Params.description }}">
     <meta name="keywords" content="{{ .Site.Params.keywords }}">
 
-    <meta name="theme-color" content="#0B1B33">
+    <meta name="theme-color" content="#0F2340">
 
     <!-- canonical -->
     <link rel="canonical" href="{{ .Permalink }}" />
@@ -67,6 +67,9 @@
 </head>
 
 <body>
+    {{- /* The home page fills this with its full-height hero, so the nav bar comes
+         after it and sticks once scrolled to; other pages start with the nav. */ -}}
+    {{- block "hero" . }}{{- end }}
     {{- partial "header.html" . -}}
     <div id="content">
         {{- block "content" . }}{{- end }}

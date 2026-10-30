@@ -1,20 +1,16 @@
 // The contact section (partials/footer.html) on navy, and the footer bar.
 .site-footer {
     background: $bg-page-footer;
-    color: $white;
+    color: $on-navy;
 
     .container {
-        padding-top: var(--spacing-10);
-        padding-bottom: var(--spacing-10);
+        padding-top: var(--spacing-12);
+        padding-bottom: var(--spacing-12);
 
         @include for-phone-only {
-            padding-top: var(--spacing-7);
-            padding-bottom: var(--spacing-7);
+            padding-top: var(--spacing-8);
+            padding-bottom: var(--spacing-8);
         }
-    }
-
-    .section-head h2 {
-        color: $white;
     }
 
     a {
@@ -56,7 +52,7 @@
         dt {
             font-size: 12px;
             font-weight: 600;
-            letter-spacing: .2em;
+            letter-spacing: .28em;
             text-transform: uppercase;
             color: $gold;
             margin-bottom: 4px;
@@ -77,11 +73,11 @@
         flex-shrink: 0;
         padding: 9px 16px;
         border: 1px solid $gold;
-        border-radius: $border-radius;
+        border-radius: 0;
         color: $gold;
-        font-size: 13px;
+        font-size: 12px;
         font-weight: 600;
-        letter-spacing: .08em;
+        letter-spacing: .2em;
         text-transform: uppercase;
         text-decoration: none;
         white-space: nowrap;
@@ -130,14 +126,17 @@
         }
 
         h3 {
+            font-size: 18px;
+            letter-spacing: .2em;
+            text-transform: uppercase;
             color: $white;
-            margin-bottom: var(--spacing-3);
+            margin-bottom: var(--spacing-4);
         }
 
         label {
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 500;
-            letter-spacing: .08em;
+            letter-spacing: .16em;
             text-transform: uppercase;
             color: rgba($white, .8);
             margin-bottom: 6px;
@@ -149,9 +148,9 @@
             font: inherit;
             font-size: 16px;
             color: $white;
-            background: rgba($navy, .55);
-            border: 1px solid rgba($white, .18);
-            border-radius: 2px;
+            background: rgba($navy-deep, .45);
+            border: 1px solid rgba($white, .16);
+            border-radius: 0;
             padding: 11px 14px;
 
             &:focus {

@@ -36,12 +36,6 @@
 
 
 
-.page {
-    padding-top: $header-height;
-    @include for-phone-only {
-        padding-top: $header-height-phone;
-    }
-}
 
 
 .overlay {

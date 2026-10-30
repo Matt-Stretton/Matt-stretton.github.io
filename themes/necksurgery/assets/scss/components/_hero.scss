@@ -1,153 +1,224 @@
-// The home page hero (partials/components/hero.html): ~80vh, under the fixed
-// header. Two layouts: photo (headshot left on studio grey) and full (cover photo).
+// The home page hero (partials/components/hero.html): the full height of the
+// window, everything centred, the monogram at the top and no nav. The nav bar
+// follows it in the page and sticks once scrolled to.
+
+// A fine grain, so the gradient background reads as a surface, not a fill.
+// (The filter reference is written url%28…%29 so the site check's url() scan
+// does not take it for a file.)
+$hero-grain: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url%28%23n%29'/%3E%3C/svg%3E";
+
 .hero {
     position: relative;
-    background: $navy;
+    isolation: isolate;
+    overflow: hidden;
+    // the window's height, within reason: never cramped on a short laptop
+    // screen, never a wall of empty navy on a tall portrait one
+    min-height: 640px;
+    min-height: unquote("clamp(620px, 100vh, 1000px)");
+    min-height: unquote("clamp(620px, 100svh, 1000px)");
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    justify-items: center;
+    text-align: center;
     color: $white;
-    padding-top: $header-height;
 
-    @include for-phone-only {
-        padding-top: $header-height-phone;
+    // Until the photo arrives: deep navy to a bluer navy, a lighter blue haze
+    // behind the heading warmed by a faint gold glow, and a lift of blue in the
+    // top right corner. (Gold alone over navy turns muddy grey.)
+    background-color: $navy;
+    background-image:
+        radial-gradient(ellipse 30% 22% at 50% 44%, rgba($gold, .07) 0%, rgba($gold, 0) 75%),
+        radial-gradient(ellipse 55% 45% at 50% 46%, rgba(#3D669E, .22) 0%, rgba(#3D669E, 0) 72%),
+        radial-gradient(ellipse 70% 60% at 88% 4%, rgba(#2B5288, .5) 0%, rgba(#2B5288, 0) 70%),
+        radial-gradient(ellipse 60% 55% at 6% 100%, rgba(#1E3D69, .45) 0%, rgba(#1E3D69, 0) 70%),
+        linear-gradient(165deg, $navy-deep 0%, $navy 55%, #14305A 100%);
+
+    // vignette and grain, over the background and under the text
+    &::before,
+    &::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+        pointer-events: none;
     }
 
-    &__inner {
-        max-width: $max-width;
-        margin: 0 auto;
-        // ~80% of the viewport, but never taller than the content needs on a
-        // very tall window, nor squashed on a short one
-        min-height: 560px;
-        min-height: unquote("clamp(560px, calc(80vh - #{$header-height}), 760px)");
-        display: grid;
-        align-items: center;
+    &::before {
+        background: radial-gradient(ellipse 85% 75% at 50% 45%, rgba($navy-deep, 0) 55%, rgba($navy-deep, .7) 100%);
     }
 
-    &__text {
-        padding: var(--spacing-6) var(--spacing-2);
+    &::after {
+        background-image: url($hero-grain);
+        opacity: .06;
+        mix-blend-mode: overlay;
     }
 
-    &__title {
-        font-size: 64px;
-        font-weight: 700;
-        line-height: 1.02;
-        letter-spacing: .03em;
-        text-transform: uppercase;
-        margin-bottom: var(--spacing-2);
-        color: $white;
+    // With the landscape photo (fullImage): the photo under a navy overlay that
+    // keeps the white text readable whatever the photo does.
+    &--photo {
+        background-image:
+            linear-gradient(180deg, rgba($navy-deep, .55) 0%, rgba($navy-deep, .45) 45%, rgba($navy-deep, .75) 100%),
+            var(--hero-photo);
+        background-size: cover;
+        background-position: center;
 
-        @include for-tablet-portrait-only {
-            font-size: 48px;
+        &::after {
+            display: none;
+        }
+    }
+
+    &__mark {
+        padding-top: var(--spacing-5);
+
+        .mark {
+            width: 72px;
+            height: 72px;
         }
 
         @include for-phone-only {
-            font-size: 38px;
+            padding-top: var(--spacing-4);
+
+            .mark {
+                width: 56px;
+                height: 56px;
+            }
         }
     }
 
-    &__credentials {
-        font-size: 14px;
+    &__text {
+        align-self: center;
+        max-width: 980px;
+        padding: var(--spacing-6) var(--spacing-2);
+    }
+
+    // Wide tracking leaves a gap after the last letter of each line; padding the
+    // left by the same amount puts the letters, not the box, in the centre.
+    &__title {
+        font-family: $font-title;
+        font-weight: 500;
+        font-size: 60px;
+        font-size: unquote("clamp(42px, 7.2vw, 96px)");
+        line-height: 1.12;
+        letter-spacing: .16em;
+        padding-left: .16em;
+        text-transform: uppercase;
+        color: $white;
+        margin-bottom: var(--spacing-3);
+
+        span {
+            display: block;
+        }
+
+        @include for-phone-only {
+            font-size: 46px;
+            letter-spacing: .12em;
+            padding-left: .12em;
+        }
+    }
+
+    &__title-accent {
+        color: $gold;
+    }
+
+    &__meta {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 6px 0;
+        font-size: 13px;
         font-weight: 500;
         letter-spacing: .16em;
-        text-transform: uppercase;
-        color: rgba($white, .75);
-        margin-bottom: var(--spacing-1);
+        color: rgba($white, .72);
+        margin-bottom: var(--spacing-3);
+
+        span + span::before {
+            content: "";
+            display: inline-block;
+            width: 4px;
+            height: 4px;
+            margin: 0 16px;
+            vertical-align: middle;
+            background: $gold;
+            transform: rotate(45deg);
+        }
+
+        // on phones the two parts stack, with no separator
+        @include for-phone-only {
+            flex-direction: column;
+
+            span + span::before {
+                display: none;
+            }
+        }
     }
 
-    &__role {
-        font-family: $font-title;
-        font-weight: 600;
-        font-size: 22px;
-        line-height: 1.35;
+    &__subtitle {
+        font-size: 20px;
+        line-height: 1.55;
         color: $white;
-        margin-bottom: 0;
-    }
+        margin: 0 auto var(--spacing-5);
+        max-width: 640px;
 
-    .rule {
-        margin: var(--spacing-3) 0;
+        @include for-phone-only {
+            font-size: 18px;
+            margin-bottom: var(--spacing-4);
+        }
     }
 
     &__cta {
         margin: 0;
     }
 
-    // photo: the whole band is the headshot's studio grey; the square photo
-    // fills the left half, cropped to it (the face is centred in the photo, so
-    // the sides can go) and faded into the grey along its right edge. Text on
-    // the right. On phones the photo sits on top, faded at the bottom, text under.
-    &--photo {
-        background: $studio;
+    // a fine gold line at the foot, pointing on to the page
+    &__scroll {
+        display: block;
+        padding: 0 var(--spacing-2) var(--spacing-4);
 
-        .hero__inner {
-            position: relative;
-            grid-template-columns: 1fr;
-
-            @include for-tablet-portrait-up {
-                grid-template-columns: 1fr 1fr;
-            }
-        }
-
-        .hero__photo {
+        span {
             display: block;
-            width: 100%;
-            height: 360px;
-            object-fit: cover;
-            object-position: center top;
-            mask-image: linear-gradient(to bottom, #000 70%, transparent 100%);
-            -webkit-mask-image: linear-gradient(to bottom, #000 70%, transparent 100%);
-
-            @include for-tablet-portrait-up {
-                position: absolute;
-                top: 0;
-                left: 0;
-                bottom: 0;
-                width: 50%;
-                height: 100%;
-                // the photo's backdrop is not quite flat, so every edge but the
-                // bottom is faded into the band: a long fade on the right, short
-                // ones on the left and top
-                $fade-right: linear-gradient(to right, #000 55%, transparent 100%);
-                $fade-left: linear-gradient(to right, transparent 0, #000 14%);
-                $fade-top: linear-gradient(to bottom, transparent 0, #000 18%);
-                mask-image: $fade-right, $fade-left, $fade-top;
-                mask-composite: intersect;
-                -webkit-mask-image: $fade-right, $fade-left, $fade-top;
-                -webkit-mask-composite: source-in;
-            }
+            width: 1px;
+            height: 56px;
+            background: linear-gradient(180deg, rgba($gold, 0), $gold);
         }
 
-        .hero__text {
-            @include for-tablet-portrait-up {
-                grid-column: 2;
-                padding-left: var(--spacing-4);
-            }
-
-            @include for-phone-only {
-                text-align: center;
-                padding-top: 0;
-
-                .rule {
-                    margin-left: auto;
-                    margin-right: auto;
-                }
-            }
+        &:hover span {
+            background: linear-gradient(180deg, rgba($gold, 0), $gold-light);
         }
-    }
 
-    // full: a landscape photo as the background, navy gradient over it
-    &--full {
-        background-color: $navy;
-        background-size: cover;
-        background-position: center;
-
-        .hero__text {
-            max-width: 640px;
+        @include for-phone-only {
+            span { height: 40px; }
         }
     }
 }
 
-// A short gold rule under headings and in the hero.
+// A short gold rule under headings.
 .rule {
     display: block;
     width: 64px;
-    height: 2px;
+    height: 1px;
     background: $gold;
+}
+
+// The primary button: solid gold, small tracked capitals.
+.btn--gold {
+    display: inline-block;
+    background: $gold;
+    color: $navy-deep;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: .24em;
+    text-transform: uppercase;
+    padding: 20px 46px 20px calc(46px + .24em);
+    border-radius: 0;
+    transition: background .2s ease;
+
+    &:hover {
+        background: $gold-light;
+        color: $navy-deep;
+    }
+
+    @include for-phone-only {
+        display: inline-block;
+        padding: 18px 34px 18px calc(34px + .24em);
+    }
 }

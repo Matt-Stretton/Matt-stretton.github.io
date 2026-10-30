@@ -1,24 +1,24 @@
-{{/* The home page hero.
+{{/* The home page hero: the full height of the window, everything centred, and
+     no nav (the nav bar follows it, see baseof.html).
 
-     (dict "title" … "credentials" … "role" … "image" … "fullImage" …)
+     (dict "title1" … "title2" … "credentials" … "role" … "subtitle" … "fullImage" …)
 
-     With "fullImage" (a landscape photo), it is a full-width cover background
-     under a navy gradient with the text over it. Without one, the square headshot
-     "image" fills the left half of a full-width studio-grey band, its edge faded
-     into the grey, with the text on the right. */}}
-{{- $text := . -}}
+     title1 and title2 are the heading's two lines, the second in gold.
+     With "fullImage" (a landscape photo, e.g. "/imgs/hero.jpg") it is the
+     background, under a navy overlay that keeps the white text readable. Without
+     one, the background is the designed navy one in components/_hero.scss. */}}
+<section class="hero{{ if .fullImage }} hero--photo{{ end }}"{{ with .fullImage }} style="--hero-photo: url({{ . }});"{{ end }}>
+    <div class="hero__mark">{{ partial "mark.html" . }}</div>
 
-{{ with .fullImage }}
-<section class="hero hero--full" style="background-image: linear-gradient(90deg, rgba(11, 27, 51, .92) 0%, rgba(11, 27, 51, .7) 45%, rgba(11, 27, 51, .25) 100%), url({{ . }});">
-    <div class="hero__inner">
-        {{ partial "components/hero-text.html" $text }}
+    <div class="hero__text">
+        <h1 class="hero__title"><span>{{ .title1 }}</span> <span class="hero__title-accent">{{ .title2 }}</span></h1>
+        <p class="hero__meta">
+            {{- with .credentials }}<span>{{ . }}</span>{{ end -}}
+            {{- with .role }}<span>{{ . }}</span>{{ end -}}
+        </p>
+        {{ with .subtitle }}<p class="hero__subtitle">{{ . }}</p>{{ end }}
+        <p class="hero__cta"><a class="btn btn--gold" href="#contact">Make an enquiry</a></p>
     </div>
+
+    <a class="hero__scroll" href="#about" aria-label="Scroll to About"><span aria-hidden="true"></span></a>
 </section>
-{{ else }}
-<section class="hero hero--photo">
-    <div class="hero__inner">
-        <img class="hero__photo" src="{{ .image }}" alt="{{ .title }}" width="512" height="512" />
-        {{ partial "components/hero-text.html" $text }}
-    </div>
-</section>
-{{ end }}

@@ -1,14 +1,16 @@
-// Fixed navy bar. Its height is exactly $header-height / $header-height-phone,
-// which .page and html's scroll-padding-top use to keep content clear of it.
+// The nav bar: a navy band with a fixed height. On the home page it comes after
+// the full-height hero and sticks to the top once scrolled to; on every other
+// page it is first, so it sticks from the start. Its height is exactly
+// $header-height / $header-height-phone, which html's scroll-padding-top uses
+// to keep anchor targets clear of it.
 .site-header {
-    position: fixed;
+    position: -webkit-sticky;
+    position: sticky;
     top: 0;
-    left: 0;
-    right: 0;
     z-index: 200;
     height: $header-height;
-    background: $bg-page-header;
-    border-bottom: 1px solid rgba($gold, .25);
+    background: $navy;
+    border-bottom: 1px solid rgba($gold, .22);
     color: $white;
 
     @include for-phone-only {
@@ -33,21 +35,32 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        gap: var(--spacing-3);
+        gap: var(--spacing-4);
     }
 
     &__brand {
-        display: block;
+        display: flex;
+        align-items: center;
+        gap: 14px;
         line-height: 1;
+        flex-shrink: 0;
+
+        .mark {
+            width: 38px;
+            height: 38px;
+        }
     }
 
     &__nav {
+        flex: 1;
         display: flex;
         align-items: center;
-        gap: var(--spacing-3);
+        gap: var(--spacing-4);
 
         ul {
+            flex: 1;
             display: flex;
+            justify-content: space-evenly;
             gap: var(--spacing-3);
             list-style: none;
             margin: 0;
@@ -58,9 +71,9 @@
         }
 
         a {
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 500;
-            letter-spacing: .12em;
+            letter-spacing: .2em;
             text-transform: uppercase;
         }
     }
@@ -69,18 +82,25 @@
         display: inline-flex;
         align-items: center;
         gap: 8px;
-        padding: 9px 16px;
-        border: 1px solid rgba($gold, .6);
-        border-radius: 999px;
         letter-spacing: .06em !important;
         text-transform: none !important;
+        white-space: nowrap;
 
         i {
             color: $gold;
         }
+    }
+
+    // the maroon button: the secondary accent's main use on the page
+    &__enquire {
+        padding: 11px 20px;
+        background: $maroon;
+        white-space: nowrap;
+        transition: background .2s ease;
 
         &:hover {
-            border-color: $gold;
+            background: $maroon-dark;
+            color: $white !important;
         }
     }
 
@@ -106,8 +126,25 @@
         }
     }
 
+    // tablets: the wordmark goes so the links keep one line
+    @include for-tablet-portrait-only {
+        .wordmark {
+            display: none;
+        }
+
+        &__nav,
+        &__nav ul {
+            gap: var(--spacing-2);
+        }
+    }
+
     // phone: the nav becomes a panel under the bar, opened by the burger (Alpine)
     @include for-phone-only {
+        &__brand .mark {
+            width: 32px;
+            height: 32px;
+        }
+
         &__burger {
             display: block;
         }
@@ -123,7 +160,7 @@
             gap: 0;
             padding: var(--spacing-1) var(--spacing-2) var(--spacing-3);
             background: $navy;
-            border-bottom: 1px solid rgba($gold, .25);
+            border-bottom: 1px solid rgba($gold, .22);
 
             ul {
                 flex-direction: column;
@@ -140,6 +177,13 @@
         &__phone {
             margin-top: var(--spacing-2);
             justify-content: center;
+            padding: 12px;
+            border: 1px solid rgba($gold, .5);
+        }
+
+        &__enquire {
+            margin-top: var(--spacing-1);
+            text-align: center;
         }
 
         &.is-open &__nav {
@@ -152,19 +196,45 @@
     }
 }
 
-// The placeholder wordmark (partials/wordmark.html) until Matt's logo arrives.
+// The monogram (partials/mark.html) until Matt's logo arrives.
+.mark {
+    display: block;
+    overflow: visible;
+
+    &__line {
+        fill: none;
+        stroke: $gold;
+        stroke-width: 1.6;
+        stroke-linejoin: miter;
+
+        &--inner {
+            stroke-width: .9;
+            opacity: .55;
+        }
+    }
+
+    &__text {
+        fill: $gold;
+        font-family: $font-title;
+        font-weight: 500;
+        font-size: 15px;
+        letter-spacing: 1.2px;
+    }
+}
+
+// The wordmark beside it in the nav bar (partials/wordmark.html).
 .wordmark {
     font-family: $font-title;
-    font-weight: 600;
-    font-size: 21px;
-    font-variant: small-caps;
-    letter-spacing: .14em;
+    font-weight: 500;
+    font-size: 15px;
+    letter-spacing: .24em;
+    text-transform: uppercase;
     color: $white;
     white-space: nowrap;
 
     @include for-phone-only {
-        font-size: 18px;
-        letter-spacing: .1em;
+        font-size: 13px;
+        letter-spacing: .18em;
     }
 }
 

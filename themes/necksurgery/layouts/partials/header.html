@@ -1,12 +1,12 @@
 {{- $phone := .Site.Params.phone -}}
 <header class="site-header" x-data="{ open: false }" :class="{ 'is-open': open }" @keydown.escape.window="open = false">
     <div class="site-header__inner">
-        <a href="/" class="site-header__brand">{{ partial "wordmark.html" . }}</a>
+        <a href="/" class="site-header__brand" aria-label="Dr Matt Stretton, home">{{ partial "mark.html" . }}{{ partial "wordmark.html" . }}</a>
 
         <nav class="site-header__nav" id="site-nav" aria-label="Main">
             <ul>
-                <li><a href="/#services" @click="open = false">Services</a></li>
                 <li><a href="/#about" @click="open = false">About</a></li>
+                <li><a href="/#services" @click="open = false">Services</a></li>
                 <li><a href="#contact" @click="open = false">Contact</a></li>
             </ul>
             {{/* Until Matt's number is in config.toml (params.phone), this points at
@@ -15,6 +15,7 @@
                 <i class="lni lni-phone" aria-hidden="true"></i>
                 <span>{{ with .Site.Params.phone_display }}{{ . }}{{ else }}[Phone number]{{ end }}</span>
             </a>
+            <a class="site-header__enquire" href="#contact" @click="open = false">Enquire</a>
         </nav>
 
         <button class="site-header__burger" type="button" aria-controls="site-nav" :aria-expanded="open.toString()" aria-expanded="false" @click="open = !open">

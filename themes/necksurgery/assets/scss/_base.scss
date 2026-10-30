@@ -8,7 +8,7 @@ html {
   scroll-behavior: smooth;
   // the canvas past the end of a short page continues the footer bar, not white
   background: $navy-3;
-  // keeps #about, #services and #contact clear of the fixed header
+  // keeps #about, #services and #contact clear of the sticky nav bar
   scroll-padding-top: $header-height;
   @include for-phone-only {
     scroll-padding-top: $header-height-phone;
@@ -35,8 +35,8 @@ p {margin-bottom: var(--spacing-2);}
 
 h1, h2, h3, h4, h5, h6 {
   font-family: $font-title;
-  font-weight: 600;
-  font-optical-sizing: auto;
+  // Jost is loaded at 400 and 500 only
+  font-weight: 500;
   line-height: 1.15;
   margin-bottom: var(--spacing-2);
   color: inherit;
@@ -45,9 +45,8 @@ h1, h2, h3, h4, h5, h6 {
 h1 {
   margin-top: 0;
   font-size: 60px;
-  font-weight: 700;
 }
-h2 {font-size: 44px; font-weight: 700;}
+h2 {font-size: 44px;}
 h3 {font-size: 26px;}
 h4 {font-size: 22px;}
 h5 {font-size: 19px;}
