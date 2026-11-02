@@ -1,5 +1,6 @@
 // The home page hero (partials/components/hero.html): the first screen,
-// everything centred, the monogram at the top and no nav. The nav bar follows it
+// centred horizontally, the monogram at the top, the text at the foot of its
+// row just above the scroll line, and no nav. The nav bar follows it
 // in the page and sticks once scrolled to; from tablet up the hero is the window
 // less the nav bar's height, so the nav sits along the bottom of the first screen.
 
@@ -96,7 +97,7 @@ $hero-grain: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width
     }
 
     &__text {
-        align-self: center;
+        align-self: end;
         max-width: 980px;
         padding: var(--spacing-6) var(--spacing-2);
     }
