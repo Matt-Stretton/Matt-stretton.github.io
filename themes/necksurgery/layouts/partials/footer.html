@@ -9,12 +9,14 @@
 
         <div class="contact">
             <div class="contact__details">
-                {{/* Placeholders until Matt's details are known. Phone and email come
-                     from config.toml (params.phone, phone_display, email) once set. */}}
+                {{/* Every line comes from config.toml's [params] (hours, address, phone,
+                     phone_display, email); while one is empty its bracketed placeholder
+                     shows instead. A "[X]" left in the address (the suite number, not
+                     known yet) is styled as a placeholder so it cannot pass for fact. */}}
                 <dl>
                     <div>
                         <dt>Hours</dt>
-                        <dd class="placeholder">[Clinic hours]</dd>
+                        <dd>{{ with $p.hours }}{{ . }}{{ else }}<span class="placeholder">[Clinic hours]</span>{{ end }}</dd>
                     </div>
                     <div>
                         <dt>Phone</dt>
@@ -27,7 +29,7 @@
                     <div>
                         <dt>Address</dt>
                         <dd class="contact__address">
-                            <address class="placeholder">[Clinic name]<br />[Street address]<br />[Suburb, city]</address>
+                            {{ with $p.address }}<address>{{ range $i, $line := . }}{{ if $i }}<br />{{ end }}{{ replace (htmlEscape $line) "[X]" `<span class="placeholder">[X]</span>` | safeHTML }}{{ end }}</address>{{ else }}<address class="placeholder">[Clinic name]<br />[Street address]<br />[Suburb, city]</address>{{ end }}
                             {{/* params.maps_url is the Google Maps link; until it is set the
                                  button is there to see but goes nowhere. */}}
                             <a class="btn-map" href="{{ $p.maps_url | default "#" }}"{{ if $p.maps_url }} target="_blank" rel="noopener"{{ else }} data-todo="Google Maps link goes in config.toml params.maps_url"{{ end }}>

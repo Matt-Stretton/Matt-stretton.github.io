@@ -91,8 +91,10 @@ mechanical stops them going live: "Not done yet" is the list to clear.
 ## Layout
 
 ```
-config.toml               title, baseURL, [params] (description, keywords, legal_title, and the
-                          empty phone / phone_display / email the templates fall back from), menus
+config.toml               title, baseURL, [params] (description, keywords, legal_title, the
+                          contact hours (display line plus hours_days / hours_open / hours_close
+                          for the JSON-LD) and address lines, and the still empty phone /
+                          phone_display / email / maps_url the templates fall back from), menus
 content/
   privacy-policy.html     /privacy-policy/  (the old practice's policy, names replaced by placeholders)
   thankyou.html           /thankyou/  (the contact form's landing page)
@@ -216,7 +218,7 @@ to anyone as finished**. Matt has seen nothing of it yet.
 | About (`partials/home.html`) | four `[Bio to come from Matt: …]` paragraphs |
 | Services (`partials/home.html`) | `[Intro to come from Matt: …]` |
 | header and Contact | `[Phone number]` (set `params.phone` and `phone_display` in `config.toml`), `[Email address]` (`params.email`) |
-| Contact (`partials/footer.html`) | `[Clinic hours]`, `[Clinic name]`, `[Street address]`, `[Suburb, city]`; the Directions button beside the address goes nowhere until `params.maps_url` is set |
+| Contact (`partials/footer.html`) | `Suite [X]`, the suite number in the address (`params.address` in `config.toml`; replace `[X]` there); the Directions button beside the address goes nowhere until `params.maps_url` is set |
 | footer bar | `[Dr Matt Stretton]` as the legal name (`params.legal_title`): his own name, or a company's? |
 | `config.toml` | `info = "[Otolaryngologist, Head and Neck Surgeon]"` (unused by the templates today) |
 | `content/privacy-policy.html` | `[Company name]` (twice), `[practice email address]`, `[date]`, and a visible note that the policy must be replaced or reviewed |
@@ -238,8 +240,10 @@ to anyone as finished**. Matt has seen nothing of it yet.
 5. **The contact form goes nowhere.** `action="#"` and an empty reCAPTCHA `data-sitekey`; it needs
    Matt's own Static Contact endpoint and key. The map was removed (it was Nick's clinic and key);
    add one back only for Matt's address.
-6. **The JSON-LD** has his name, the URL and the services only. Telephone and email are added
-   automatically once `params.phone` / `params.email` / `params.maps_url` are set; address and hours are not wired up.
+6. **The JSON-LD** has his name, the URL, the services and the opening hours (from `params.hours_days`,
+   `hours_open`, `hours_close`). Telephone and email are added automatically once `params.phone` /
+   `params.email` / `params.maps_url` are set. The address is not wired up: it waits on the suite
+   number, since structured data must not carry the `[X]` placeholder (see `partials/schema.html`).
 7. **No git remote.** The commits are local only (see "Branches").
 8. **No deploy, and aklent.co.nz is not pointed anywhere.** The source's `.github/workflows/hugo.yml`
    was left out on purpose. Its shape, for reference: on push to `main` (and by hand), install Hugo

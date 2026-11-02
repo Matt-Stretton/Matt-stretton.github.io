@@ -1,7 +1,9 @@
 {{- if .IsHome -}}
-{{- /* Physician JSON-LD. Only what is on the page and known: name, URL and the
-       services Matt listed. Telephone, email, address and opening hours are left
-       out until they are known; add them from config.toml then, not by hand. */ -}}
+{{- /* Physician JSON-LD. Only what is on the page and known: name, URL, the
+       services Matt listed, and the opening hours (config.toml's hours_days,
+       hours_open, hours_close). Telephone, email and the map link join from
+       config.toml once set. The postal address is left out while its suite
+       number is the placeholder "[X]": structured data must not carry one. */ -}}
 {{- $services := slice -}}
 {{- range hugo.Data.services -}}
   {{- range .items -}}
@@ -18,5 +20,14 @@
 {{- with site.Params.phone }}{{ $ld = merge $ld (dict "telephone" .) }}{{ end -}}
 {{- with site.Params.email }}{{ $ld = merge $ld (dict "email" .) }}{{ end -}}
 {{- with site.Params.maps_url }}{{ $ld = merge $ld (dict "hasMap" .) }}{{ end -}}
+{{- with site.Params.hours_days -}}
+  {{- $ld = merge $ld (dict "openingHoursSpecification" (dict
+      "@type" "OpeningHoursSpecification"
+      "dayOfWeek" .
+      "opens" site.Params.hours_open
+      "closes" site.Params.hours_close)) -}}
+{{- end -}}
+{{- /* The address goes in here (a PostalAddress from params.address) once the
+       suite number is known and "[X]" is gone from it. */ -}}
 <script type="application/ld+json">{{ $ld | jsonify | safeJS }}</script>
 {{- end -}}
