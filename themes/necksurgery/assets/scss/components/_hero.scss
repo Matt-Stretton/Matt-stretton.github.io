@@ -1,6 +1,7 @@
-// The home page hero (partials/components/hero.html): the full height of the
-// window, everything centred, the monogram at the top and no nav. The nav bar
-// follows it in the page and sticks once scrolled to.
+// The home page hero (partials/components/hero.html): the first screen,
+// everything centred, the monogram at the top and no nav. The nav bar follows it
+// in the page and sticks once scrolled to; from tablet up the hero is the window
+// less the nav bar's height, so the nav sits along the bottom of the first screen.
 
 // A fine grain, so the gradient background reads as a surface, not a fill.
 // (The filter reference is written url%28…%29 so the site check's url() scan
@@ -11,11 +12,20 @@ $hero-grain: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width
     position: relative;
     isolation: isolate;
     overflow: hidden;
-    // the window's height, within reason: never cramped on a short laptop
-    // screen, never a wall of empty navy on a tall portrait one
+    // Phones: the window's height, within reason: never cramped on a short
+    // screen, never a wall of empty navy on a tall one.
+    // Tablet and up: exactly the window less the nav bar, so the nav's bottom edge
+    // is the bottom of the first screen. No floor or cap here, since either would
+    // move the nav off that edge; min-height (not height) lets the content's own
+    // height win on a very short window rather than clip it.
     min-height: 640px;
     min-height: unquote("clamp(620px, 100vh, 1000px)");
     min-height: unquote("clamp(620px, 100svh, 1000px)");
+
+    @include for-tablet-portrait-up {
+        min-height: calc(100vh - #{$header-height});
+        min-height: unquote("calc(100svh - #{$header-height})");
+    }
     display: grid;
     grid-template-rows: auto 1fr auto;
     justify-items: center;
@@ -187,6 +197,38 @@ $hero-grain: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width
 
         @include for-phone-only {
             span { height: 40px; }
+        }
+    }
+
+    // Short windows from tablet up (a 1280x720 laptop, or a browser with toolbars
+    // on a 900px screen): the hero has only the window less the nav bar, so the
+    // spacing, the monogram and the name tighten to keep the nav on the bottom
+    // edge. The name also scales with the height here, not just the width. At full
+    // spacing the content is about 780px tall, so the threshold is that plus the
+    // nav bar.
+    @media screen and (min-width: 600px) and (max-height: 860px) {
+        &__mark {
+            padding-top: var(--spacing-3);
+
+            .mark {
+                width: 60px;
+                height: 60px;
+            }
+        }
+
+        &__text {
+            padding-top: var(--spacing-3);
+            padding-bottom: var(--spacing-3);
+        }
+
+        &__title {
+            font-size: unquote("clamp(42px, min(7.2vw, 11vh), 96px)");
+        }
+
+        &__scroll {
+            padding-bottom: var(--spacing-2);
+
+            span { height: 36px; }
         }
     }
 }

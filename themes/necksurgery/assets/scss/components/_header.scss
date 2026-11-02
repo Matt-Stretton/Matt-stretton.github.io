@@ -1,5 +1,5 @@
 // The nav bar: a navy band with a fixed height. On the home page it comes after
-// the full-height hero and sticks to the top once scrolled to; on every other
+// the hero (the window less this bar, from tablet up) and sticks to the top once scrolled to; on every other
 // page it is first, so it sticks from the start. Its height is exactly
 // $header-height / $header-height-phone, which html's scroll-padding-top uses
 // to keep anchor targets clear of it.
@@ -9,6 +9,7 @@
     top: 0;
     z-index: 200;
     height: $header-height;
+    box-sizing: border-box; // the border inside the height, so it is exactly $header-height
     background: $navy;
     border-bottom: 1px solid rgba($gold, .22);
     color: $white;

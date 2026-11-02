@@ -11,10 +11,10 @@ of the necksurgery.co.nz site (Dr Nick Lilic's practice) taken on 2026-10-29 fro
 `sfe/necksurgery.co.nz/nicklilic.github.io/`, without that repository's git history or its
 `.github/` deploy workflow. The design, copy structure, images and identity have since been
 replaced with Matt's (2026-10-29), and on 2026-10-30 redesigned after a reference Paul supplied
-(branch `design-v2`; see "Branches"): a full-height navy hero with the "MS" monogram, his name in
-large tracked capitals (the second line gold) and a gold button; a sticky nav bar under it; About
-on navy with the headshot on studio grey running to the right edge; a moving band of affiliation
-logos; four service tiles on a cream band; and a navy contact section. Jost headings, Inter body
+(branch `design-v2`; see "Branches"): a navy hero filling the first screen above the nav bar,
+with the "MS" monogram, his name in large tracked capitals (the second line gold) and a gold
+button; a sticky nav bar under it; About on navy with the headshot on studio grey running to the
+right edge; a moving band of affiliation logos; four service tiles on a cream band; and a navy contact section. Jost headings, Inter body
 text, navy, gold and maroon. **Much of the copy is still bracketed placeholders**, and
 the privacy policy is still the old practice's text with the names taken out: see "Not done yet".
 
@@ -117,8 +117,9 @@ themes/necksurgery/       the theme, tracked here, not a submodule
     mark.html             the gold "MS" diamond monogram (hero top and nav): swap this one file
                           for the logo
     wordmark.html         the "Dr Matt Stretton" text beside the monogram in the nav
-    components/hero.html  the full-height centred hero: monogram, two-line name, credentials and
-                          role, one-line subtitle, gold button; a designed navy background, or the
+    components/hero.html  the centred hero (the window less the nav bar from 600px up, so the
+                          nav sits at the bottom of the first screen): monogram, two-line
+                          name, credentials and role, one-line subtitle, gold button; a designed navy background, or the
                           fullImage photo under a navy overlay
     marquee-logos.html    one set of affiliation logos; home.html renders it twice to loop
     icons/*.html          the four service icons (neck, thyroid, nose, child): a gold line
