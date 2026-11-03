@@ -92,28 +92,6 @@ $marquee-bg: $navy-3;
             color: $white;
         }
 
-        // ACC is a square JPEG, white letters on blue. Crop to the letters
-        // (they span 135-749 x 290-596 of 900px), then turn the blue black and
-        // let screen blending drop the black into the navy.
-        &--acc {
-            position: relative;
-            overflow: hidden;
-            height: 30px;
-            width: 60px; // 30 * 614 / 306
-            filter: none;
-            background: $marquee-bg; // the backdrop the screen blend below works against
-
-            img {
-                position: absolute;
-                width: 88.2px; // 30 * 900 / 306
-                height: 88.2px;
-                max-width: none;
-                left: -13.2px; // 135 / 900 * 88.2
-                top: -28.4px; // 290 / 900 * 88.2
-                filter: grayscale(1) contrast(6);
-                mix-blend-mode: screen;
-            }
-        }
     }
 
     @media (prefers-reduced-motion: reduce) {

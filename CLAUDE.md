@@ -101,7 +101,7 @@ content/
 data/services.yaml        the four service groups and their items, in Matt's words; each names its icon
 static/imgs/
   matt-stretton.webp      the headshot (512x512, the only photo so far)
-  logo_college_of_surgens.png, logo-acc.jpeg, logo-southen-cross.svg, logo-anzhncs.svg, logo-nib.svg
+  logo_college_of_surgens.png, logo-southen-cross.svg, logo-anzhncs.svg, logo-nib.svg
                           affiliation logos (logo-nib.svg is unused: the marquee inlines nib's path)
   social.png              1200x630 OG/Twitter card; favicon-32.png, favicon-16.png,
                           apple-touch-icon.png (gold "MS" on navy). All four generated with PIL.
@@ -177,10 +177,7 @@ stops there if the photo is bright. Nothing else changes.
 - **The `<head>` ignores the page.** `baseof.html` writes the site `description`, `keywords` and
   title into every page's meta description and OG/Twitter tags; the social image is `/imgs/social.png`.
 - **The marquee's logos are recoloured by CSS, not edited.** `filter: brightness(0) invert(1)` turns
-  every opaque pixel white, which is why the ANZHNCS SVG's unfilled (black) paths show too. ACC is a
-  blue square JPEG: it is cropped to the letters by a fixed box and blended with `screen` against
-  the marquee band's own colour (`$marquee-bg`) on its wrapper. Change its height and the crop numbers in
-  `_marquee.scss` must change with it.
+  every opaque pixel white, which is why the ANZHNCS SVG's unfilled (black) paths show too.
 - **The SCSS goes through LibSass.** `toCSS` with no `transpiler` is LibSass, which needs the extended
   edition and which Hugo deprecated in 0.153.0 (a warning every build). The old workflow installed
   Dart Sass, but nothing asked for it, so it was never used. LibSass also tries to evaluate CSS
@@ -228,10 +225,11 @@ to anyone as finished**. Matt has seen nothing of it yet.
 
 1. **The privacy policy's text and structure** are Neck Surgery Limited's with the names removed.
    It needs Matt's own policy (or a reviewed one) for his practice.
-2. **The affiliation logos** (Royal Australasian College of Surgeons, ACC, Southern Cross, nib) are
+2. **The affiliation logos** (Royal Australasian College of Surgeons, Southern Cross, nib) are
    the files that came with Nick's site, and the ANZHNCS logo is the society's own SVG from
-   anzhncs.org. Matt named all five bodies; whether he holds each membership or provider status is
-   not confirmed, and each links to the body's home page, not a profile of his.
+   anzhncs.org. Matt named these bodies; whether he holds each membership or provider status is
+   not confirmed, and each links to the body's home page, not a profile of his. ACC was in the
+   band and was taken out (owner, 2026-11-04); the About placeholder still asks about ACC.
 3. **No logo.** The hero and nav show a made-up gold "MS" diamond monogram
    (`partials/mark.html`) and the nav a text wordmark (`partials/wordmark.html`); the favicons and
    social card are a generated "MS" and name.
