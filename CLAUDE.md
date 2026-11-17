@@ -224,7 +224,6 @@ to anyone as finished**. Matt has seen nothing of it yet.
 | Where | Placeholder |
 |---|---|
 | header and Contact | `[Phone number]` (set `params.phone` and `phone_display` in `config.toml`): still to be confirmed by Matt (2026-11-11) |
-| Contact (`partials/footer.html`) | the Directions button beside the address goes nowhere until `params.maps_url` is set |
 | `content/privacy-policy.html` | **hidden since 2026-11-17** (`draft: true`, footer link and menu entry commented out) until the text is Matt's own. Still in it: `[Company name]` (twice), `[practice email address]`, `[date]`, and a visible note that the policy must be replaced or reviewed |
 
 The hero's credentials (MBChB FRACS) and role, and the footer bar's legal name (Dr Matt Stretton),

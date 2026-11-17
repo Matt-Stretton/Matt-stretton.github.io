@@ -20,7 +20,7 @@ pagination.pagerSize = 20
 
     # Contact ------------
     # Hours and address are known (2026-11-02), the suite number and email since
-    # 2026-11-11. Phone and maps_url are empty until known: the header, the contact section and the JSON-LD show a
+    # 2026-11-11. Phone is empty until known: the header, the contact section and the JSON-LD show a
     # placeholder (or leave the property out) while they are empty.
     # Hours: the display line for the contact section, and the same in structured
     # form for the JSON-LD's openingHoursSpecification. Change both together.
@@ -33,9 +33,10 @@ pagination.pagerSize = 20
     phone = ""          # E.164 for the tel: link, e.g. +6491234567
     phone_display = ""  # as written, e.g. 09 123 4567
     email = "admin@aklent.co.nz"
-    # Google Maps link for the "Directions" button beside the address, e.g. a
-    # https://maps.app.goo.gl/… share link. Empty: the button renders but goes nowhere.
-    maps_url = ""
+    # Google Maps link for the "Directions" button beside the address: a Google
+    # Maps search for the address above (owner, 2026-11-18). Change it with the
+    # address. Empty: the button renders but goes nowhere.
+    maps_url = "https://www.google.com/maps/search/?api=1&query=Suite+11%2C+Mauranui+Clinic%2C+86+Great+South+Rd%2C+Epsom+1051%2C+Auckland%2C+NZ"
 
     dateformat = "January 2, 2006"
 
