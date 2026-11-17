@@ -18,9 +18,10 @@ right edge; a moving band of affiliation logos; four service tiles on a cream ba
 text, navy, gold and maroon. **Much of the copy is still bracketed placeholders**, and
 the privacy policy is still the old practice's text with the names taken out: see "Not done yet".
 
-It is a local git repository with **no remote**. See "Branches" for what is on which. Within SFE it sits at
+Its remote is `Matt-Stretton/Matt-stretton.github.io` on GitHub (public, since 2026-11-17), and a
+push to `main` builds and publishes it to GitHub Pages (`.github/workflows/pages.yml`). See "Branches" for what is on which. Within SFE it sits at
 `sfe/matt-stretton.github.io/`, untracked by SFE like every product. The folder name suggests a
-GitHub Pages user site; nothing has been created on GitHub.
+GitHub Pages user site, which it now is: https://matt-stretton.github.io/.
 
 No JavaScript build, no `package.json`, no database, no server-side code. The page loads Alpine.js
 from unpkg (unversioned; it drives the phone menu), Lineicons and animate.css from CDNs, the two
@@ -258,14 +259,12 @@ to be set up that day). The footer bar carries a small RAH Panthers logo
    `hours_open`, `hours_close`). Telephone and email are added automatically once `params.phone` /
    `params.email` / `params.maps_url` are set. The address comes from `params.postal`, which repeats
    `params.address` in parts: change both together.
-7. **No git remote.** The commits are local only (see "Branches").
-8. **No deploy, and aklent.co.nz is not pointed anywhere.** The source's `.github/workflows/hugo.yml`
-   was left out on purpose. Its shape, for reference: on push to `main` (and by hand), install Hugo
-   **0.162.1** extended from the release `.deb`, `snap install dart-sass` (unused, see above),
-   `actions/configure-pages`, `hugo --gc --minify --baseURL <pages url>` with
-   `HUGO_ENVIRONMENT=production`, then `actions/upload-pages-artifact` and **`actions/deploy-pages`**.
-   A new workflow should install Hugo with `make setup` and run `make test`, not name a version of
-   its own; `make check` fails if it does.
+7. **aklent.co.nz is not pointed anywhere.** The site is published at
+   https://matt-stretton.github.io/ by `.github/workflows/pages.yml` on every push to `main`
+   (since 2026-11-17): `make setup`, `make check`, `make test`, then the production build with the
+   Pages base URL, `actions/upload-pages-artifact` and `actions/deploy-pages`. The workflow names
+   no Hugo version; `make check` fails if it does. The custom domain is still to do: the DNS
+   records, then Settings > Pages > Custom domain. The build picks the new base URL up by itself.
 
 `make test` cannot see any of the above: the placeholders are deliberately not a pattern it flags.
 

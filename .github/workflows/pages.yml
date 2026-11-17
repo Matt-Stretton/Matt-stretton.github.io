@@ -1,0 +1,59 @@
+# Builds the site and publishes it to GitHub Pages on every push to main (and
+# by hand from the Actions tab).
+#
+# Hugo is installed by `make setup`, which downloads the version scripts/lib.sh
+# pins (checksum-verified), so this builds with exactly what `make test` and
+# `make build` use locally, and no version is written down here. `make check`
+# fails the job if that ever stops being true. `make test` runs first: a build
+# that fails the site checks is not published.
+#
+# The build takes its base URL from the Pages settings, not config.toml, so the
+# links are right at matt-stretton.github.io now and at the custom domain as
+# soon as one is set under Settings > Pages.
+name: pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# One deploy at a time; a newer push waits for the one in flight to finish.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+      - name: make setup
+        run: make setup
+      - name: make check
+        run: make check
+      - name: make test
+        run: make test
+      - id: pages
+        uses: actions/configure-pages@v6
+      - name: Build for Pages
+        run: scripts/hugo.sh --production --cleanDestinationDir --baseURL "${{ steps.pages.outputs.base_url }}/"
+      - uses: actions/upload-pages-artifact@v5
+        with:
+          path: public
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v5

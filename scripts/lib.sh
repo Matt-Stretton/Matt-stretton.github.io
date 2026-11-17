@@ -7,9 +7,8 @@
 REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 
 # The Hugo this site is built with, extended edition. The one place the
-# version is written down: there is no deploy config yet to hold it, and when
-# one is added it should install Hugo through `make setup` rather than name a
-# version of its own. 0.168.0 is the newest release and builds the theme; the
+# version is written down: the Pages workflow (.github/workflows/pages.yml)
+# installs Hugo through `make setup` rather than naming a version of its own. 0.168.0 is the newest release and builds the theme; the
 # old GitHub Pages workflow used 0.162.1, which gives the same deprecation
 # warnings (see CLAUDE.md), so there was nothing to gain by going back.
 HUGO_PIN="0.168.0"
@@ -38,9 +37,9 @@ hugo_version_of() { "$1" version 2>/dev/null | sed -nE 's/^hugo v([0-9]+\.[0-9]+
 hugo_is_extended() { "$1" version 2>/dev/null | grep -q '+extended'; }
 
 # The build flags the old GitHub Pages workflow used (`hugo --gc --minify`),
-# minus its --baseURL, which came from the Pages deployment and has no
-# equivalent until a deploy exists. make build and make test share them so
-# that what is tested is what would be shipped.
+# minus its --baseURL, which comes from the Pages deployment: the Pages
+# workflow adds it to the same flags. make build and make test share them so
+# that what is tested is what is shipped.
 BUILD_FLAGS=(--gc --minify)
 production_env() { export HUGO_ENVIRONMENT=production; }
 
