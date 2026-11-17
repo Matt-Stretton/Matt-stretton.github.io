@@ -1,9 +1,9 @@
-{{/* The "MS" monogram: a gold diamond with Matt's initials, used at the top of the
-     hero and at the left of the nav bar. It stands in for his logo, which is
-     still to come: when it arrives, replace this one file (an <img> or inline
-     SVG, square, reading on navy) and both places follow. Sized by CSS. */}}
-<svg class="mark" viewBox="0 0 64 64" aria-hidden="true" focusable="false">
-    <path class="mark__line" d="M32 2 L62 32 L32 62 L2 32 Z"/>
-    <path class="mark__line mark__line--inner" d="M32 8 L56 32 L32 56 L8 32 Z"/>
-    <text class="mark__text" x="32.6" y="37.6" text-anchor="middle">MS</text>
+{{/* Matt's "MS" logo mark (the solid version from the designer's mock-ups,
+     .doncheckin/fwdlogomockupoptions/4.svg), used at the top of the hero and at
+     the left of the nav bar. The two paths are the designer's own, moved to a
+     tight 636x258 viewBox; the gold is the site's ($gold, set in
+     components/_header.scss), not the mock-up's #ad8e33. Sized by height in CSS. */}}
+<svg class="mark" viewBox="0 0 636 258" aria-hidden="true" focusable="false">
+    <path transform="translate(-18.5 258)" d="M 134.5625 -258 L 211.453125 -135.578125 L 126.46875 -2.03125 L 18.546875 -171.65625 L 18.546875 -258 Z M 367.9375 -258 L 367.9375 0 L 221.578125 0 L 221.578125 -150.75 L 289.703125 -258 Z M 18.546875 -127.140625 L 21.578125 -127.140625 L 102.1875 0 L 18.546875 0 Z M 18.546875 -127.140625"/>
+    <path transform="translate(353.2 258)" d="M 267.78125 -258 L 267.78125 -153.453125 L 140.296875 -258 Z M 104.890625 -256.640625 L 107.25 -256.640625 L 246.1875 -143 C 250.457031 -139.175781 254.390625 -135.40625 257.984375 -131.6875 C 261.585938 -127.976562 265.976562 -122.640625 271.15625 -115.671875 C 278.789062 -105.109375 282.609375 -92.519531 282.609375 -77.90625 C 282.609375 -65.09375 279.460938 -52.726562 273.171875 -40.8125 C 266.878906 -28.894531 257.039062 -19.113281 243.65625 -11.46875 C 230.28125 -3.820312 213.703125 0 193.921875 0 L 69.140625 -94.4375 C 51.597656 -107.695312 38.722656 -121.238281 30.515625 -135.0625 C 22.316406 -148.894531 18.21875 -163.679688 18.21875 -179.421875 C 18.21875 -194.929688 22.035156 -208.53125 29.671875 -220.21875 C 37.316406 -231.914062 47.71875 -240.910156 60.875 -247.203125 C 74.03125 -253.492188 88.703125 -256.640625 104.890625 -256.640625 Z M 19.5625 -107.921875 L 157.15625 0 L 19.5625 0 Z M 19.5625 -107.921875"/>
 </svg>

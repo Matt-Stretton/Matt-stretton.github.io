@@ -200,7 +200,20 @@
         display: flex;
         flex-wrap: wrap;
         justify-content: space-between;
+        align-items: center;
         gap: 8px var(--spacing-3);
+    }
+
+    &__legal {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    &__egg {
+        display: block;
+        height: 40px;
+        width: auto;
     }
 
     a {

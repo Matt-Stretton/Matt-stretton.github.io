@@ -111,11 +111,12 @@
             [full-start] minmax(var(--spacing-2), 1fr)
             [text-start] minmax(0, $max-width * .5)
             [photo-start] minmax(0, $max-width * .5)
-            minmax(var(--spacing-2), 1fr) [full-end];
+            [photo-end] minmax(var(--spacing-2), 1fr) [full-end];
     }
 
     &__text {
-        padding: var(--spacing-12) var(--spacing-2);
+        // stacked (below tablet landscape) the photo follows, so less below
+        padding: var(--spacing-12) var(--spacing-2) var(--spacing-6);
 
         @include for-tablet-landscape-up {
             grid-column: text-start / photo-start;
@@ -137,40 +138,40 @@
         }
     }
 
-    // The headshot is 512px square and soft above that, so it is shown at no
-    // more than its own size, bottom-aligned on its studio grey, its edges faded
-    // into the grey so the square does not show.
+    // Matt's portrait, upright at the photo's own shape (owner, 2026-11-11), no
+    // wider than 440px, in its column beside the text. It does not stretch with
+    // the text.
     &__photo {
+        width: 100%;
+        max-width: 440px;
+        aspect-ratio: unquote("960 / 1405");
+        margin: 0 auto var(--spacing-8);
         background: $studio;
-        display: flex;
-        align-items: flex-end;
-        justify-content: center;
+        border: 1px solid rgba($gold, .45);
         overflow: hidden;
-        min-height: 380px;
-        border-top: 1px solid rgba($gold, .35);
 
         @include for-tablet-landscape-up {
-            grid-column: photo-start / full-end;
-            margin: var(--spacing-14) 0 var(--spacing-14);
-            border-top: 0;
-            border-left: 1px solid rgba($gold, .45);
+            grid-column: photo-start / photo-end;
+            // Centred against the height of the text beside it (owner,
+            // 2026-11-11). anchor-center acts as center here, as the photo has
+            // no anchor; the first line is for browsers without it.
+            align-self: center;
+            align-self: anchor-center;
+            justify-self: end;
+            margin: var(--spacing-14) var(--spacing-2) var(--spacing-14) 0;
+        }
+
+        @include for-phone-only {
+            width: calc(100% - 2 * var(--spacing-2));
+            max-width: 360px;
+            margin-bottom: var(--spacing-6);
         }
 
         img {
             display: block;
             width: 100%;
-            max-width: 480px;
-            height: auto;
-            $fade-x: linear-gradient(to right, transparent 0, #000 16%, #000 84%, transparent 100%);
-            $fade-top: linear-gradient(to bottom, transparent 0, #000 20%);
-            mask-image: $fade-x, $fade-top;
-            mask-composite: intersect;
-            -webkit-mask-image: $fade-x, $fade-top;
-            -webkit-mask-composite: source-in;
-
-            @include for-phone-only {
-                max-width: 360px;
-            }
+            height: 100%;
+            object-fit: cover;
         }
     }
 }

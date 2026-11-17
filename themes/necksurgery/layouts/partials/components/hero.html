@@ -1,13 +1,16 @@
 {{/* The home page hero: the full height of the window, everything centred, and
      no nav (the nav bar follows it, see baseof.html).
 
-     (dict "title1" … "title2" … "credentials" … "role" … "subtitle" … "fullImage" …)
+     (dict "title1" … "title2" … "credentials" … "role" … "subtitle" … "fullImage" …
+           "portraitImage" …)
 
      title1 and title2 are the heading's two lines, the second in gold.
      With "fullImage" (a landscape photo, e.g. "/imgs/hero.jpg") it is the
      background, under a navy overlay that keeps the white text readable. Without
-     one, the background is the designed navy one in components/_hero.scss. */}}
-<section class="hero{{ if .fullImage }} hero--photo{{ end }}"{{ with .fullImage }} style="--hero-photo: url({{ . }});"{{ end }}>
+     one, the background is the designed navy one in components/_hero.scss.
+     "portraitImage" (optional) replaces it in windows taller than 5:4, where a
+     landscape photo would lose its sides. */}}
+<section class="hero{{ if .fullImage }} hero--photo{{ end }}"{{ with .fullImage }} style="--hero-photo: url({{ . }});{{ with $.portraitImage }} --hero-photo-portrait: url({{ . }});{{ end }}"{{ end }}>
     <div class="hero__mark">{{ partial "mark.html" . }}</div>
 
     <div class="hero__text">
@@ -19,6 +22,4 @@
         {{ with .subtitle }}<p class="hero__subtitle">{{ . }}</p>{{ end }}
         <p class="hero__cta"><a class="btn btn--gold" href="#contact">Make an enquiry</a></p>
     </div>
-
-    <a class="hero__scroll" href="#about" aria-label="Scroll to About"><span aria-hidden="true"></span></a>
 </section>

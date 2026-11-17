@@ -1,6 +1,6 @@
-// The home page hero (partials/components/hero.html): the first screen,
-// centred horizontally, the monogram at the top, the text at the foot of its
-// row just above the scroll line, and no nav. The nav bar follows it
+// The home page hero (partials/components/hero.html): the first screen. Upright
+// windows: centred, the mark at the top, the text at the foot. Landscape
+// windows: Matt on the left, the mark and text on the right. No nav. The nav bar follows it
 // in the page and sticks once scrolled to; from tablet up the hero is the window
 // less the nav bar's height, so the nav sits along the bottom of the first screen.
 
@@ -64,14 +64,28 @@ $hero-grain: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width
         mix-blend-mode: overlay;
     }
 
-    // With the landscape photo (fullImage): the photo under a navy overlay that
-    // keeps the white text readable whatever the photo does.
+    // With the photo (fullImage): the photo under a light navy overlay. The
+    // stops are the owner's (2026-11-12): lighter than before in landscape,
+    // where the text is beside Matt, and heavier at the foot in upright windows,
+    // where the text is over him.
     &--photo {
         background-image:
-            linear-gradient(180deg, rgba($navy-deep, .5) 0%, rgba($navy-deep, .05) 45%, rgba($navy-deep, .85) 100%),
+            linear-gradient(180deg, rgba($navy-deep, .25) 0%, rgba($navy-deep, .05) 45%, rgba($navy-deep, .15) 100%),
             var(--hero-photo);
         background-size: cover;
-        background-position: center;
+        // The wide photo has Matt near its left edge and is as tall as the hero
+        // in any ordinary window, so he shows whole, head to hips, in the left
+        // half; only its empty right crops.
+        background-position: left top;
+
+        // Upright windows (phones, tablets held upright): the upright photo
+        // if there is one, from its top so the face stays in the picture.
+        @media (max-aspect-ratio: 5/4) {
+            background-image:
+                linear-gradient(180deg, rgba($navy-deep, .25) 0%, rgba($navy-deep, .05) 45%, rgba($navy-deep, .55) 100%),
+                var(--hero-photo-portrait, var(--hero-photo));
+            background-position: center top;
+        }
 
         &::after {
             display: none;
@@ -82,16 +96,14 @@ $hero-grain: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width
         padding-top: var(--spacing-5);
 
         .mark {
-            width: 72px;
-            height: 72px;
+            height: 44px;
         }
 
         @include for-phone-only {
             padding-top: var(--spacing-4);
 
             .mark {
-                width: 56px;
-                height: 56px;
+                height: 36px;
             }
         }
     }
@@ -99,7 +111,17 @@ $hero-grain: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width
     &__text {
         align-self: end;
         max-width: 980px;
-        padding: var(--spacing-6) var(--spacing-2);
+        // the bottom includes the space the scroll cue used to take (removed,
+        // owner, 2026-11-11). It is on the text, not the hero: padding on the
+        // hero would add to its min-height and push the nav off the screen.
+        // Each bottom value is 80% of what it was: the owner asked for 20%
+        // less space between the button and the nav on tablet and phone
+        // (2026-11-11). Landscape windows set their own padding below.
+        padding: var(--spacing-6) var(--spacing-2) calc(var(--spacing-6) * 1.6);
+
+        @include for-phone-only {
+            padding-bottom: calc((var(--spacing-6) + var(--spacing-4)) * .8);
+        }
     }
 
     // Wide tracking leaves a gap after the last letter of each line; padding the
@@ -180,27 +202,6 @@ $hero-grain: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width
         margin: 0;
     }
 
-    // a fine gold line at the foot, pointing on to the page
-    &__scroll {
-        display: block;
-        padding: 0 var(--spacing-2) var(--spacing-4);
-
-        span {
-            display: block;
-            width: 1px;
-            height: 56px;
-            background: linear-gradient(180deg, rgba($gold, 0), $gold);
-        }
-
-        &:hover span {
-            background: linear-gradient(180deg, rgba($gold, 0), $gold-light);
-        }
-
-        @include for-phone-only {
-            span { height: 40px; }
-        }
-    }
-
     // Short windows from tablet up (a 1280x720 laptop, or a browser with toolbars
     // on a 900px screen): the hero has only the window less the nav bar, so the
     // spacing, the monogram and the name tighten to keep the nav on the bottom
@@ -212,24 +213,68 @@ $hero-grain: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width
             padding-top: var(--spacing-3);
 
             .mark {
-                width: 60px;
-                height: 60px;
+                height: 38px;
             }
         }
 
         &__text {
             padding-top: var(--spacing-3);
-            padding-bottom: var(--spacing-3);
+            padding-bottom: calc(var(--spacing-3) * 1.6);
         }
 
         &__title {
             font-size: unquote("clamp(42px, min(7.2vw, 11vh), 96px)");
         }
+    }
 
-        &__scroll {
-            padding-bottom: var(--spacing-2);
+    // Landscape windows (desktops, laptops, tablets on their side): Matt on the
+    // left of the wide photo, and the mark and text together in the right half,
+    // left-aligned and centred in the height (owner, 2026-11-11). Upright
+    // windows keep the centred layout above.
+    @media (min-aspect-ratio: 5/4) {
+        grid-template-columns: 50% 1fr;
+        grid-template-rows: 1fr auto auto 1fr;
+        justify-items: start;
+        text-align: left;
 
-            span { height: 36px; }
+        &__mark {
+            grid-column: 2;
+            grid-row: 2;
+            padding: 0 var(--spacing-3);
+        }
+
+        &__text {
+            grid-column: 2;
+            grid-row: 3;
+            align-self: start;
+            padding: var(--spacing-4) var(--spacing-3) 0;
+        }
+
+        // left-aligned, so no padding to balance the tracking; smaller, as it
+        // has half the window
+        &__title {
+            padding-left: 0;
+            font-size: unquote("clamp(40px, min(5.4vw, 11vh), 88px)");
+        }
+
+        &__meta {
+            justify-content: flex-start;
+        }
+
+        &__subtitle {
+            margin-left: 0;
+        }
+    }
+
+    // ...and where half the window is too narrow for the credentials and role
+    // on one line, they stack as on phones, with no separator.
+    @media (min-aspect-ratio: 5/4) and (max-width: 1250px) {
+        &__meta {
+            flex-direction: column;
+
+            span + span::before {
+                display: none;
+            }
         }
     }
 }

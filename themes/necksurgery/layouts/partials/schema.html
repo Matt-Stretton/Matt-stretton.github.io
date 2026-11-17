@@ -2,8 +2,7 @@
 {{- /* Physician JSON-LD. Only what is on the page and known: name, URL, the
        services Matt listed, and the opening hours (config.toml's hours_days,
        hours_open, hours_close). Telephone, email and the map link join from
-       config.toml once set. The postal address is left out while its suite
-       number is the placeholder "[X]": structured data must not carry one. */ -}}
+       config.toml once set. The postal address is params.postal. */ -}}
 {{- $services := slice -}}
 {{- range hugo.Data.services -}}
   {{- range .items -}}
@@ -27,7 +26,14 @@
       "opens" site.Params.hours_open
       "closes" site.Params.hours_close)) -}}
 {{- end -}}
-{{- /* The address goes in here (a PostalAddress from params.address) once the
-       suite number is known and "[X]" is gone from it. */ -}}
+{{- with site.Params.postal -}}
+  {{- /* Spelled out: Hugo lowercases config keys, schema.org's are camelCase. */ -}}
+  {{- $ld = merge $ld (dict "address" (dict
+      "@type" "PostalAddress"
+      "streetAddress" .streetaddress
+      "addressLocality" .addresslocality
+      "postalCode" .postalcode
+      "addressCountry" .addresscountry)) -}}
+{{- end -}}
 <script type="application/ld+json">{{ $ld | jsonify | safeJS }}</script>
 {{- end -}}

@@ -10,17 +10,17 @@ pagination.pagerSize = 20
 [params]
     # The legal name for the footer's copyright line. Placeholder until Matt
     # says whether it is his own name or a company's.
-    legal_title = "[Dr Matt Stretton]"
+    legal_title = "Dr Matt Stretton"
 
     # Meta ------------
     # Only the services Matt listed; nothing about him beyond them until his
     # bio and credentials arrive.
     description = "Dr Matt Stretton, ENT, head and neck surgeon: head and neck cancer, neck lumps, thyroid and parathyroid, nose and sinus, snoring and sleep apnoea, and children's ENT."
-    keywords = "Dr Matt Stretton, ENT, head and neck surgeon, head and neck cancer, robotic surgery, neck lumps, skin cancer, mouth, tongue and lip lesions, salivary gland, swallowing and voice problems, thyroid nodules, thyroid cancer, goitre, parathyroid, thyroglossal duct cyst, nasal blockage, allergy, deviated septum, turbinates, rhinitis, sinusitis, snoring, sleep apnoea, tonsillitis, bleeding nose, paediatric ENT, enlarged tonsils, glue ear, ear infections"
+    keywords = "Dr Matt Stretton, ENT, head and neck surgeon, head and neck cancer, robotic surgery, neck lumps, skin cancer, mouth, tongue and lip lesions, salivary gland, swallowing and voice problems, thyroid nodules, thyroid cancer, goitre, parathyroid, thyroglossal duct cyst, nasal blockage, allergy, deviated septum, turbinates, rhinitis, sinusitis, snoring, sleep apnoea, tonsillitis, bleeding nose, epistaxis, paediatric ENT, enlarged tonsils, adenoids, glue ear, ear infections"
 
     # Contact ------------
-    # Hours and address are known (2026-11-02). Phone, email and maps_url are empty
-    # until known: the header, the contact section and the JSON-LD show a
+    # Hours and address are known (2026-11-02), the suite number and email since
+    # 2026-11-11. Phone and maps_url are empty until known: the header, the contact section and the JSON-LD show a
     # placeholder (or leave the property out) while they are empty.
     # Hours: the display line for the contact section, and the same in structured
     # form for the JSON-LD's openingHoursSpecification. Change both together.
@@ -28,13 +28,11 @@ pagination.pagerSize = 20
     hours_days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
     hours_open = "08:00"
     hours_close = "17:00"
-    # The address, one entry per line. The suite number is not known yet: "[X]"
-    # stays bracketed and the contact section styles it as a placeholder. Keep it
-    # out of the JSON-LD until it is real (see partials/schema.html).
-    address = ["Suite [X], Mauranui Clinic", "86 Great South Rd", "Epsom 1051", "Auckland, NZ"]
+    # The address, one entry per line, as the contact section shows it.
+    address = ["Suite 11, Mauranui Clinic", "86 Great South Rd", "Epsom 1051", "Auckland, NZ"]
     phone = ""          # E.164 for the tel: link, e.g. +6491234567
     phone_display = ""  # as written, e.g. 09 123 4567
-    email = ""
+    email = "admin@aklent.co.nz"
     # Google Maps link for the "Directions" button beside the address, e.g. a
     # https://maps.app.goo.gl/… share link. Empty: the button renders but goes nowhere.
     maps_url = ""
@@ -48,9 +46,16 @@ pagination.pagerSize = 20
 
     # Blog ------------
     author = "Dr Matt Stretton"
-    info = "[Otolaryngologist, Head and Neck Surgeon]"
+    info = "Otolaryngologist, Head and Neck Surgeon"
 
     # analytics: none yet (Nick's ids were removed with the copy)
+
+    # The same address in parts, for the JSON-LD's PostalAddress. Change both together.
+    [params.postal]
+        streetAddress = "Suite 11, Mauranui Clinic, 86 Great South Rd"
+        addressLocality = "Epsom, Auckland"
+        postalCode = "1051"
+        addressCountry = "NZ"
 
 # Allow raw-HTML content files (content/*.html) — required since the Hugo upgrade
 # enabled the security.allowContent policy, which blocks text/html by default.

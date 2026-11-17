@@ -100,7 +100,8 @@ content/
   thankyou.html           /thankyou/  (the contact form's landing page)
 data/services.yaml        the four service groups and their items, in Matt's words; each names its icon
 static/imgs/
-  matt-stretton.webp      the headshot (512x512, the only photo so far)
+  hero-matt.jpg, hero-matt-portrait.jpg   the hero photo, wide and upright ("The hero photo")
+  matt-stretton-portrait.webp   the About portrait; matt-stretton.webp is the old headshot, unused
   logo_college_of_surgens.png, logo-southen-cross.svg, logo-anzhncs.svg, logo-nib.svg
                           affiliation logos (logo-nib.svg is unused: the marquee inlines nib's path)
   social.png              1200x630 OG/Twitter card; favicon-32.png, favicon-16.png,
@@ -114,9 +115,8 @@ themes/necksurgery/       the theme, tracked here, not a submodule
     home.html             below the hero: About, the marquee, Services
     header.html           the sticky navy nav bar: monogram + wordmark, links, phone link, maroon
                           Enquire button, Alpine burger for phones
-    mark.html             the gold "MS" diamond monogram (hero top and nav): swap this one file
-                          for the logo
-    wordmark.html         the "Dr Matt Stretton" text beside the monogram in the nav
+    mark.html             Matt's gold "MS" logo mark, inline SVG (hero top and nav)
+    wordmark.html         the "Dr Matt Stretton" lettering beside the mark in the nav, inline SVG
     components/hero.html  the centred hero (the window less the nav bar from 600px up, so the
                           nav sits at the bottom of the first screen): monogram, two-line
                           name, credentials and role, one-line subtitle, gold button; a designed navy background, or the
@@ -148,18 +148,28 @@ so anchors land below it.
 
 ### The hero photo
 
-The landscape photo is due the week of 2026-11-02. Until then the hero shows a designed background
-(layered navy gradients, a faint blue and gold glow behind the heading, a vignette and a fine SVG
-grain, all in `components/_hero.scss`). To put the photo in:
+Matt's photos arrived on 2026-11-11 (`.doncheckin/Matt Stretton -4.jpg` and `-5.jpg`, both
+upright). The hero uses `-4` (scrubs, arms folded, dark studio backdrop) as two files, both set in
+`themes/necksurgery/layouts/index.html`:
 
-1. Supply a landscape **JPEG, 2400x1500 (16:10), under 400 KB**, with the subject or the quiet
-   part of the picture in the middle third: the heading sits centred over it, and the sides crop
-   away on phones (`background-size: cover`, centred).
-2. Save it as **`static/imgs/hero.jpg`**.
-3. In **`themes/necksurgery/layouts/index.html`**, set `"fullImage" "/imgs/hero.jpg"`.
+- **`static/imgs/hero-matt.jpg`** (`fullImage`, 4000x1600): for landscape windows (5:4 and
+  wider). The photo less its headroom, 150px in from the left of a wide canvas, the rest of the
+  canvas being **the studio backdrop carried out from the photo's edges, row by row, with the
+  joins feathered**. The extra backdrop is made, not photographed. It is anchored left and is as
+  tall as the hero, so Matt shows whole in the left half and only the empty right crops. The mark
+  and the text sit together in the right half, left-aligned (owner, 2026-11-11).
+- **`static/imgs/hero-matt-portrait.jpg`** (`portraitImage`, 720x1200): the photo less its
+  headroom and side margins, used in windows taller than 5:4 (phones, upright tablets), from its
+  top, under the centred layout: mark at the top, text at the foot, the heading over his neck and
+  chest. The owner called this layout right on 2026-11-11; do not change it with the landscape one.
 
-The hero then shows the photo under a navy overlay (`.hero--photo`); darken the overlay's three
-stops there if the photo is bright. Nothing else changes.
+The scroll cue under the button was removed at every size (owner, 2026-11-11). Its space is
+padding on `.hero__text`, never on `.hero`: padding there adds to the hero's `min-height` and
+pushes the nav bar off the first screen.
+
+Both sit under the navy overlay (`.hero--photo`). `static/imgs/hero.jpg` (untracked, 1.9 MB) is the
+earlier stand-in photo and is no longer referenced. Leaving `fullImage` empty brings back the
+designed navy background.
 
 ## Traps that do not announce themselves
 
@@ -212,14 +222,17 @@ to anyone as finished**. Matt has seen nothing of it yet.
 
 | Where | Placeholder |
 |---|---|
-| hero (`layouts/index.html`) | `[MBChB FRACS]` (credentials), `[Otolaryngologist, Head and Neck Surgeon]` (role) |
-| About (`partials/home.html`) | four `[Bio to come from Matt: …]` paragraphs |
-| Services (`partials/home.html`) | `[Intro to come from Matt: …]` |
-| header and Contact | `[Phone number]` (set `params.phone` and `phone_display` in `config.toml`), `[Email address]` (`params.email`) |
-| Contact (`partials/footer.html`) | `Suite [X]`, the suite number in the address (`params.address` in `config.toml`; replace `[X]` there); the Directions button beside the address goes nowhere until `params.maps_url` is set |
-| footer bar | `[Dr Matt Stretton]` as the legal name (`params.legal_title`): his own name, or a company's? |
-| `config.toml` | `info = "[Otolaryngologist, Head and Neck Surgeon]"` (unused by the templates today) |
+| header and Contact | `[Phone number]` (set `params.phone` and `phone_display` in `config.toml`): still to be confirmed by Matt (2026-11-11) |
+| Contact (`partials/footer.html`) | the Directions button beside the address goes nowhere until `params.maps_url` is set |
 | `content/privacy-policy.html` | `[Company name]` (twice), `[practice email address]`, `[date]`, and a visible note that the policy must be replaced or reviewed |
+
+The hero's credentials (MBChB FRACS) and role, and the footer bar's legal name (Dr Matt Stretton),
+lost their brackets on 2026-11-17 on the owner's say-so.
+
+**Matt's copy arrived on 2026-11-11**: the About bio, the Services intro, two service-list
+changes, the suite number (11) and the contact email (`admin@aklent.co.nz`; the mailbox was still
+to be set up that day). The footer bar carries a small RAH Panthers logo
+(`static/imgs/logo-rah-panthers.webp`), an easter egg he asked for.
 
 **Still Nick's, or unconfirmed:**
 
@@ -229,20 +242,22 @@ to anyone as finished**. Matt has seen nothing of it yet.
    the files that came with Nick's site, and the ANZHNCS logo is the society's own SVG from
    anzhncs.org. Matt named these bodies; whether he holds each membership or provider status is
    not confirmed, and each links to the body's home page, not a profile of his. ACC was in the
-   band and was taken out (owner, 2026-11-04); the About placeholder still asks about ACC.
-3. **No logo.** The hero and nav show a made-up gold "MS" diamond monogram
-   (`partials/mark.html`) and the nav a text wordmark (`partials/wordmark.html`); the favicons and
-   social card are a generated "MS" and name.
-4. **No landscape hero photo.** It arrives next week (owner, 2026-10-29). The hero shows a designed
-   navy background meanwhile; see "The hero photo" for the file, size and the one line to change.
-   The About section uses the 512px headshot, shown no larger than 480px so it stays sharp.
+   band and was taken out (owner, 2026-11-04).
+3. **The logo is in (2026-11-11), the social card is not redone.** `partials/mark.html` is the
+   solid "MS" mark from the designer's mock-ups (`.doncheckin/fwdlogomockupoptions/4.svg`), in the
+   site's gold, in the hero and the nav; the favicons are the same mark cut from `4.png`. Which
+   mock-up option Matt prefers is not confirmed. The nav lettering (`partials/wordmark.html`) is the designer's
+   own letterforms from the same file, as outlines; `social.png` is still the generated name card.
+4. **The photos are in (2026-11-11), not yet seen by Matt in place.** See "The hero photo". The
+   About section shows `-5` upright (`static/imgs/matt-stretton-portrait.webp`, 960x1405, shown
+   up to 440px wide). `matt-stretton.webp`, the first 512px headshot, is no longer used.
 5. **The contact form goes nowhere.** `action="#"` and an empty reCAPTCHA `data-sitekey`; it needs
    Matt's own Static Contact endpoint and key. The map was removed (it was Nick's clinic and key);
    add one back only for Matt's address.
 6. **The JSON-LD** has his name, the URL, the services and the opening hours (from `params.hours_days`,
    `hours_open`, `hours_close`). Telephone and email are added automatically once `params.phone` /
-   `params.email` / `params.maps_url` are set. The address is not wired up: it waits on the suite
-   number, since structured data must not carry the `[X]` placeholder (see `partials/schema.html`).
+   `params.email` / `params.maps_url` are set. The address comes from `params.postal`, which repeats
+   `params.address` in parts: change both together.
 7. **No git remote.** The commits are local only (see "Branches").
 8. **No deploy, and aklent.co.nz is not pointed anywhere.** The source's `.github/workflows/hugo.yml`
    was left out on purpose. Its shape, for reference: on push to `main` (and by hand), install Hugo
