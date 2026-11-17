@@ -182,12 +182,6 @@
     }
 }
 
-.recaptcha-note {
-    margin: var(--spacing-2) 0 0;
-    font-size: 12px;
-    color: rgba($white, .6);
-}
-
 .footer-bar {
     background: $navy-3;
     color: rgba($white, .7);
@@ -225,8 +219,4 @@
             color: $gold;
         }
     }
-}
-
-.grecaptcha-badge {
-    display: none;
 }

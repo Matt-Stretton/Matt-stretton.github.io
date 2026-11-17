@@ -41,8 +41,11 @@
             <div class="contact__form">
                 <h3>Appointment enquiry</h3>
 
-                <form id="contact_form" method="post" action="#" data-todo="Matt's own Static Contact endpoint goes here">
-                    <input type="hidden" name="b0tbu5t3r" value="true" />
+                {{/* Posts to Static Contact (staticcontact.com), which emails the
+                     enquiry on; the key in the address is Matt's form there. Where it
+                     sends the visitor afterwards (/thankyou/) is the form's Return URL
+                     in Static Contact, not anything here. */}}
+                <form id="contact_form" method="post" action="https://staticcontact.com/send/1a67adbb-0122-4796-b7da-39bd482c9f88">
                     <div class="form-grid">
                         <div>
                             <label for="cf_first_name">First name *</label>
@@ -66,26 +69,11 @@
                     <label for="cf_message">Message</label>
                     <textarea id="cf_message" name="message" rows="5"></textarea>
 
-                    <button class="btn btn--maroon g-recaptcha" data-sitekey="" data-callback='onSubmit'
-                        data-action='submit'>Send enquiry <i class="lni lni-arrow-right" aria-hidden="true"></i></button>
-                    <script src="https://www.google.com/recaptcha/api.js"></script>
-                    <script>
-                        function onSubmit(token) {
-                            var form = document.getElementById("contact_form");
-                            if (form.checkValidity()) {
-                                form.submit();
-                            } else {
-                                grecaptcha.reset();
-                                form.reportValidity();
-                            }
-                        }
-                    </script>
-
-                    <p class="recaptcha-note">
-                        This site is protected by reCAPTCHA and the Google
-                        <a href="https://policies.google.com/privacy">Privacy Policy</a> and
-                        <a href="https://policies.google.com/terms">Terms of Service</a> apply.
-                    </p>
+                    <button class="btn btn--maroon" type="submit">Send enquiry <i class="lni lni-arrow-right" aria-hidden="true"></i></button>
+                    {{/* Static Contact's own spam check, no keys needed: it adds its
+                         hidden fields to the form here, and a post without them is
+                         blocked. It must stay inside the form. */}}
+                    <script src="https://staticcontact.com/js/static_contact_botbuster.js"></script>
                 </form>
             </div>
         </div>

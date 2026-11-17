@@ -25,7 +25,7 @@ GitHub Pages user site, which it now is: https://matt-stretton.github.io/.
 
 No JavaScript build, no `package.json`, no database, no server-side code. The page loads Alpine.js
 from unpkg (unversioned; it drives the phone menu), Lineicons and animate.css from CDNs, the two
-Google Fonts (from the stylesheet's `@import`), and Google's reCAPTCHA script with the form. There
+Google Fonts (from the stylesheet's `@import`), and Static Contact's botbuster script with the form. There
 is no analytics tag.
 
 `.doncheckin/` (gitignored) holds what the client sent: the headshot original, his reference
@@ -252,9 +252,11 @@ to be set up that day). The footer bar carries a small RAH Panthers logo
 4. **The photos are in (2026-11-11), not yet seen by Matt in place.** See "The hero photo". The
    About section shows `-5` upright (`static/imgs/matt-stretton-portrait.webp`, 960x1405, shown
    up to 440px wide). `matt-stretton.webp`, the first 512px headshot, is no longer used.
-5. **The contact form goes nowhere.** `action="#"` and an empty reCAPTCHA `data-sitekey`; it needs
-   Matt's own Static Contact endpoint and key. The map was removed (it was Nick's clinic and key);
-   add one back only for Matt's address.
+5. **The contact form posts to Static Contact** (`https://staticcontact.com/send/<Matt's form key>`,
+   in `partials/footer.html`, since 2026-11-18), guarded by Static Contact's botbuster script, not
+   reCAPTCHA. Not yet tested with a real submission; the form's Return URL in Static Contact should
+   be the site's `/thankyou/`. The map was removed (it was Nick's clinic and key); add one back
+   only for Matt's address.
 6. **The JSON-LD** has his name, the URL, the services and the opening hours (from `params.hours_days`,
    `hours_open`, `hours_close`). Telephone and email are added automatically once `params.phone` /
    `params.email` / `params.maps_url` are set. The address comes from `params.postal`, which repeats
