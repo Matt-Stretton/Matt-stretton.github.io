@@ -205,6 +205,8 @@
     }
 
     &__legal {
+        // keeps to the right while the privacy link is hidden
+        margin-left: auto;
         display: inline-flex;
         align-items: center;
         gap: 12px;

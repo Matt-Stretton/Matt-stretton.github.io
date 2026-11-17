@@ -93,7 +93,10 @@
 </footer>
 <div class="footer-bar">
     <div class="footer-bar__inner">
-        <a href="/privacy-policy/">Privacy policy</a>
+        {{/* The privacy policy is hidden for now (owner, 2026-11-17): its page is a
+             draft (content/privacy-policy.html) until the text is Matt's own. Put
+             this link back when it is published:
+             <a href="/privacy-policy/">Privacy policy</a> */}}
         <span class="footer-bar__legal">
             &copy; {{ now.Format "2006" }} {{ $p.legal_title }}. All rights reserved.
             {{/* Matt's team from his fellowship at the Royal Adelaide Hospital: a

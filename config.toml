@@ -97,7 +97,8 @@ pagination.pagerSize = 20
 #     name = "Terms and Conditions"
 #     weight = 1
 #     url  = "/terms-and-conditions"
-[[menu.footer]]
-    name = "Privacy policy"
-    weight = 1
-    url  = "/privacy-policy"
+# Hidden for now (2026-11-17): the page is a draft until the policy is Matt's own.
+# [[menu.footer]]
+#     name = "Privacy policy"
+#     weight = 1
+#     url  = "/privacy-policy"

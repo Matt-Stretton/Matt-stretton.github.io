@@ -96,7 +96,7 @@ config.toml               title, baseURL, [params] (description, keywords, legal
                           for the JSON-LD) and address lines, and the still empty phone /
                           phone_display / email / maps_url the templates fall back from), menus
 content/
-  privacy-policy.html     /privacy-policy/  (the old practice's policy, names replaced by placeholders)
+  privacy-policy.html     /privacy-policy/  (a draft, so not built: the old practice's policy, names replaced by placeholders)
   thankyou.html           /thankyou/  (the contact form's landing page)
 data/services.yaml        the four service groups and their items, in Matt's words; each names its icon
 static/imgs/
@@ -224,7 +224,7 @@ to anyone as finished**. Matt has seen nothing of it yet.
 |---|---|
 | header and Contact | `[Phone number]` (set `params.phone` and `phone_display` in `config.toml`): still to be confirmed by Matt (2026-11-11) |
 | Contact (`partials/footer.html`) | the Directions button beside the address goes nowhere until `params.maps_url` is set |
-| `content/privacy-policy.html` | `[Company name]` (twice), `[practice email address]`, `[date]`, and a visible note that the policy must be replaced or reviewed |
+| `content/privacy-policy.html` | **hidden since 2026-11-17** (`draft: true`, footer link and menu entry commented out) until the text is Matt's own. Still in it: `[Company name]` (twice), `[practice email address]`, `[date]`, and a visible note that the policy must be replaced or reviewed |
 
 The hero's credentials (MBChB FRACS) and role, and the footer bar's legal name (Dr Matt Stretton),
 lost their brackets on 2026-11-17 on the owner's say-so.
