@@ -1,141 +1,60 @@
-// The home page hero (partials/components/hero.html): the first screen. Upright
-// windows: centred, the mark at the top, the text at the foot. Landscape
-// windows: Matt on the left, the mark and text on the right. No nav. The nav bar follows it
-// in the page and sticks once scrolled to; from tablet up the hero is the window
-// less the nav bar's height, so the nav sits along the bottom of the first screen.
-
-// A fine grain, so the gradient background reads as a surface, not a fill.
-// (The filter reference is written url%28…%29 so the site check's url() scan
-// does not take it for a file.)
-$hero-grain: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url%28%23n%29'/%3E%3C/svg%3E";
-
+// The home page intro (partials/components/hero.html), below desktop width only:
+// the mark, the name block and the gold button, centred on plain navy, then the
+// nav bar under it. On desktop it is gone and the nav bar is the top of the page
+// (owner, 2026-11-25). The full-screen photo hero it replaced is on main before
+// that date.
 .hero {
-    position: relative;
-    isolation: isolate;
-    overflow: hidden;
-    // Phones: the window's height, within reason: never cramped on a short
-    // screen, never a wall of empty navy on a tall one.
-    // Tablet and up: exactly the window less the nav bar, so the nav's bottom edge
-    // is the bottom of the first screen. No floor or cap here, since either would
-    // move the nav off that edge; min-height (not height) lets the content's own
-    // height win on a very short window rather than clip it.
-    min-height: 640px;
-    min-height: unquote("clamp(620px, 100vh, 1000px)");
-    min-height: unquote("clamp(620px, 100svh, 1000px)");
+    background: $navy;
+    color: $white;
+    text-align: center;
+    padding: var(--spacing-5) var(--spacing-2) var(--spacing-5);
+
+    // the window less the nav bar, so the nav sits at the foot of the first
+    // screen (owner, 2026-11-25); the content centred in that height.
+    // min-height, so a very short window grows the intro rather than clipping
+    // it. svh: the height with the browser's toolbars showing, so the nav is
+    // not hidden under them; vh first for browsers without it.
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    box-sizing: border-box;
+    min-height: calc(100vh - #{$header-height-phone});
+    min-height: unquote("calc(100svh - #{$header-height-phone})");
 
     @include for-tablet-portrait-up {
         min-height: calc(100vh - #{$header-height});
         min-height: unquote("calc(100svh - #{$header-height})");
     }
-    display: grid;
-    grid-template-rows: auto 1fr auto;
-    justify-items: center;
-    text-align: center;
-    color: $white;
 
-    // Until the photo arrives: deep navy to a bluer navy, a lighter blue haze
-    // behind the heading warmed by a faint gold glow, and a lift of blue in the
-    // top right corner. (Gold alone over navy turns muddy grey.)
-    background-color: $navy;
-    background-image:
-        radial-gradient(ellipse 30% 22% at 50% 44%, rgba($gold, .07) 0%, rgba($gold, 0) 75%),
-        radial-gradient(ellipse 55% 45% at 50% 46%, rgba(#3D669E, .22) 0%, rgba(#3D669E, 0) 72%),
-        radial-gradient(ellipse 70% 60% at 88% 4%, rgba(#2B5288, .5) 0%, rgba(#2B5288, 0) 70%),
-        radial-gradient(ellipse 60% 55% at 6% 100%, rgba(#1E3D69, .45) 0%, rgba(#1E3D69, 0) 70%),
-        linear-gradient(165deg, $navy-deep 0%, $navy 55%, #14305A 100%);
-
-    // vignette and grain, over the background and under the text
-    &::before,
-    &::after {
-        content: "";
-        position: absolute;
-        inset: 0;
-        z-index: -1;
-        pointer-events: none;
-    }
-
-    &::before {
-        background: radial-gradient(ellipse 85% 75% at 50% 45%, rgba($navy-deep, 0) 55%, rgba($navy-deep, .7) 100%);
-    }
-
-    &::after {
-        background-image: url($hero-grain);
-        opacity: .06;
-        mix-blend-mode: overlay;
-    }
-
-    // With the photo (fullImage): the photo under a light navy overlay. The
-    // stops are the owner's (2026-11-12): lighter than before in landscape,
-    // where the text is beside Matt, and heavier at the foot in upright windows,
-    // where the text is over him.
-    &--photo {
-        background-image:
-            linear-gradient(180deg, rgba($navy-deep, .25) 0%, rgba($navy-deep, .05) 45%, rgba($navy-deep, .15) 100%),
-            var(--hero-photo);
-        background-size: cover;
-        // The wide photo has Matt near its left edge and is as tall as the hero
-        // in any ordinary window, so he shows whole, head to hips, in the left
-        // half; only its empty right crops.
-        background-position: left top;
-
-        // Upright windows (phones, tablets held upright): the upright photo
-        // if there is one, from its top so the face stays in the picture.
-        @media (max-aspect-ratio: 5/4) {
-            background-image:
-                linear-gradient(180deg, rgba($navy-deep, .25) 0%, rgba($navy-deep, .05) 45%, rgba($navy-deep, .55) 100%),
-                var(--hero-photo-portrait, var(--hero-photo));
-            background-position: center top;
-        }
-
-        &::after {
-            display: none;
-        }
+    @include for-tablet-landscape-up {
+        display: none;
     }
 
     &__mark {
-        padding-top: var(--spacing-5);
+        margin-bottom: var(--spacing-4);
 
         .mark {
-            height: 44px;
-        }
-
-        @include for-phone-only {
-            padding-top: var(--spacing-4);
-
-            .mark {
-                height: 36px;
-            }
+            height: 36px;
+            margin: 0 auto;
         }
     }
 
-    &__text {
-        align-self: end;
-        max-width: 980px;
-        // the bottom includes the space the scroll cue used to take (removed,
-        // owner, 2026-11-11). It is on the text, not the hero: padding on the
-        // hero would add to its min-height and push the nav off the screen.
-        // Each bottom value is 40% of what it first was: the owner asked for
-        // 20% less space between the button and the nav on tablet and phone
-        // (2026-11-11), then half of that again so the text sits lower and
-        // more of Matt's head shows (2026-11-18). Landscape windows set their
-        // own padding below.
-        padding: var(--spacing-6) var(--spacing-2) calc(var(--spacing-6) * .8);
-
-        @include for-phone-only {
-            padding-bottom: calc((var(--spacing-6) + var(--spacing-4)) * .4);
-        }
+    &__cta {
+        margin: var(--spacing-4) 0 0;
     }
+}
 
-    // Wide tracking leaves a gap after the last letter of each line; padding the
-    // left by the same amount puts the letters, not the box, in the centre.
+// Matt's name, credentials, role and subtitle (partials/name-block.html): in the
+// intro above, centred; at the top of About on desktop, left-aligned. Smaller
+// than the old full-screen hero's name. The lines under it share one font, size
+// and colour (owner, 2026-11-25).
+.name-block {
     &__title {
         font-family: $font-title;
         font-weight: 500;
-        font-size: 60px;
-        font-size: unquote("clamp(42px, 7.2vw, 96px)");
-        line-height: 1.12;
-        letter-spacing: .16em;
-        padding-left: .16em;
+        font-size: 40px;
+        line-height: 1.15;
+        letter-spacing: .14em;
         text-transform: uppercase;
         color: $white;
         margin-bottom: var(--spacing-3);
@@ -144,141 +63,62 @@ $hero-grain: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width
             display: block;
         }
 
-        @include for-phone-only {
-            font-size: 46px;
-            letter-spacing: .12em;
-            padding-left: .12em;
+        @include for-tablet-landscape-up {
+            font-size: 52px;
+        }
+
+        // a short gold rule under the name, as under the section headings
+        &::after {
+            content: "";
+            display: block;
+            width: 64px;
+            height: 1px;
+            margin-top: var(--spacing-3);
+            background: $gold;
         }
     }
 
-    &__title-accent {
+    &__accent {
         color: $gold;
     }
 
+    // In the heading's font, white and as large as the old hero's subtitle, so
+    // the lines stand out like the old title did (owner, 2026-11-25); all
+    // three alike.
     &__meta {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 6px 0;
-        font-size: 13px;
-        font-weight: 500;
-        letter-spacing: .16em;
-        color: rgba($white, .72);
-        margin-bottom: var(--spacing-3);
-
-        span + span::before {
-            content: "";
-            display: inline-block;
-            width: 4px;
-            height: 4px;
-            margin: 0 16px;
-            vertical-align: middle;
-            background: $gold;
-            transform: rotate(45deg);
-        }
-
-        // on phones the two parts stack, with no separator
-        @include for-phone-only {
-            flex-direction: column;
-
-            span + span::before {
-                display: none;
-            }
-        }
-    }
-
-    &__subtitle {
-        font-size: 20px;
+        font-family: $font-title;
+        font-size: 17px;
+        font-weight: 400;
         line-height: 1.55;
+        letter-spacing: .06em;
         color: $white;
-        margin: 0 auto var(--spacing-5);
-        max-width: 640px;
-
-        @include for-phone-only {
-            font-size: 18px;
-            margin-bottom: var(--spacing-4);
-        }
-    }
-
-    &__cta {
         margin: 0;
-    }
 
-    // Short windows from tablet up (a 1280x720 laptop, or a browser with toolbars
-    // on a 900px screen): the hero has only the window less the nav bar, so the
-    // spacing, the monogram and the name tighten to keep the nav on the bottom
-    // edge. The name also scales with the height here, not just the width. At full
-    // spacing the content is about 780px tall, so the threshold is that plus the
-    // nav bar.
-    @media screen and (min-width: 600px) and (max-height: 860px) {
-        &__mark {
-            padding-top: var(--spacing-3);
-
-            .mark {
-                height: 38px;
-            }
+        @include for-tablet-landscape-up {
+            font-size: 20px;
         }
 
-        &__text {
-            padding-top: var(--spacing-3);
-            padding-bottom: calc(var(--spacing-3) * .8);
-        }
-
-        &__title {
-            font-size: unquote("clamp(42px, min(7.2vw, 11vh), 96px)");
+        // credentials and role each on its own line, at every width: side by
+        // side, the role wrapped in the desktop column
+        span {
+            display: block;
         }
     }
+}
 
-    // Landscape windows (desktops, laptops, tablets on their side): Matt on the
-    // left of the wide photo, and the mark and text together in the right half,
-    // left-aligned and centred in the height (owner, 2026-11-11). Upright
-    // windows keep the centred layout above.
-    @media (min-aspect-ratio: 5/4) {
-        grid-template-columns: 50% 1fr;
-        grid-template-rows: 1fr auto auto 1fr;
-        justify-items: start;
-        text-align: left;
+// centred (the intro): the tracking's trailing gap, balanced on the left
+.hero .name-block__title {
+    padding-left: .14em;
 
-        &__mark {
-            grid-column: 2;
-            grid-row: 2;
-            padding: 0 var(--spacing-3);
-        }
-
-        &__text {
-            grid-column: 2;
-            grid-row: 3;
-            align-self: start;
-            padding: var(--spacing-4) var(--spacing-3) 0;
-        }
-
-        // left-aligned, so no padding to balance the tracking; smaller, as it
-        // has half the window
-        &__title {
-            padding-left: 0;
-            font-size: unquote("clamp(40px, min(5.4vw, 11vh), 88px)");
-        }
-
-        &__meta {
-            justify-content: flex-start;
-        }
-
-        &__subtitle {
-            margin-left: 0;
-        }
+    &::after {
+        margin-left: auto;
+        margin-right: auto;
     }
+}
 
-    // ...and where half the window is too narrow for the credentials and role
-    // on one line, they stack as on phones, with no separator.
-    @media (min-aspect-ratio: 5/4) and (max-width: 1250px) {
-        &__meta {
-            flex-direction: column;
-
-            span + span::before {
-                display: none;
-            }
-        }
-    }
+// About's paragraph spacing would otherwise open gaps between the lines
+.about .name-block__meta {
+    margin: 0;
 }
 
 // A short gold rule under headings.

@@ -49,9 +49,13 @@
         }
     }
 
+    // pretty wrapping keeps the last line from being one short word (the
+    // Services intro ended in a lone "in:" on phones, owner, 2026-11-25); the
+    // template also ties that last word to the one before it with &nbsp;.
     &__intro {
         max-width: 640px;
         margin: var(--spacing-4) auto 0;
+        text-wrap: pretty;
     }
 }
 
@@ -101,30 +105,82 @@
 // the middle out to the right edge of the window, as in the reference. The
 // grid's outer columns are the margins either side of $max-width.
 .about {
+    // Below desktop: navy, so the photo above the text is a clean block of its
+    // own. Desktop: the photo's own backdrop colour, so the photo, its edges
+    // blended into that colour, has no visible edge (owner, 2026-11-25).
     background: $navy;
+
+    @include for-tablet-landscape-up {
+        background: $studio;
+        // the photo runs past its column (see &__photo); nothing past the
+        // window's edges
+        overflow: hidden;
+        // at least the window less the nav bar, the text centred in it; where
+        // the text is taller (small screens), the section grows and scrolls
+        // (owner, 2026-11-25)
+        min-height: calc(100vh - #{$header-height});
+        min-height: unquote("calc(100svh - #{$header-height})");
+    }
     color: $on-navy;
     display: grid;
     grid-template-columns: 1fr;
 
+    // Desktop: the photo in the left half out to the window's edge, the text in
+    // the right half of the content width, as the old full-screen hero had them
+    // (owner, 2026-11-25).
     @include for-tablet-landscape-up {
         grid-template-columns:
-            [full-start] minmax(var(--spacing-2), 1fr)
-            [text-start] minmax(0, $max-width * .5)
-            [photo-start] minmax(0, $max-width * .5)
-            [photo-end] minmax(var(--spacing-2), 1fr) [full-end];
+            [full-start photo-start] minmax(var(--spacing-2), 1fr)
+            minmax(0, $max-width * .5)
+            [photo-end text-start] minmax(0, $max-width * .5)
+            [text-end] minmax(var(--spacing-2), 1fr) [full-end];
     }
 
+    // Below desktop the photo comes first, straight under the nav bar, then the
+    // "Meet" heading and the text. On desktop the photo is on the left and the
+    // text, headed by the name block (no "Meet" heading), on the right.
     &__text {
-        // stacked (below tablet landscape) the photo follows, so less below
-        padding: var(--spacing-12) var(--spacing-2) var(--spacing-6);
+        order: 2;
+        max-width: 760px;
+        margin: 0 auto;
+        padding: var(--spacing-6) var(--spacing-2) var(--spacing-10);
+
+        > .name-block {
+            display: none;
+            margin-bottom: var(--spacing-6);
+        }
 
         @include for-tablet-landscape-up {
-            grid-column: text-start / photo-start;
-            padding: var(--spacing-14) var(--spacing-8) var(--spacing-14) var(--spacing-2);
+            order: 0;
+            max-width: none;
+            margin: 0;
+            grid-column: text-start / text-end;
+            position: relative;
+            z-index: 1; // over the photo's blended right edge
+            grid-row: 1; // both on row 1: the photo's columns come first, so
+                         // auto-placement would drop it to a second row
+            align-self: center;
+            padding: var(--spacing-8) var(--spacing-2) var(--spacing-8) var(--spacing-6);
+
+            > .name-block {
+                display: block;
+            }
+
+            .about__head {
+                display: none;
+            }
+        }
+
+        // wide screens: the text runs on into the right margin, so it takes
+        // fewer lines and the section fits the window (owner, 2026-11-25)
+        @include for-desktop-up {
+            grid-column: text-start / full-end;
+            box-sizing: border-box;
+            max-width: 860px; // 780px of text once the padding is inside
         }
 
         @include for-phone-only {
-            padding: var(--spacing-8) var(--spacing-2) var(--spacing-6);
+            padding: var(--spacing-5) var(--spacing-2) var(--spacing-8);
         }
 
         p {
@@ -138,40 +194,135 @@
         }
     }
 
-    // Matt's portrait, upright at the photo's own shape (owner, 2026-11-11), no
-    // wider than 440px, in its column beside the text. It does not stretch with
-    // the text.
+    // The scrub photo, cropped above so his head is near its top, its sides and
+    // top blended into $studio. Below desktop: the full width, straight under
+    // the nav bar (no gap, no frame), at its own shape but never taller than the
+    // window less the nav bar. On desktop: the left half of the section out to
+    // the window's edge and its full height, like a background (owner,
+    // 2026-11-25).
     &__photo {
+        order: 1;
+        position: relative;
         width: 100%;
-        max-width: 440px;
-        aspect-ratio: unquote("960 / 1405");
-        margin: 0 auto var(--spacing-8);
+        aspect-ratio: unquote("1440 / 1650");
+        max-height: calc(100vh - #{$header-height});
+        max-height: unquote("calc(100svh - #{$header-height})");
         background: $studio;
-        border: 1px solid rgba($gold, .45);
         overflow: hidden;
+
+        @include for-phone-only {
+            max-height: calc(100vh - #{$header-height-phone});
+            max-height: unquote("calc(100svh - #{$header-height-phone})");
+        }
 
         @include for-tablet-landscape-up {
             grid-column: photo-start / photo-end;
-            // Centred against the height of the text beside it (owner,
-            // 2026-11-11). anchor-center acts as center here, as the photo has
-            // no anchor; the first line is for browsers without it.
-            align-self: center;
-            align-self: anchor-center;
-            justify-self: end;
-            margin: var(--spacing-14) var(--spacing-2) var(--spacing-14) 0;
+            grid-row: 1;
+            // the image runs on under the text, so its own blended right edge,
+            // not this column's edge, is where it meets the section
+            overflow: visible;
+            align-self: stretch;
+            aspect-ratio: auto;
+            max-height: none;
         }
 
-        @include for-phone-only {
-            width: calc(100% - 2 * var(--spacing-2));
-            max-width: 360px;
-            margin-bottom: var(--spacing-6);
-        }
+        // The image is out of the flow, so the text, not the photo, sets the
+        // section's height. Below desktop it fills the box.
+        container-type: inline-size;
 
         img {
+            position: absolute;
+            bottom: 0;
+            left: 0;
             display: block;
             width: 100%;
             height: 100%;
-            object-fit: cover;
+        }
+
+        // Desktop: on the box's bottom, with Matt centred in it (his middle is
+        // 49% across the photo; owner, 2026-11-25), and as tall as the box
+        // unless that would make him (65.4% of the photo's width) wider than
+        // the box less 100px: (100cqw - 100px) / .654 of width, times the
+        // photo's 1650/1440, gives 1.752. A narrow window shrinks him rather
+        // than cutting him off; the space above is the section's colour, which
+        // the photo's blended top edge fades into.
+        @include for-tablet-landscape-up {
+            img {
+                left: 50%;
+                transform: translateX(-49%);
+                width: auto;
+                max-width: none;
+                height: unquote("min(100%, calc((100cqw - 100px) * 1.752))");
+            }
+        }
+    }
+}
+
+// care quote -----------------------------------------------------------------
+// The last paragraph of the bio as a pull quote, between About and the
+// affiliations band: the words in white, left-aligned, in the heading's font,
+// with a large gold quote mark to their left (owner, 2026-11-25). Below desktop it is on the lighter navy (#17304F, owner, 2026-11-25),
+// so it stands apart from About's navy text above it; on desktop, where About
+// is the photo's grey, it is on navy.
+.care-quote {
+    background: $navy-2;
+    color: $white;
+    padding: var(--spacing-8) var(--spacing-2);
+    text-align: left;
+
+    @include for-tablet-landscape-up {
+        background: $navy;
+        padding: var(--spacing-10) var(--spacing-2);
+    }
+
+    @include for-phone-only {
+        padding: var(--spacing-6) var(--spacing-2);
+    }
+
+    // the mark in a column of its own, the text beside it
+    blockquote {
+        display: flex;
+        gap: var(--spacing-3);
+        max-width: 860px;
+        margin: 0 auto;
+        padding: 0;
+        border: 0;
+        background: none;
+
+        @include for-phone-only {
+            gap: var(--spacing-2);
+        }
+
+        // replaces the base style's grey mark
+        &::before {
+            content: "\201C";
+            flex-shrink: 0;
+            font-family: $font-title;
+            font-size: 80px;
+            line-height: .8;
+            vertical-align: baseline; // the base style nudges it
+            margin: 0;
+            color: $gold;
+
+            @include for-phone-only {
+                font-size: 64px;
+            }
+        }
+    }
+
+    p {
+        display: block; // the base style makes blockquote paragraphs inline
+        font-family: $font-title;
+        font-size: 22px; // owner, 2026-11-25
+        font-weight: 400;
+        line-height: 1.55;
+        letter-spacing: .02em;
+        color: $white;
+        margin: 0;
+        text-wrap: pretty;
+
+        @include for-phone-only {
+            font-size: 20px;
         }
     }
 }

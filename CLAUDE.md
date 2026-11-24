@@ -11,10 +11,12 @@ of the necksurgery.co.nz site (Dr Nick Lilic's practice) taken on 2026-10-29 fro
 `sfe/necksurgery.co.nz/nicklilic.github.io/`, without that repository's git history or its
 `.github/` deploy workflow. The design, copy structure, images and identity have since been
 replaced with Matt's (2026-10-29), and on 2026-10-30 redesigned after a reference Paul supplied
-(branch `design-v2`; see "Branches"): a navy hero filling the first screen above the nav bar,
-with the "MS" monogram, his name in large tracked capitals (the second line gold) and a gold
-button; a sticky nav bar under it; About on navy with the headshot on studio grey running to the
-right edge; a moving band of affiliation logos; four service tiles on a cream band; and a navy contact section. Jost headings, Inter body
+(branch `design-v2`; see "Branches"), and on 2026-11-25 simplified on the owner's feedback ("it
+was just quite a lot"): on desktop the sticky nav bar is the top of the page and About opens with
+his name in tracked capitals (the second line gold), credentials, role and subtitle, beside the
+scrub photo; below desktop a short navy intro (monogram, the same name block, a gold button) comes
+before the nav bar, then the photo, then About. Then the bio's last paragraph as a pull quote,
+a moving band of affiliation logos; four service tiles on a cream band; and a navy contact section. Jost headings, Inter body
 text, navy, gold and maroon. **Much of the copy is still bracketed placeholders**, and
 the privacy policy is still the old practice's text with the names taken out: see "Not done yet".
 
@@ -94,15 +96,14 @@ mechanical stops them going live: "Not done yet" is the list to clear.
 ```
 config.toml               title, baseURL, [params] (description, keywords, legal_title, the
                           contact hours (display line plus hours_days / hours_open / hours_close
-                          for the JSON-LD) and address lines, and the still empty phone /
-                          phone_display / email / maps_url the templates fall back from), menus
+                          for the JSON-LD) and address lines, the phone (E.164 and as written),
+                          email and maps_url), menus
 content/
   privacy-policy.html     /privacy-policy/  (a draft, so not built: the old practice's policy, names replaced by placeholders)
   thankyou.html           /thankyou/  (the contact form's landing page)
 data/services.yaml        the four service groups and their items, in Matt's words; each names its icon
 static/imgs/
-  hero-matt.jpg, hero-matt-portrait.jpg   the hero photo, wide and upright ("The hero photo")
-  matt-stretton-portrait.webp   the About portrait; matt-stretton.webp is the old headshot, unused
+  matt-stretton-scrubs.webp   the About photo ("The photo"); matt-stretton.webp is the old headshot, unused
   logo_college_of_surgens.png, logo-southen-cross.svg, logo-anzhncs.svg, logo-nib.svg
                           affiliation logos (logo-nib.svg is unused: the marquee inlines nib's path)
   social.png              1200x630 OG/Twitter card; favicon-32.png, favicon-16.png,
@@ -110,18 +111,26 @@ static/imgs/
 themes/necksurgery/       the theme, tracked here, not a submodule
   layouts/_default/baseof.html   every page's <head>: meta, canonical, OG/Twitter, favicons, CSS;
                           in <body>, a "hero" block (filled only by the home page), then the nav
-  layouts/index.html      the home page: the hero's words and fullImage (the "hero" block), then
+  layouts/index.html      the home page: components/hero (the "hero" block), then
                           partials/home.html
   layouts/partials/
-    home.html             below the hero: About, the marquee, Services
-    header.html           the sticky navy nav bar: monogram + wordmark, links, phone link, maroon
-                          Enquire button, Alpine burger for phones
-    mark.html             Matt's gold "MS" logo mark, inline SVG (hero top and nav)
+    home.html             below the nav: About (name block on desktop, "Meet" heading below
+                          it, photo), the care quote (the bio's last paragraph as a pull
+                          quote, white and left-aligned beside a gold quote mark: on $navy-2 (#17304F) below desktop, navy on desktop; moved out of About so the photo sits higher on a
+                          1440x900 screen), the marquee, Services
+    header.html           the sticky navy nav bar: monogram + wordmark (on the home page it
+                          scrolls to the top instead of reloading), Services and Contact links
+                          (no About, since 2026-11-25), phone link, gold
+                          "Make an enquiry" button ("Enquiry" from 600 to 900px), Alpine burger
+                          for phones
+    mark.html             Matt's gold "MS" logo mark, inline SVG (intro top and nav)
     wordmark.html         the "Dr Matt Stretton" lettering beside the mark in the nav, inline SVG
-    components/hero.html  the centred hero (the window less the nav bar from 600px up, so the
-                          nav sits at the bottom of the first screen): monogram, two-line
-                          name, credentials and role, one-line subtitle, gold button; a designed navy background, or the
-                          fullImage photo under a navy overlay
+    components/hero.html  the intro above the nav bar, below 900px only: monogram, name block,
+                          gold button, centred on plain navy, the window's height less the nav
+                          bar's (so the nav is at the foot of the first screen). Hidden on desktop
+    name-block.html       the two-line name, credentials, role and subtitle; the three lines
+                          under the name share one font, size and colour. In the intro and
+                          at the top of About; only one shows at any width
     marquee-logos.html    one set of affiliation logos; home.html renders it twice to loop
     icons/*.html          the four service icons (neck, thyroid, nose, child): a gold line
                           drawing in two weights (thick outline, thin detail) inside the
@@ -137,40 +146,47 @@ themes/necksurgery/       the theme, tracked here, not a submodule
                           wordmark), hero (and the gold button), marquee, sections (headings,
                           About, Services, icons, legal pages) and footer
 archetypes/default.md     front matter for `scripts/hugo.sh new`
-scripts/                  setup, serve, preview, test, check-site.py, known-defects.txt
+scripts/                  setup, serve, preview, test, check-site.py, known-defects.txt,
+                          make-about-photo.py (builds the About photo; see "The photo")
 ```
 
 There is no `content/_index.md`, no services or contact page: Services (`/#services`) and About
 (`/#about`) are sections of `partials/home.html`, and Contact (`#contact`) is the footer, so it is on
 every page. The nav bar is `position: sticky` at a fixed `$header-height` (80px, 64px on phones):
-on the home page it follows the hero and sticks once scrolled to; on other pages it is first, so
+on the home page below 900px it follows the intro and sticks once scrolled to; on desktop and
+on other pages it is first, so
 it takes its own space and nothing pads for it. `html` has `scroll-padding-top` of the same height,
 so anchors land below it.
 
-### The hero photo
+### The photo
 
-Matt's photos arrived on 2026-11-11 (`.doncheckin/Matt Stretton -4.jpg` and `-5.jpg`, both
-upright). The hero uses `-4` (scrubs, arms folded, dark studio backdrop) as two files, both set in
-`themes/necksurgery/layouts/index.html`:
+Matt's photos arrived on 2026-11-11 (`.doncheckin/Matt Stretton -4.jpg`, scrubs on a dark studio
+backdrop, and `-5.jpg`, a suit on grey concrete, both upright). Since 2026-11-25 the site uses only
+`-4`, as `static/imgs/matt-stretton-scrubs.webp`, built by `scripts/make-about-photo.py`: the
+photo less its top 775px (of 3283), so about 40px shows above his head at phone width, resized to
+1440x1650; the studio backdrop's light falloff evened out to one flat `$studio` (`#272D31`); then
+its left 12%, right 17% and top 6% blended into that colour. On desktop About's ground is
+`$studio` too, so the photo has no visible edge wherever it lands (owner, 2026-11-25: "no fade",
+no hard line); below desktop About's text is on navy and the photo is a grey block above it. If
+the photo changes, re-measure the backdrop and the script's numbers.
 
-- **`static/imgs/hero-matt.jpg`** (`fullImage`, 4000x1600): for landscape windows (5:4 and
-  wider). The photo less its headroom, 150px in from the left of a wide canvas, the rest of the
-  canvas being **the studio backdrop carried out from the photo's edges, row by row, with the
-  joins feathered**. The extra backdrop is made, not photographed. It is anchored left and is as
-  tall as the hero, so Matt shows whole in the left half and only the empty right crops. The mark
-  and the text sit together in the right half, left-aligned (owner, 2026-11-11).
-- **`static/imgs/hero-matt-portrait.jpg`** (`portraitImage`, 720x1200): the photo less its
-  headroom and side margins, used in windows taller than 5:4 (phones, upright tablets), from its
-  top, under the centred layout: mark at the top, text at the foot, the heading over his neck and
-  chest. The owner called this layout right on 2026-11-11; do not change it with the landscape one.
-
-The scroll cue under the button was removed at every size (owner, 2026-11-11). Its space is
-padding on `.hero__text`, never on `.hero`: padding there adds to the hero's `min-height` and
-pushes the nav bar off the first screen.
-
-Both sit under the navy overlay (`.hero--photo`). `static/imgs/hero.jpg` (untracked, 1.9 MB) is the
-earlier stand-in photo and is no longer referenced. Leaving `fullImage` empty brings back the
-designed navy background.
+On desktop the photo is on the left and the text on the right, as the old full-screen hero had
+them (owner, 2026-11-25). The photo's box is the section's left half out to the window's edge,
+its full height. The image sits on the box's bottom with Matt centred in the box (his middle is
+49% across the photo, so `left: 50%; translateX(-49%)`), and is as tall as the box unless that
+would make him wider than the box less 100px: `height: min(100%, calc((100cqw - 100px) * 1.752))`, the box being a
+size container. So a narrow desktop window shrinks him rather than cutting him off, leaving
+section colour above him. The image runs on under the text (the box is `overflow: visible`, the
+text `z-index: 1`, the section `overflow: hidden`) so that its own blended right edge, not the
+column's edge, is where it meets the section. The text, not the photo, sets the section's
+height; both are pinned to `grid-row: 1`, as the photo's columns come first. The section is at
+least the window less the nav bar, with the text centred in it; from 1400px the text runs on
+into the right margin (up to 780px of text), so at 1920x1080 the section is exactly one screen.
+Smaller desktops scroll. Below
+desktop it runs the full width straight under the nav bar, no taller than the window less the bar. The suit photo was dropped and the full-screen
+photo hero (`hero-matt.jpg`, `hero-matt-portrait.jpg`, built from `-4` with made-up backdrop) went
+with the hero; both are in git on `main` before that date. `static/imgs/hero.jpg` (untracked,
+1.9 MB) is an earlier stand-in, unreferenced.
 
 ## Traps that do not announce themselves
 
@@ -182,7 +198,7 @@ designed navy background.
 - **`markup.goldmark.renderer.unsafe = true`**: raw HTML inside Markdown is passed through as-is,
   scripts included. Nothing here is Markdown today, so it changes no output; it matters the moment
   Markdown content or a CMS is added.
-- **Most of the home page is template, not content.** The hero words are in `layouts/index.html`,
+- **Most of the home page is template, not content.** The name, credentials and subtitle are in `partials/name-block.html`,
   the About heading and placeholders in `partials/home.html`, the logos in `partials/marquee-logos.html`, the contact placeholders in
   `partials/footer.html`. Only the services list is data (`data/services.yaml`).
 - **The `<head>` ignores the page.** `baseof.html` writes the site `description`, `keywords` and
@@ -192,7 +208,7 @@ designed navy background.
 - **The SCSS goes through LibSass.** `toCSS` with no `transpiler` is LibSass, which needs the extended
   edition and which Hugo deprecated in 0.153.0 (a warning every build). The old workflow installed
   Dart Sass, but nothing asked for it, so it was never used. LibSass also tries to evaluate CSS
-  `min()`/`max()` itself; wrap modern CSS functions in `unquote("…")`, as the hero's `clamp()` is.
+  `min()`/`max()` itself; wrap modern CSS functions in `unquote("…")` (`clamp()`, `aspect-ratio`'s `960 / 1440`).
 - **`languageCode = 'en-nz'`** is deprecated since Hugo 0.158.0 (use `locale`). The theme writes
   `<html lang="en-NZ">` by hand, so it does not change pages.
 - **The menus in `config.toml` render nowhere.** No template reads `.Site.Menus`; the visible nav is
@@ -202,11 +218,10 @@ designed navy background.
 - **`static/js/scripts.js` (theme) defines a global `scrollTo(elementId)`**, which replaces
   `window.scrollTo`: calling `window.scrollTo(0, y)` throws. It came with the copy; nothing on the
   site calls it. Use `window.scroll(…)` in scripts and headless-browser checks.
-- **The hero's grain is an inline SVG `data:` URI** in `_hero.scss`. Its filter reference is
-  written `url%28%23n%29`, not `url(#n)`: `make test` scans every `url(` in the CSS and would report
-  `#n` as a missing file.
+- **`make test` scans every `url(` in the CSS** and reports what it points at as a missing file,
+  so an inline SVG `data:` URI with a filter must write `url%28%23n%29`, not `url(#n)`.
 - **Wide tracking pushes centred text left.** Letter-spacing adds space after the last letter of
-  each line, so centred tracked headings (hero, Services) are padded on the left by the same amount.
+  each line, so centred tracked headings (the intro's name, Services) are padded on the left by the same amount.
   Change one and change the other.
 - **The Hugo snap cannot see `/tmp`.** Build into a directory under the checkout (`make test` uses
   `.test/`), never `/tmp`.
@@ -223,10 +238,9 @@ to anyone as finished**. Matt has seen nothing of it yet.
 
 | Where | Placeholder |
 |---|---|
-| header and Contact | `[Phone number]` (set `params.phone` and `phone_display` in `config.toml`): still to be confirmed by Matt (2026-11-11) |
 | `content/privacy-policy.html` | **hidden since 2026-11-17** (`draft: true`, footer link and menu entry commented out) until the text is Matt's own. Still in it: `[Company name]` (twice), `[practice email address]`, `[date]`, and a visible note that the policy must be replaced or reviewed |
 
-The hero's credentials (MBChB FRACS) and role, and the footer bar's legal name (Dr Matt Stretton),
+The phone number (09 219 1865) came from Matt on 2026-11-25. The credentials (MBChB FRACS) and role, and the footer bar's legal name (Dr Matt Stretton),
 lost their brackets on 2026-11-17 on the owner's say-so.
 
 **Matt's copy arrived on 2026-11-11**: the About bio, the Services intro, two service-list
@@ -245,12 +259,11 @@ to be set up that day). The footer bar carries a small RAH Panthers logo
    band and was taken out (owner, 2026-11-04).
 3. **The logo is in (2026-11-11), the social card is not redone.** `partials/mark.html` is the
    solid "MS" mark from the designer's mock-ups (`.doncheckin/fwdlogomockupoptions/4.svg`), in the
-   site's gold, in the hero and the nav; the favicons are the same mark cut from `4.png`. Which
+   site's gold, in the intro and the nav; the favicons are the same mark cut from `4.png`. Which
    mock-up option Matt prefers is not confirmed. The nav lettering (`partials/wordmark.html`) is the designer's
    own letterforms from the same file, as outlines; `social.png` is still the generated name card.
-4. **The photos are in (2026-11-11), not yet seen by Matt in place.** See "The hero photo". The
-   About section shows `-5` upright (`static/imgs/matt-stretton-portrait.webp`, 960x1405, shown
-   up to 440px wide). `matt-stretton.webp`, the first 512px headshot, is no longer used.
+4. **The photo** is the scrub one only, since 2026-11-25. See "The photo".
+   `matt-stretton.webp`, the first 512px headshot, is no longer used.
 5. **The contact form posts to Static Contact** (`https://staticcontact.com/send/<Matt's form key>`,
    in `partials/footer.html`, since 2026-11-18), guarded by Static Contact's botbuster script, not
    reCAPTCHA. Not yet tested with a real submission; the form's Return URL in Static Contact should

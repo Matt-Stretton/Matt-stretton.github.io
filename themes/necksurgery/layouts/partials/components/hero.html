@@ -1,25 +1,9 @@
-{{/* The home page hero: the full height of the window, everything centred, and
-     no nav (the nav bar follows it, see baseof.html).
-
-     (dict "title1" … "title2" … "credentials" … "role" … "subtitle" … "fullImage" …
-           "portraitImage" …)
-
-     title1 and title2 are the heading's two lines, the second in gold.
-     With "fullImage" (a landscape photo, e.g. "/imgs/hero.jpg") it is the
-     background, under a navy overlay that keeps the white text readable. Without
-     one, the background is the designed navy one in components/_hero.scss.
-     "portraitImage" (optional) replaces it in windows taller than 5:4, where a
-     landscape photo would lose its sides. */}}
-<section class="hero{{ if .fullImage }} hero--photo{{ end }}"{{ with .fullImage }} style="--hero-photo: url({{ . }});{{ with $.portraitImage }} --hero-photo-portrait: url({{ . }});{{ end }}"{{ end }}>
+{{/* The home page intro, below desktop width only (see components/_hero.scss):
+     the mark, the name block and the enquiry button, on plain navy, above the
+     nav bar. On desktop there is no hero: the nav bar is the top of the page and
+     the name block heads About (owner, 2026-11-25). */}}
+<section class="hero">
     <div class="hero__mark">{{ partial "mark.html" . }}</div>
-
-    <div class="hero__text">
-        <h1 class="hero__title"><span>{{ .title1 }}</span> <span class="hero__title-accent">{{ .title2 }}</span></h1>
-        <p class="hero__meta">
-            {{- with .credentials }}<span>{{ . }}</span>{{ end -}}
-            {{- with .role }}<span>{{ . }}</span>{{ end -}}
-        </p>
-        {{ with .subtitle }}<p class="hero__subtitle">{{ . }}</p>{{ end }}
-        <p class="hero__cta"><a class="btn btn--gold" href="#contact">Make an enquiry</a></p>
-    </div>
+    {{ partial "name-block.html" . }}
+    <p class="hero__cta"><a class="btn btn--gold" href="#contact">Make an enquiry</a></p>
 </section>

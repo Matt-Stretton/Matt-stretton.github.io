@@ -1,24 +1,41 @@
 {{- $phone := .Site.Params.phone -}}
-<header class="site-header" x-data="{ open: false }" :class="{ 'is-open': open }" @keydown.escape.window="open = false">
+{{/* toggle(): opening the menu while the bar is not yet stuck (on the home page
+     on phones it starts at the foot of the first screen, under the intro) first
+     scrolls the bar to the top of the window, so the menu below it is in view.
+     window.scroll, not scrollIntoView (html's scroll-padding-top would stop a
+     bar's height short) nor window.scrollTo (the theme's scripts.js replaces it).
+     html's scroll-behavior makes it smooth, or not under reduced motion. */}}
+<header class="site-header" x-data="{
+        open: false,
+        toggle() {
+            this.open = !this.open;
+            const top = this.$root.getBoundingClientRect().top;
+            if (this.open && top > 0) window.scroll({ top: window.scrollY + top });
+        }
+    }" :class="{ 'is-open': open }" @keydown.escape.window="open = false">
     <div class="site-header__inner">
-        <a href="/" class="site-header__brand" aria-label="Dr Matt Stretton, home">{{ partial "mark.html" . }}{{ partial "wordmark.html" . }}</a>
+        {{/* On the home page the logo scrolls back to the top instead of reloading
+             the page (owner, 2026-11-25); elsewhere, and without JavaScript, it
+             is a plain link home. */}}
+        <a href="/" class="site-header__brand" aria-label="Dr Matt Stretton, home"{{ if .IsHome }} @click.prevent="open = false; window.scroll({ top: 0 })"{{ end }}>{{ partial "mark.html" . }}{{ partial "wordmark.html" . }}</a>
 
+        {{/* No "About" link (owner, 2026-11-25): About is the top of the page, which
+             the logo goes to. */}}
         <nav class="site-header__nav" id="site-nav" aria-label="Main">
             <ul>
-                <li><a href="/#about" @click="open = false">About</a></li>
                 <li><a href="/#services" @click="open = false">Services</a></li>
                 <li><a href="#contact" @click="open = false">Contact</a></li>
             </ul>
-            {{/* Until Matt's number is in config.toml (params.phone), this points at
-                 the contact section and shows a placeholder. */}}
+            {{/* Without params.phone in config.toml this points at the contact
+                 section and shows a placeholder. */}}
             <a class="site-header__phone" {{ with $phone }}href="tel:{{ . }}"{{ else }}href="#contact"{{ end }} @click="open = false">
                 <i class="lni lni-phone" aria-hidden="true"></i>
                 <span>{{ with .Site.Params.phone_display }}{{ . }}{{ else }}[Phone number]{{ end }}</span>
             </a>
-            <a class="site-header__enquire" href="#contact" @click="open = false">Enquire</a>
+            <a class="site-header__enquire btn btn--gold" href="#contact" @click="open = false"><span class="site-header__enquire-lead">Make an </span>enquiry</a>
         </nav>
 
-        <button class="site-header__burger" type="button" aria-controls="site-nav" :aria-expanded="open.toString()" aria-expanded="false" @click="open = !open">
+        <button class="site-header__burger" type="button" aria-controls="site-nav" :aria-expanded="open.toString()" aria-expanded="false" @click="toggle()">
             <span class="visually-hidden">Menu</span>
             <span class="bar" aria-hidden="true"></span>
             <span class="bar" aria-hidden="true"></span>
