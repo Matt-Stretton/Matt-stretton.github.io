@@ -1,6 +1,7 @@
-// The nav bar: a navy band with a fixed height. On the home page it comes after
-// the hero (the window less this bar, from tablet up) and sticks to the top once scrolled to; on every other
-// page it is first, so it sticks from the start. Its height is exactly
+// The nav bar: a navy band with a fixed height. On the home page below desktop
+// width it comes after the short intro (components/_hero.scss) and sticks to the
+// top once scrolled to; on desktop, and on every other page, it is first, so it
+// sticks from the start. Its height is exactly
 // $header-height / $header-height-phone, which html's scroll-padding-top uses
 // to keep anchor targets clear of it.
 .site-header {
@@ -60,8 +61,9 @@
         ul {
             flex: 1;
             display: flex;
-            justify-content: space-evenly;
-            gap: var(--spacing-3);
+            // to the right, beside the phone and the button (owner, 2026-11-25)
+            justify-content: flex-end;
+            gap: var(--spacing-4);
             list-style: none;
             margin: 0;
 
@@ -91,24 +93,33 @@
         }
     }
 
-    // the maroon button: the secondary accent's main use on the page
-    &__enquire {
-        padding: 11px 20px;
-        background: $maroon;
+    // the gold "Make an enquiry" button (.btn--gold), sized down for the bar;
+    // it was maroon until the owner asked for the gold one (2026-11-25)
+    &__nav &__enquire {
+        padding: 12px 18px 12px calc(18px + .24em);
+        font-size: 12px;
+        font-weight: 600;
+        letter-spacing: .24em;
+        color: $navy-deep;
         white-space: nowrap;
-        transition: background .2s ease;
 
         &:hover {
-            background: $maroon-dark;
-            color: $white !important;
+            color: $navy-deep;
         }
     }
 
+    // The bars are centred in the 44px button by flex, 6px apart: padding and
+    // margins used to add up to more than 44px and push them below the middle.
+    // The open state's translateY(8px) is that gap plus a bar.
     &__burger {
         display: none;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
         background: transparent;
         border: 0;
-        padding: 10px 6px;
+        padding: 0;
         width: 44px;
         height: 44px;
 
@@ -120,21 +131,36 @@
             display: block;
             width: 26px;
             height: 2px;
-            margin: 6px auto;
+            margin: 0;
             background: $white;
             transition: transform .25s ease, opacity .2s ease;
         }
     }
 
-    // tablets: the wordmark goes so the links keep one line
+    // tablets: the wordmark goes, the button says just "Enquiry" and the
+    // tracking tightens, so everything keeps one line down to 600px
     @include for-tablet-portrait-only {
         .wordmark {
             display: none;
         }
 
+        &__inner,
         &__nav,
         &__nav ul {
             gap: var(--spacing-2);
+        }
+
+        &__nav &__enquire {
+            padding-left: calc(14px + .24em);
+            padding-right: 14px;
+        }
+
+        &__nav a {
+            letter-spacing: .14em;
+        }
+
+        &__enquire-lead {
+            display: none;
         }
     }
 
@@ -149,7 +175,7 @@
         }
 
         &__burger {
-            display: block;
+            display: flex;
         }
 
         &__nav {

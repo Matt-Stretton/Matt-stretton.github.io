@@ -30,8 +30,8 @@ pagination.pagerSize = 20
     hours_close = "17:00"
     # The address, one entry per line, as the contact section shows it.
     address = ["Suite 11, Mauranui Clinic", "86 Great South Rd", "Epsom 1051", "Auckland, NZ"]
-    phone = ""          # E.164 for the tel: link, e.g. +6491234567
-    phone_display = ""  # as written, e.g. 09 123 4567
+    phone = "+6492191865"           # E.164, for the tel: link
+    phone_display = "09 219 1865"   # as written on the page
     email = "admin@aklent.co.nz"
     # Google Maps link for the "Directions" button beside the address: a Google
     # Maps search for the address above (owner, 2026-11-18). Change it with the

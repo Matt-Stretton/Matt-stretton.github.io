@@ -67,8 +67,9 @@
 </head>
 
 <body>
-    {{- /* The home page fills this with its full-height hero, so the nav bar comes
-         after it and sticks once scrolled to; other pages start with the nav. */ -}}
+    {{- /* The home page fills this with its intro below desktop width, so there the
+         nav bar comes after it and sticks once scrolled to; on desktop, and on
+         other pages, the nav bar is first. */ -}}
     {{- block "hero" . }}{{- end }}
     {{- partial "header.html" . -}}
     <div id="content">

@@ -2,19 +2,6 @@
     {{ .Site.Title }}
 {{end}}
 
-{{ define "hero" }}
-{{/* The credentials and role in [square brackets] are placeholders waiting on
-     Matt; see CLAUDE.md, "Not done yet". fullImage is the wide hero photo and
-     portraitImage the upright one for phones and other upright windows; how both
-     were made from Matt's photo is in CLAUDE.md, "The hero photo". */}}
-{{ partial "components/hero" (dict
-    "title1" "Dr Matt"
-    "title2" "Stretton"
-    "credentials" "MBChB FRACS"
-    "role" "Otolaryngologist, Head and Neck Surgeon"
-    "subtitle" "Specialist ear, nose and throat care for adults and children."
-    "fullImage" "/imgs/hero-matt.jpg"
-    "portraitImage" "/imgs/hero-matt-portrait.jpg") }}
-{{ end }}
+{{ define "hero" }}{{ partial "components/hero" . }}{{ end }}
 
 {{ define "content" }}{{ partial "home.html" . }}{{ end }}

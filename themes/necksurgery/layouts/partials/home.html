@@ -1,8 +1,11 @@
-{{/* The home page below the hero (the hero is in index.html). The About and
-     Services words are Matt's own (2026-11-11). */}}
+{{/* The home page below the nav bar (the phone-and-tablet intro above it is
+     components/hero.html). The About and Services words are Matt's own
+     (2026-11-11). On desktop About opens with the name block in place of its
+     "Meet" heading; below desktop the photo comes first, then the heading. */}}
 <section class="about" id="about">
     <div class="about__text">
-        <header class="section-head section-head--dark">
+        {{ partial "name-block.html" . }}
+        <header class="section-head section-head--dark about__head">
             <h2>Meet Dr Matt<br />Stretton</h2>
             <span class="rule" aria-hidden="true"></span>
         </header>
@@ -10,12 +13,25 @@
         <p>After graduating from the University of Otago, Matt completed his surgical training throughout Auckland and Northland, before being awarded Fellowship of the Royal Australasian College of Surgeons.</p>
         <p>Matt is a Consultant ENT Surgeon at North Shore Hospital and regularly participates in multidisciplinary oncology meetings at Auckland Hospital. He also contributes to the regional after-hours on-call service at Auckland Hospital.</p>
         <p>To further develop his subspecialty expertise, Matt completed an Advanced Fellowship at the Royal Adelaide Hospital in South Australia. This highly regarded fellowship provided advanced training in Head and Neck, Thyroid, Reconstructive and Robotic Surgery.</p>
-        <p>Matt is committed to providing thorough, considered and personalised care. He believes in taking the time to understand each patient’s concerns, explaining their diagnosis and treatment options clearly, and working together to determine the most appropriate approach to treatment.</p>
     </div>
-    {{/* Matt's portrait, upright (960x1405, twice its largest shown size). */}}
+    {{/* The scrub photo, its top cropped to about 40px of headroom at phone
+         width (1440x1650; see CLAUDE.md, "The photo"). On desktop it fills the right half
+         of About to the window edge, as a background would; below desktop it
+         runs the full width under the nav bar. The
+         suit photo was dropped (owner, 2026-11-25). Not lazy: below desktop it is
+         the first thing under the nav bar. */}}
     <div class="about__photo">
-        <img src="/imgs/matt-stretton-portrait.webp" alt="Dr Matt Stretton" width="960" height="1405" loading="lazy" />
+        <img src="/imgs/matt-stretton-scrubs.webp" alt="Dr Matt Stretton" width="1440" height="1650" />
     </div>
+</section>
+
+{{/* The last paragraph of the bio, set apart as a pull quote: it shortens About,
+     so on desktop the photo, which is as tall as About allows, reaches higher up
+     the first screen (owner, 2026-11-25). */}}
+<section class="care-quote" aria-label="Approach to care">
+    <blockquote>
+        <p>Matt is committed to providing thorough, considered and personalised care. He believes in taking the time to understand each patient’s concerns, explaining their diagnosis and treatment options clearly, and working together to determine the most appropriate approach to treatment.</p>
+    </blockquote>
 </section>
 
 <section class="marquee" aria-label="Affiliations">
@@ -30,7 +46,7 @@
         <header class="section-head section-head--center">
             <h2>Services</h2>
             <span class="rule" aria-hidden="true"></span>
-            <p class="section-head__intro">Matt takes a comprehensive approach to patient care, offering both medical and surgical treatment options where appropriate. His aim is to provide clear advice, expert treatment and continuity of care throughout the patient’s treatment journey and has a particular expertise in:</p>
+            <p class="section-head__intro">Matt takes a comprehensive approach to patient care, offering both medical and surgical treatment options where appropriate. His aim is to provide clear advice, expert treatment and continuity of care throughout the patient’s treatment journey and has a particular expertise&nbsp;in:</p>
         </header>
 
         <div class="service-grid">
